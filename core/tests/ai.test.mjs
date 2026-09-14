@@ -47,7 +47,7 @@ test('fake-plant: unknown unit name, bad page and a changed character are droppe
   const store = memoryStore()
   const a = await ask('Brown Sound Deluxe fake-plant', { store })
   assert.equal(a.ai.used, true)
-  assert.equal(a.ai.reason, 'ok')
+  assert.equal(a.ai.reason, null)
   assert.equal(a.status, 'ok')
   const s = a.suggestions[0]
   assert.equal(s.model_id, '1959slp')
@@ -69,6 +69,15 @@ test('fake-plant: unknown unit name, bad page and a changed character are droppe
   assert.deepEqual(store.calls.map((c) => [c.step, c.ok, c.input_tokens, c.cached_input_tokens, c.output_tokens]), [['pick', 1, 1500, 500, 400], ['cite', 1, 1500, 500, 400]])
   assert.ok(a.ai.cost_cad > 0)
   checkInvariants(a, { pages })
+})
+
+test('fake-span: an AI citation that runs across a box break is dropped as quote_not_on_page', async () => {
+  const q = 'Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.'
+  assert.ok(checkQuote({ quote: q, page: 28 }, pages).ok, 'control: it is an exact, verified substring')
+  const a = await ask('1959SLP fake-span')
+  assert.deepEqual(a.ai.dropped, [{ kind: 'quote_not_on_page', detail: '1959SLP, p. 28' }, { kind: 'no_verified_quote', detail: '1959SLP' }])
+  assert.ok(a.suggestions.every((s) => s.source === 'guide_search'))
+  assert.ok(!JSON.stringify(a).includes('Van Halen “My settings'))
 })
 
 test('fake-puppets: general knowledge + search terms lead to USA IIC+ with a verified p. 270 quote', async () => {

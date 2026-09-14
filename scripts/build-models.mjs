@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadPages, loadSections } from '../core/tests/guide-node.mjs'
 import { pageText, pagesSha256, PDF_PAGES } from '../core/guide.js'
-import { normText, splitSentences } from '../core/text.js'
+import { normText, splitSentences, splitAtBoxBreaks, spansBoxBreak, cutAttribution } from '../core/text.js'
 import { checkQuote } from '../core/verify.js'
 import { brandsForSection } from '../core/brands.js'
 import { facetMasterVolume, facetPowerTubes } from '../core/models.js'
@@ -55,12 +55,32 @@ const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 export function build({ pages, sections, curation, log = () => {} }) {
   const fails = []
-  const stats = { cut_dropped: 0, cut_shrunk: 0 }
+  const stats = { cut_dropped: 0, cut_shrunk: 0, box_split: 0 }
 
   const verified = (quote, page, opts) => checkQuote({ quote, page }, pages, opts).ok
   const findPage = (quote, start, end, opts) => {
     for (let p = start; p <= end; p++) if (verified(quote, p, opts)) return p
     return null
+  }
+  // API.md §4.2: split at box breaks, cut attributions into said_by; pieces only get shorter and must still verify.
+  const CARD_LABEL = /^(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls|More videos, clips and comments)(?![A-Za-z])/
+  const boxClean = (quote, page, min = 12, max = 320) => {
+    const out = []
+    for (const piece of splitAtBoxBreaks(quote, pages.get(page))) {
+      if (CARD_LABEL.test(piece)) continue
+      const cut = cutAttribution(piece, SAID_BY)
+      const q = cut.quote
+      if (q.length < min || q.length > max || !verified(q, page) || spansBoxBreak(q, pages.get(page))) continue
+      out.push({ quote: q, said_by: cut.said_by === 'Yek' ? 'yek' : cut.said_by })
+    }
+    return out
+  }
+  const firstClean = (r) => {
+    if (!r) return null
+    const [c] = boxClean(r.quote, r.page)
+    if (!c) { stats.cut_dropped++; log(`box split left nothing: p. ${r.page} "${r.quote.slice(0, 50)}"`); return null }
+    if (c.quote !== r.quote) { stats.box_split++; log(`box split p. ${r.page}: "${r.quote.slice(0, 50)}" → "${c.quote.slice(0, 50)}"`) }
+    return { quote: c.quote, page: r.page }
   }
 
   // ---------- sections → model skeletons ----------
@@ -377,44 +397,29 @@ export function build({ pages, sections, curation, log = () => {} }) {
     }
     if (k.isStub) return model
 
-    model.synopsis = card.Synopsis ? bestQuote(cutCard(card.Synopsis, [' • ', ' Tips ', ' Clips ', ' More videos']), k, 'synopsis') : null
-    model.controls = controlsQuote(k)
+    model.synopsis = card.Synopsis ? firstClean(bestQuote(cutCard(card.Synopsis, [' • ', ' Tips ', ' Clips ', ' More videos']), k, 'synopsis')) : null
+    model.controls = firstClean(controlsQuote(k))
     const hints = parseControlHints(model.controls?.quote)
 
     // Tips: sentence by sentence.
     const tipText = cutCard(card.Tips, [' More videos, clips and comments', ' Clips ', ' Cabinet/speaker '])
     const tipSeen = new Set()
-    // Card tips lose the line break between two tips ("…like Eddie Van Halen “My settings…"): split there too.
-    // Only where the quotes before it are balanced, so a nested “typical” doesn't split a tip.
-    const splitAtOpeningQuote = (s) => {
-      const out = []
-      let start = 0
-      let depth = 0
-      for (let i = 0; i < s.length; i++) {
-        if (s[i] === '“') {
-          if (depth === 0 && i > start && /[A-Za-z0-9)] $/.test(s.slice(i - 2, i))) {
-            out.push(s.slice(start, i).trim())
-            start = i
-          }
-          depth++
-        } else if (s[i] === '”' && depth > 0) depth--
+    for (const sen of tipText ? splitSentences(tipText) : []) {
+      if (sen.length < 12) continue
+      const page = sen.length <= 320 ? findPage(sen, k.s.page, k.s.end) : null
+      if (!page) { stats.cut_dropped++; log(`tip ${k.id}: dropped "${sen.slice(0, 60)}…"`); continue }
+      const pieces = boxClean(sen, page)
+      if (pieces.length !== 1 || pieces[0].quote !== sen) { stats.box_split++; log(`tip ${k.id} p. ${page}: box split into ${pieces.length}`) }
+      for (const pc of pieces) {
+        if (tipSeen.has(pc.quote)) continue
+        tipSeen.add(pc.quote)
+        model.tips.push({ quote: pc.quote, page, said_by: pc.said_by ?? saidBy(pc.quote, page) })
       }
-      out.push(s.slice(start).trim())
-      return out.filter(Boolean)
-    }
-    const tipSentences = (tipText ? splitSentences(tipText) : []).flatMap(splitAtOpeningQuote)
-    for (const sen of tipSentences) {
-      const q = sen.replace(/\s*–\s*(?:yek|Yek|Cliff)$/, '').trim()
-      if (q.length < 12 || tipSeen.has(q)) continue
-      const page = q.length <= 320 ? findPage(q, k.s.page, k.s.end) : null
-      if (!page) { stats.cut_dropped++; log(`tip ${k.id}: dropped "${q.slice(0, 60)}…"`); continue }
-      tipSeen.add(q)
-      model.tips.push({ quote: q, page, said_by: saidBy(q, page) })
     }
 
     // Cab.
-    const speaker = card['Cabinet/speaker'] ? bestQuote(cutCard(card['Cabinet/speaker'], [' Web, Manual', ' More videos, clips and comments']), k, 'speaker') : null
-    const stock = card['Stock cabs'] ? bestQuote(cutCard(card['Stock cabs'], [' Web, Manual', ' More videos, clips and comments']), k, 'stock_cabs') : null
+    const speaker = card['Cabinet/speaker'] ? firstClean(bestQuote(cutCard(card['Cabinet/speaker'], [' Web, Manual', ' More videos, clips and comments']), k, 'speaker')) : null
+    const stock = card['Stock cabs'] ? firstClean(bestQuote(cutCard(card['Stock cabs'], [' Web, Manual', ' More videos, clips and comments']), k, 'stock_cabs')) : null
     const stored = new Set([speaker?.quote, stock?.quote, model.synopsis?.quote, model.controls?.quote, ...model.tips.map((t) => t.quote)])
     const cabNotes = []
     const headerEnd = model.controls ? pageText(pages, k.s.page).indexOf(model.controls.quote) + model.controls.quote.length : 0
@@ -426,9 +431,12 @@ export function build({ pages, sections, curation, log = () => {} }) {
         if (sen.length < 40 || sen.length > CAB_NOTE_MAX || stored.has(sen)) continue
         if (!/\b(cab|cabs|cabinet|cabinets|speaker|speakers)\b/i.test(sen)) continue
         if (/Cab Pack|Amplifier Specifications|Web, Manual|More videos|https?:/i.test(sen)) continue
-        if (!verified(sen, p)) continue
-        cabNotes.push({ quote: sen, page: p })
-        stored.add(sen)
+        for (const pc of boxClean(sen, p, 40, CAB_NOTE_MAX)) {
+          if (cabNotes.length >= 2 || stored.has(pc.quote)) continue
+          if (!/\b(cab|cabs|cabinet|cabinets|speaker|speakers)\b/i.test(pc.quote)) continue
+          cabNotes.push({ quote: pc.quote, page: p })
+          stored.add(pc.quote)
+        }
       }
     }
     model.cab = { speaker, stock_cabs: stock, notes: cabNotes }
@@ -438,6 +446,7 @@ export function build({ pages, sections, curation, log = () => {} }) {
       const r = checkQuote({ quote: st.quote, page: st.page }, pages)
       if (!r.ok) { fails.push(`settings quote ${r.reason} p. ${st.page} (${k.id}): ${st.quote}`); continue }
       if (st.page < k.s.page || st.page > k.s.end) { fails.push(`settings page outside model pages (${k.id})`); continue }
+      if (spansBoxBreak(st.quote, pages.get(st.page))) { fails.push(`settings quote spans a box break p. ${st.page} (${k.id})`); continue }
       if (st.context && !checkQuote({ quote: st.context, page: st.page }, pages).ok) fails.push(`settings context not on p. ${st.page}: ${st.context}`)
       for (const o of st.other || []) if (!st.quote.includes(o)) fails.push(`settings other fragment not in quote: ${o}`)
       const knobs = parseKnobs(st.quote, hints, st.other || [])
@@ -496,6 +505,7 @@ export function build({ pages, sections, curation, log = () => {} }) {
         for (const cand of [sents[0]?.length < 60 ? two : null, sents[0]]) {
           if (cand && cand.length >= 12 && cand.length <= NOTE_MAX && checkQuote({ quote: cand, page: p }, pages).ok) { q = cand; break }
         }
+        if (q) q = boxClean(q, p, 12, NOTE_MAX)[0]?.quote ?? null
         if (!q || stored.has(q)) continue
         const who = m[1] === 'Yek' ? 'yek' : m[1]
         cands.push({ quote: q, page: p, said_by: who, rank: who === 'yek' || who === 'Cliff' ? 0 : 1, at: p * 1e6 + open })
@@ -552,7 +562,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       `models.json: ${m.length} models, ${m.filter((x) => x.refers_to).length} stubs, ` +
         `${m.reduce((n, x) => n + x.unit_names.length, 0)} unit names, ${m.reduce((n, x) => n + x.settings.length, 0)} settings, ` +
         `${m.reduce((n, x) => n + x.directions.length, 0)} directions, ${m.reduce((n, x) => n + x.notes.length, 0)} notes, ` +
-        `${m.reduce((n, x) => n + x.tips.length, 0)} tips; cuts shrunk ${stats.cut_shrunk}, dropped ${stats.cut_dropped}`,
+        `${m.reduce((n, x) => n + x.tips.length, 0)} tips; cuts shrunk ${stats.cut_shrunk}, dropped ${stats.cut_dropped}, box splits ${stats.box_split}`,
     )
   } catch (e) {
     if (verbose) console.error(lines.join('\n'))

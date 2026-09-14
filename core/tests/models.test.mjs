@@ -113,12 +113,7 @@ test('golden: names_resolve_to, names_never, stub_ids, stub_targets', () => {
   }
   for (const name of golden.names_never) assert.deepEqual(modelsForUnitName(data, name), [], name)
   const stubs = models.filter((m) => m.refers_to).map((m) => m.id)
-  // Contract question 1 (build report): p. 139 "Dweezil’s B-man" is, by §0, a stub ("Please refer to the section
-  // on the 65 Bassguy model.") but golden stub_ids leaves it out. Golden's five are asserted exactly; the one
-  // extra is named here so the divergence stays visible instead of silent.
-  assert.deepEqual(stubs.filter((id) => id !== 'dweezils-b-man').sort(), [...golden.stub_ids].sort())
-  assert.equal(byId.get('dweezils-b-man').refers_to, '65-bassguy')
-  assert.equal(stubs.length, golden.stub_ids.length + 1)
+  assert.deepEqual(stubs.sort(), [...golden.stub_ids].sort())
   for (const [stub, target] of Object.entries(golden.stub_targets)) {
     assert.equal(byId.get(stub).refers_to, target)
     assert.equal(resolvedModel(data, stub).id, target)

@@ -1,6 +1,6 @@
 // Optional AI step (docs/API.md §5). Pure ESM: fetch and storage are injected, so the same code runs in core
 // tests (memory store, fake server) and in the Worker (D1). Nothing here logs or returns the key or the prompt.
-import { normText } from './text.js'
+import { normText, spansBoxBreak } from './text.js'
 import { pageText, sha256Hex } from './guide.js'
 import { checkQuote } from './verify.js'
 import { indexModels, unitNameOf } from './models.js'
@@ -147,6 +147,7 @@ export function checkCitation(model, c, pages) {
   if (!Number.isInteger(page) || page < model.pages.start || page > model.pages.end) return { ok: false, kind: 'bad_page' }
   const quote = normText(c?.quote)
   const r = checkQuote({ quote, page }, pages)
+  if (r.ok && spansBoxBreak(quote, pages.get(page))) return { ok: false, kind: 'quote_not_on_page' }
   if (r.ok) return { ok: true, quote, page }
   return { ok: false, kind: r.reason === 'too_long' || r.reason === 'too_many_sentences' ? 'quote_too_long' : 'quote_not_on_page' }
 }
@@ -170,7 +171,7 @@ function sanitisePick(content) {
 export async function aiAnswer(query, { models: data, pages = null, env = {}, ai = true, fetchImpl = globalThis.fetch, store }) {
   const q = normText(query)
   const guideOnly = (reason, extraTerms = []) => {
-    const { answer } = guideAnswer(q, { models: data, pages, extraTerms })
+    const { answer } = guideAnswer(query, { models: data, pages, extraTerms })
     answer.ai = { used: false, reason, dropped: [], cost_cad: 0 }
     return answer
   }
@@ -213,7 +214,7 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
 
   const dropped = []
   let gk, terms
-  const c0 = guideAnswer(q, { models: data, pages })
+  const c0 = guideAnswer(query, { models: data, pages })
   const survivors = []
   try {
     // Call A: pick.
@@ -241,7 +242,7 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
   }
 
   // Search again with the AI's terms.
-  const c1 = guideAnswer(q, { models: data, pages, extraTerms: terms })
+  const c1 = guideAnswer(query, { models: data, pages, extraTerms: terms })
   const targets = [...survivors]
   for (const c of c1.candidates) {
     if (targets.length >= LIMITS.models) break
@@ -328,7 +329,7 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
   }
   let answer
   if (suggestions.length) {
-    answer = baseAnswer(q, data)
+    answer = baseAnswer(query, data)
     answer.status = 'ok'
     answer.message = null
     answer.understood = c1.answer.understood
@@ -338,7 +339,7 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
     if (answer === c0.answer) answer.understood = { ...c0.answer.understood, ai_terms: c1.answer.understood.ai_terms }
   }
   answer.general_knowledge = answer.suggestions.length ? gk.map((text) => ({ text, label: GK_LABEL })) : []
-  answer.ai = { used: true, reason: 'ok', dropped, cost_cad: Math.round(costCad * 1e6) / 1e6 }
+  answer.ai = { used: true, reason: null, dropped, cost_cad: Math.round(costCad * 1e6) / 1e6 }
   await store.putCache(key, answer)
   return answer
 }

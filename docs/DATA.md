@@ -13,16 +13,17 @@ fails stops the build; a **mechanical** cut that fails is dropped and counted (`
 | Models (sections) | 109, in guide order |
 | Stubs | 6: `brit-pre`, `brit-super`, `das-metall`, `dweezils-b-man`, `legato-100`, `usa-iic-plus-plus` |
 | Unit names | 205 |
-| Tips | 156 |
+| Tips | 146 |
 | Settings entries (curated) | 20 across 18 models |
 | Directions | 58 |
 | Notes | 125 |
 | Cab notes | ≤ 2 per model |
 | Conventions (p. 12) | 6 |
 | Mechanical cuts shrunk / dropped | 3 / 3 |
+| Quotes shortened at box breaks (round 2) | 21 |
 
-**Quote budget:** 876 stored quotes plus unit-name evidence and settings context = 70,042 characters, against
-540,437 characters of `pageText` over all 301 pages: **12.96%** (limit 15%). The test prints both numbers.
+**Quote budget:** 866 stored quotes plus unit-name evidence and settings context = 69,267 characters, against
+540,437 characters of `pageText` over all 301 pages: **12.82%** (limit 15%). The test prints both numbers.
 
 ## How each field was made
 
@@ -60,6 +61,14 @@ fails stops the build; a **mechanical** cut that fails is dropped and counted (`
     stock cabs keep their first verified part.
   - Dropped (3): two PVH stock-cab lines (`4x12 PVH` is 8 characters, under the 12-character minimum) and one
     Prince Tone tip that the extraction duplicated into a run-on.
+- **Box breaks (round 2, API.md §4.2).** Every stored quote (synopsis, controls, tips, speaker, stock cabs, cab notes,
+  notes) is split with `splitAtBoxBreaks` when it is picked, and an attribution at either end (" – Name") is cut, the
+  name going to `said_by`. The build refuses a curated settings quote that spans a break: the JD Simo settings
+  (p. 31) ran from "Volume:10" across a bullet into "Presence: to taste (around 5 or 6)", so the quote is now only
+  "Bass:0, Mid:10, Treble:10, Volume:10". 21 quotes got shorter; the tests check that none left in the file spans a
+  break or ends with an attribution. One side effect worth knowing: the Plexi models synopsis stops at "Models of
+  various Marshall Plexi heads," because “the world’s greatest rock amp” starts a new raw line with “. The old
+  opening-quote tip splitter (round 1) is gone; box breaks replace it.
 - **Controls.** The raw `Amp controls …` line on the section's first page, plus continuation lines (a line ending
   in `,`/`-`/`and`/`with`, or a next line starting lower-case), verified.
 - **Tips.** Each sentence of the cut `Tips` field (also split where an opening “ follows a word with no

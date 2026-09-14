@@ -67,11 +67,15 @@ test('a tip direction nudges only a guess', () => {
     assert.equal(k.value, slp.settings[0].knobs[k.knob])
     assert.ok(!('direction' in k))
   }
-  // Clamped at 0–10.
-  const clone = { ...brown, directions: [{ knob: 'Drive', dir: 'up', quote: 'x', page: 60 }] }
-  assert.equal(knobsFor(clone, { conventions, intent: 'high_gain' }).knobs[0].value, 9)
-  const low = { ...brown, directions: [{ knob: 'Drive', dir: 'down', quote: 'x', page: 60 }] }
-  assert.equal(knobsFor(low, { conventions, intent: 'clean' }).knobs[0].value, 0.5)
+  // Up → at least 7, down → at most 3; a guess already on that side stays.
+  const up = { ...brown, directions: [{ knob: 'Drive', dir: 'up', quote: 'x', page: 60 }] }
+  assert.equal(knobsFor(up, { conventions, intent: 'high_gain' }).knobs[0].value, 7)
+  assert.equal(knobsFor(up, { conventions, intent: 'clean' }).knobs[0].value, 7)
+  const down = { ...brown, directions: [{ knob: 'Drive', dir: 'down', quote: 'x', page: 60 }] }
+  const clean = knobsFor(down, { conventions, intent: 'clean' }).knobs[0]
+  assert.equal(clean.value, 2.5, 'clean Drive 2.5 with "keep Drive low" stays 2.5')
+  assert.equal(clean.direction.dir, 'down')
+  assert.equal(knobsFor(down, { conventions }).knobs[0].value, 3)
 })
 
 test('the settings entry with the same unit name wins', () => {
