@@ -121,3 +121,10 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     chime") is solved by the coverage factor in #18 (Car Roamer matches one of two terms); R2-2 a "the" n-gram of
     generic words is generic; R2-3 drop detail is `"<unit name>, p. <n>"`; R2-4 a why sentence that names the model
     is preferred.
+
+20. **Round 3 graded; last polish (lead).** QA 01dce76: core 73/73, worker 16/16; all 23 golden queries green.
+    Reading answers again: Van Halen brown sound → Brit Brown only; SRV → Super Verb; The Edge chime → Class-A 30W;
+    Metallica → USA IIC++ with "Metallica’s IIC+"; Dimebag → no support. Adopted tf1's R3-1 (generic + filler
+    phrases stay generic) and R3-2 (the running page header is a box break), plus: the printed page number at the
+    foot of a page is a box break ("…Crunch.” – MESA 262"), a quote never starts with a bullet, and stock-cab list
+    lines are never why quotes ("4x12 … Petrucci – Cab Packs…" was shown for "Petrucci lead").

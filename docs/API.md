@@ -212,7 +212,8 @@ null (Worker before load-guide), in which case the only searchable text is the q
 - **Proper names with "the".** A 2+-word n-gram may start with `the` when the capitalised form (`The Edge`) occurs in
   the guide somewhere other than at a sentence start. Otherwise "The Edge chime" falls back to "edge" and matches
   "edge of breakup". A "the" n-gram whose other words are all generic words is itself generic (a capitalised
-  "The Rhythm" in the guide must not make "the rhythm" strong).
+  "The Rhythm" in the guide must not make "the rhythm" strong). Likewise any n-gram whose words, minus a leading
+  "the" and minus filler words, are all generic words is generic ("rhythm tone", "lead tone").
 - A model's searchable text, by field weight: unit names, `name`, `based_on` (4) · synopsis, tips (3) · controls,
   cab, settings (2) · every other sentence of its pages' `pageText` (1). Stubs are merged into their target first.
 - `df(term)` = number of models (109 minus stubs) whose searchable text contains the term;
@@ -248,7 +249,9 @@ null (Worker before load-guide), in which case the only searchable text is the q
   - A **box break** is a line break in the raw page text followed (after optional spaces or tabs) by an opening `“`,
     by an attribution dash (`– ` or `- ` then a capital letter), by a bullet (`• `), or by a card label at the start
     of the line: `Synopsis `, `Tips `, `Clips `, `Sound Clips `, `Cabinet/speaker `, `Stock cabs `, `Web, Manual `,
-    `Amp controls `, `More videos, clips and comments`. (p. 168's Gilmour quote ran from a tip into "Clips 1972 Hiwatt
+    `Amp controls `, `More videos, clips and comments`. Also a box break: the line break after a page's first raw
+    line when that line is the section title (the running header), and the line break before a page's last
+    non-empty raw line when that line is only digits (the printed page number). (p. 168's Gilmour quote ran from a tip into "Clips 1972 Hiwatt
     DR103 CRANKED … (Tyler Grund)".) `core/text.js` exports
     `boxBreaks(rawPage) → number[]` (offsets in `pageText`, found by normalising each run between breaks and
     joining the runs with one space, which gives exactly `pageText`) and `spansBoxBreak(quote, rawPage)` (true when
@@ -263,15 +266,15 @@ null (Worker before load-guide), in which case the only searchable text is the q
     and then bring the master to taste” – Manual"; doesn't span → p. 16 "The name “Twin” probably refers to the use
     of two 12” speakers.", p. 28 "Plexis with 4x12 cabinets gave rise to the “Marshall stack”.", p. 146 "Model of the
     Bogner Uberschall, called “Armageddon in a box” by Bogner".
-- **Clean cuts.** A quote cut at a box break or clause must not end on a comma, semicolon, colon or a dangling
-  "and" / "or" / "with": trim them (the result is still an exact substring and must still verify), or drop the quote
+- **Clean cuts.** A quote cut at a box break or clause must not start with a bullet (`• `) and must not end on a
+  comma, semicolon, colon or a dangling "and" / "or" / "with": trim them (the result is still an exact substring and must still verify), or drop the quote
   when that leaves under 12 characters ("Models of various Marshall Plexi heads," → "… heads"; Recto stock cabs
   "… 13, 14, 21 and").
 - **Which sentence first.** Among a model's why candidates for the same term, prefer a sentence that also contains
   the model's name, one of its unit names, or the last word of a unit name when that word has 3+ characters (for
   "Metallica", p. 270 "…also referred to as “Metallica’s IIC+”" beats p. 267 "Add Santana, Metallica, Keith Richards etc.").
 - **Why quality.** A why quote must contain a strong term, except that the second or third quote may carry only
-  generic terms when it comes from synopsis or tips. `controls` lines and spec-table lines are never why quotes. A
+  generic terms when it comes from synopsis or tips. `controls` lines, `stock_cabs` lines and spec-table lines are never why quotes. A
   quote shown under one suggestion is not repeated under another in the same Answer when that model has another
   verified sentence with a found term. A why quote starts at a sentence or box start, never mid-word.
 - `unit_name`: the model's unit name that appears in a `why` quote or the query (case-insensitive), else the first.
