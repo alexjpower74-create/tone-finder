@@ -67,7 +67,13 @@ test('/api/admin/guide: 401 without or with a wrong token', async () => {
   const wrong = await call('POST', '/api/admin/guide', { body: { pages_sha256: sha, pages: allPages }, token: 'nope' })
   assert.equal(wrong.status, 401)
   assert.equal(wrong.json.error, 'unauthorized')
+  // Same length as the real token, one character different: only the comparison itself can refuse this.
+  const sameLength = TOKEN.slice(0, -1) + (TOKEN.endsWith('X') ? 'Y' : 'X')
+  assert.equal(sameLength.length, TOKEN.length)
+  assert.equal((await call('POST', '/api/admin/guide', { body: { pages_sha256: sha, pages: allPages }, token: sameLength })).status, 401)
+  assert.equal((await call('GET', '/api/admin/spend', { token: sameLength })).status, 401)
   assert.equal((await call('GET', '/api/admin/spend')).status, 401)
+  assert.equal((await call('GET', '/api/health')).json.guide.loaded, false, 'nothing was loaded by the refused posts')
 })
 
 test('/api/admin/guide: 400 with 300 pages, 409 with one page altered', async () => {
