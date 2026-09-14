@@ -271,7 +271,8 @@ advice: "Your firmware doesn't have this control. Skip this step: Fractal replac
 ## 5. AI step (optional, `core/ai.js`, run by the Worker)
 
 Runs only when `ai: true` was asked, `OPENAI_API_KEY` is set, guide pages are loaded, and the cap allows it.
-Otherwise `ai.used: false` and `ai.reason` is `"off"`, `"no_key"`, `"guide_not_loaded"` or `"spend_cap"`.
+Otherwise `ai.used: false` and `ai.reason` is `"off"`, `"no_key"`, `"guide_not_loaded"` or `"spend_cap"`. A fresh
+successful run is `ai.used: true, ai.reason: null`; `"cached"` and `"error"` are described below.
 
 1. Guide search first (§4.1) → candidates C0 (possibly none).
 2. **Call A, "pick"**: system rules + the query + the full model list (id, unit names, based_on, brands,
@@ -322,7 +323,7 @@ JSON everywhere, `Access-Control-Allow-Origin: *`, `OPTIONS` answered. Errors: `
 - `GET /api/models/:id` → `{ "model": Model, "conventions": [...], "guide": {...} }`; unknown id → 404
   `not_found`.
 - `POST /api/ask` body `{ "query": "…", "ai": true }` (query trimmed, 1–200 characters, else 400 `bad_query`;
-  `ai` defaults to `true`) → Answer:
+  `ai` defaults to `true`) → Answer. `Answer.query` echoes the trimmed query as typed (case kept):
 
 ```jsonc
 {
@@ -380,7 +381,9 @@ CREATE TABLE answer_cache (key TEXT PRIMARY KEY, at TEXT NOT NULL, answer_json T
 
 ## 8. Screens and copy (app)
 
-Dark, stage-readable: 18 px base, body contrast ≥ 7:1, tap targets ≥ 44 × 44 px, system fonts, tabular numbers,
+Dark, stage-readable: 18 px base, body contrast ≥ 7:1, tap targets ≥ 44 × 44 px for everything you can tap or click
+(buttons, links, example chips, filter pills, switches; static tags such as page pills and brand tags on rows may
+be smaller, ≥ 24 px tall), system fonts, tabular numbers,
 inline SVG icons (no emoji). The approved portfolio look: dark navy/slate base, glass surfaces with hairline
 borders, soft shadows, a faint aurora at ~0.2 opacity, gradient wordmark "Tone Finder". Colour goes on data:
 **teal** = from the guide (page pills, solid knob rings), **amber, dashed** = starting guess, **violet** = AI pick

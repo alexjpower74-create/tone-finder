@@ -169,8 +169,8 @@ Static app, no build step, per `docs/API.md` §6 (JSON shapes), §8 (screens and
      pills; unknown id message.
    - Binder: "Add to binder" → binder page lists it after a reload; remove works; `page.emulateMedia({ media:
      'print' })` → body background computes to white and the nav is hidden.
-   - Every button, chip and pill: ≥ 44 × 44 and `document.elementFromPoint` at its centre is the element (or inside
-     it), after scrolling it into view.
+   - Everything you can tap (buttons, links, chips, filter pills, switches): ≥ 44 × 44 and `document.elementFromPoint`
+     at its centre is the element (or inside it), after scrolling it into view. Static tags may be smaller (API.md §8).
    - No horizontal scroll at 390 on every page.
    - `app/tests/live.spec.mjs`, skipped unless `TF_LIVE_API` is set: the same Ask journey against a real Worker
      (the lead runs it in QA).

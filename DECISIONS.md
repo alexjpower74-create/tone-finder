@@ -68,3 +68,9 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
 
 12. **Design.** Portfolio look (dark navy, glass, colour on data), stage-readable sizes. The print one-pager is white
     and low-ink, per Alexander's printing preference.
+
+13. **Contract answers for tf2's first questions (16:15).** A fresh successful AI run reports `ai.reason: null`.
+    The 44 px rule covers everything you can tap; static tags (page pills, brand tags on rows) may be smaller,
+    ≥ 24 px tall, so the Models rows stay readable. `Answer.query` echoes the trimmed query as typed. Dweezil's
+    B-man (p. 139) is a stub pointing at 65 Bassguy: the lead's golden file missed it, and a scan of the whole
+    guide for "Please refer to the section on the …" confirms exactly six stubs (pp. 67, 70, 118, 139, 185, 272).
