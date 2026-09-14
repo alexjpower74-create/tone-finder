@@ -113,6 +113,18 @@ export function cutAttribution(quote, names) {
   return { quote: q, said_by }
 }
 
+// Clean cuts (API.md §4.2): a cut quote never ends on , ; : or a dangling and/or/with. Only trims, so the result is
+// still a substring; callers verify it again.
+export function cleanCut(quote) {
+  let s = String(quote).trim()
+  let prev
+  do {
+    prev = s
+    s = s.replace(/[\s,;:]+$/, '').replace(/\s+(?:and|or|with)$/i, '').trim()
+  } while (s !== prev)
+  return s
+}
+
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }

@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { loadPages } from './guide-node.mjs'
 import { pageText } from '../guide.js'
-import { boxBreaks, spansBoxBreak, splitAtBoxBreaks, cutAttribution } from '../text.js'
+import { boxBreaks, spansBoxBreak, splitAtBoxBreaks, cutAttribution, cleanCut } from '../text.js'
 import { answer } from '../answer.js'
 import { SAID_BY } from '../../scripts/build-models.mjs'
 
@@ -65,6 +65,7 @@ test('no quote in models.json spans a box break or ends with an attribution', ()
       n++
       assert.ok(!spansBoxBreak(v.quote, pages.get(v.page)), `${path} p. ${v.page} spans: ${v.quote}`)
       assert.ok(!ATTRIBUTION_END.test(v.quote), `${path} ends with an attribution: ${v.quote}`)
+      assert.ok(!/(?:[,;:]|\s(?:and|or|with))$/i.test(v.quote), `${path} unclean cut: ${v.quote}`)
     }
     for (const [k, x] of Object.entries(v)) if (k !== 'quote') walk(x, `${path}.${k}`, model)
   }
@@ -77,4 +78,12 @@ test('the p. 28 splice never reaches an answer', () => {
     const a = answer(q, { models, pages })
     for (const s of a.suggestions) for (const w of s.why) assert.ok(!spansBoxBreak(w.quote, pages.get(w.page)), `${q}: ${w.quote}`)
   }
+})
+
+test('cleanCut trims trailing punctuation and dangling words only', () => {
+  assert.equal(cleanCut('Models of various Marshall Plexi heads,'), 'Models of various Marshall Plexi heads')
+  assert.equal(cleanCut('4x12 Recto – Cab Packs 5, 7, 13, 14, 21 and'), '4x12 Recto – Cab Packs 5, 7, 13, 14, 21')
+  assert.equal(cleanCut('Four models of a VOX AC30:'), 'Four models of a VOX AC30')
+  assert.equal(cleanCut('rock and roll'), 'rock and roll')
+  assert.equal(cleanCut('Brand new sound with'), 'Brand new sound')
 })

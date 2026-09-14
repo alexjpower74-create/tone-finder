@@ -1,5 +1,5 @@
 // Answer engine (docs/API.md §4, §6). Pure: the AI step lives in core/ai.js and calls back into here.
-import { normText, foldForSearch, spansBoxBreak, cutAttribution } from './text.js'
+import { normText, foldForSearch, spansBoxBreak, cutAttribution, cleanCut } from './text.js'
 import { checkQuote, QUOTE_MAX } from './verify.js'
 import { search, sentencePool, termRegex } from './search.js'
 import { knobsFor } from './knobs.js'
@@ -47,6 +47,13 @@ export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
   const compiled = terms.map((t) => ({ ...t, re: termRegex(t.term) }))
   const saidBy = storedSaidBy(model)
   const controls = model.controls?.quote
+  // §4.2 "Which sentence first": the model's name, a unit name, or a unit name's last word of 3+ characters.
+  const nameParts = new Set([model.name, ...model.unit_names.map((u) => u.name)])
+  for (const u of model.unit_names) {
+    const last = u.name.split(' ').pop()
+    if (last.length >= 3) nameParts.add(last)
+  }
+  const nameRe = new RegExp([...nameParts].map((n) => termRegex(n).source).join('|'))
   const seen = new Set()
   const cands = []
   sentencePool(model, pages).forEach((item, order) => {
@@ -57,6 +64,7 @@ export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
       text = cut.quote
       said = said || (cut.said_by === 'Yek' ? 'yek' : cut.said_by)
     }
+    text = cleanCut(text)
     if (text.length < 12) return
     if (SPEC_LINE.test(text) || (controls && (text.includes(controls) || controls.includes(text)))) return
     let matched = compiled.filter((t) => t.re.test(foldForSearch(text)))
@@ -64,7 +72,8 @@ export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
     if (text.length > QUOTE_MAX) {
       const pre = clausePrefix(text, [...matched].sort((a, b) => b.strong - a.strong))
       if (!pre) return
-      text = pre
+      text = cleanCut(pre)
+      if (text.length < 12) return
       matched = compiled.filter((t) => t.re.test(foldForSearch(text)))
       if (!matched.length) return
     }
@@ -74,7 +83,7 @@ export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
     seen.add(key)
     const strong = matched.some((t) => t.strong)
     if (!strong && item.weight < 3) return
-    cands.push({ text, page: item.page, weight: item.weight, order, said_by: said || saidBy.get(key) || null, matched, strong })
+    cands.push({ text, page: item.page, weight: item.weight, order, said_by: said || saidBy.get(key) || null, matched, strong, named: nameRe.test(foldForSearch(text)) })
   })
   const fresh = cands.filter((c) => !avoid.has(c.text))
   const usable = fresh.some((c) => c.strong) ? fresh : cands
@@ -87,7 +96,7 @@ export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
     pool.forEach((c, i) => {
       if (!chosen.length && !c.strong) return
       const add = c.matched.filter((t) => !covered.has(t.term))
-      const key = [c.strong ? 1 : 0, add.some((t) => t.strong) ? 1 : 0, c.weight >= 3 ? 1 : 0, add.length, c.weight, -c.order]
+      const key = [c.strong ? 1 : 0, add.some((t) => t.strong) ? 1 : 0, c.weight >= 3 ? 1 : 0, c.named ? 1 : 0, add.length, c.weight, -c.order]
       if (!bestKey || cmpKey(key, bestKey) > 0) {
         best = i
         bestKey = key
