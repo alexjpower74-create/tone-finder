@@ -261,6 +261,7 @@ details[open] > summary::before { transform: rotate(45deg); }
   @page { margin: 12mm; }
   :root { color-scheme: light; font-size: 11pt; }
   body { background: #fff !important; color: #000 !important; }
+  body * { color: #000 !important; }
   body::before { display: none !important; }
   .site-header, .site-footer, .no-print, nav, .card-actions, .btn, .demo-pill { display: none !important; }
   .print-only { display: block !important; }
