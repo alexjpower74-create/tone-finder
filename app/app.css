@@ -154,6 +154,17 @@ label { font-weight: 600; }
 .understood { font-size: 0.95rem; color: var(--text-2); }
 .understood strong { color: var(--text); font-weight: 600; }
 .status { min-height: 1.5em; }
+.ask-form > * { min-width: 0; }
+#status { margin: 32px 0 8px; scroll-margin-top: 8px; }
+#status:focus, .no-support h2:focus { outline: none; }
+/* Phones: the example chips sit in one contained row that scrolls sideways; the page never does. */
+@media (max-width: 600px) {
+  .chips.examples {
+    flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; max-width: 100%;
+    padding-bottom: 6px; scroll-padding-inline: 8px; scrollbar-width: thin;
+  }
+  .chips.examples .chip { flex: none; white-space: nowrap; }
+}
 .error { color: var(--danger); }
 
 .results { display: grid; gap: 16px; margin-top: 16px; }

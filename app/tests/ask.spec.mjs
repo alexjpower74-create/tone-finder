@@ -115,6 +115,33 @@ test('general knowledge is labelled and the AI drops list Brown Sound Deluxe', a
   await expect(page.getByTestId('general-knowledge')).toHaveCount(0);
 });
 
+test('card header: based on + pages, guide section only when the unit name is not in the title', async ({ page }, ti) => {
+  await tapExample(page, ti, 'Van Halen brown sound');
+  const slp = page.locator('[data-testid="suggestion"][data-model-id="1959slp"]');
+  await expect(slp.getByTestId('based-on')).toHaveText('Based on Marshall SLP1959, Vintage Re-Issue Series · pp. 28–31');
+  await expect(slp.getByTestId('guide-section')).toHaveCount(0);
+  await expect(slp).not.toContainText('Section: 1959SLP');
+
+  const brown = page.locator('[data-testid="suggestion"][data-model-id="brit-brown-and-fas-brown"]');
+  await expect(brown.getByTestId('based-on')).toHaveText('Fractal Audio custom model (no real amp) · pp. 60–61');
+  await expect(brown.getByTestId('guide-section')).toHaveCount(0);
+
+  await tapExample(page, ti, 'AC30 chime');
+  const ac30 = page.locator('[data-testid="suggestion"][data-model-id="class-a-30w"]');
+  await expect(ac30.locator('.unit-name')).toHaveText('Class-A 30W TB');
+  await expect(ac30.getByTestId('based-on')).toHaveText('Based on VOX AC30 · pp. 107–109');
+  await expect(ac30.getByTestId('guide-section')).toHaveText('Guide section: Class-A 30W (VOX AC30)');
+});
+
+test('there is room between the ask panel and the results summary', async ({ page }, ti) => {
+  await typeQuery(page, ti, 'Van Halen brown sound');
+  await expect(page.getByTestId('suggestion').first()).toBeVisible();
+  const gap = await page.evaluate(
+    () => document.getElementById('status').getBoundingClientRect().top - document.querySelector('main > section.glass').getBoundingClientRect().bottom,
+  );
+  expect(gap).toBeGreaterThanOrEqual(24);
+});
+
 test('Ares: planted flag callout and both release-note sources', async ({ page }, ti) => {
   await tapExample(page, ti, 'AC30 chime');
   await waitForAnswer(page);

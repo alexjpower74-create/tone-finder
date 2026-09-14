@@ -124,6 +124,17 @@ function renderAnswer(a) {
   answerEl.innerHTML = parts.join('');
 }
 
+// After a search, put focus on the results summary (or the no-support heading) and bring it into view, so on a
+// phone the first card's name is on screen without a manual scroll.
+function revealAnswer(a) {
+  const target = a.status === 'ok' ? statusEl : answerEl.querySelector('.no-support h2');
+  if (!target) return;
+  target.setAttribute('tabindex', '-1');
+  target.focus({ preventScroll: true });
+  const narrow = globalThis.matchMedia?.('(max-width: 600px)').matches;
+  target.scrollIntoView({ block: narrow ? 'start' : 'nearest' });
+}
+
 async function run(raw, { updateUrl = true } = {}) {
   const query = raw.trim();
   if (!query) {
@@ -149,6 +160,7 @@ async function run(raw, { updateUrl = true } = {}) {
     renderAnswer(a);
     statusEl.textContent =
       a.status === 'ok' ? `${a.suggestions.length} starting ${a.suggestions.length === 1 ? 'point' : 'points'} for “${query}”.` : '';
+    revealAnswer(a);
   } catch (e) {
     if (mine !== seq) return;
     current = null;
