@@ -1,0 +1,10 @@
+ADMIN_TOKEN=local-dev-token
+OPENAI_API_KEY=
+OPENAI_BASE_URL=https://api.openai.com/v1
+AI_MODEL=gpt-5.4-mini
+AI_CAP_CAD=2.00
+USD_CAD=1.3866
+AI_PRICE_IN_PER_M=0.75
+AI_PRICE_CACHED_IN_PER_M=0.075
+AI_PRICE_OUT_PER_M=4.50
+TF_GUIDE_DIR=/home/alexander/Claude/Reference/Yek Fractal Amp Guide

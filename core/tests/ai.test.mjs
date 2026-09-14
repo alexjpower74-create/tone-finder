@@ -1,0 +1,180 @@
+// AI step (docs/API.md §5) against the fake OpenAI server on TF_FAKE_AI_PORT (8303). No paid calls.
+import { test, before, after, beforeEach } from 'node:test'
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { loadPages } from './guide-node.mjs'
+import { aiAnswer, memoryStore, estimateCad, costUsd, prices, MAX_TOKENS } from '../ai.js'
+import { answer, GK_LABEL } from '../answer.js'
+import { checkQuote } from '../verify.js'
+import { isUnitName } from '../models.js'
+import { checkInvariants } from './invariants.mjs'
+import { startFake } from '../../worker/tests/fake-openai.mjs'
+
+const read = (p) => JSON.parse(readFileSync(fileURLToPath(new URL(p, import.meta.url)), 'utf8'))
+const pages = loadPages()
+const models = read('../../data/models.json')
+const KEY = 'sk-test-DO-NOT-ECHO-0123456789abcdef'
+
+let fake
+let env
+const answers = []
+const http = (path, method = 'GET') => fetch(`http://127.0.0.1:${fake.port}${path}`, { method }).then((r) => r.json())
+
+before(async () => {
+  fake = await startFake({ port: Number(process.env.TF_FAKE_AI_PORT || 8303) })
+  env = {
+    OPENAI_API_KEY: KEY,
+    OPENAI_BASE_URL: `http://127.0.0.1:${fake.port}/v1`,
+    AI_MODEL: 'gpt-5.4-mini',
+    AI_CAP_CAD: '2.00',
+    USD_CAD: '1.3866',
+    AI_PRICE_IN_PER_M: '0.75',
+    AI_PRICE_CACHED_IN_PER_M: '0.075',
+    AI_PRICE_OUT_PER_M: '4.50',
+  }
+})
+after(() => fake.close())
+beforeEach(() => http('/reset', 'POST'))
+
+const ask = async (query, opts = {}) => {
+  const a = await aiAnswer(query, { models, pages, env, store: memoryStore(), ...opts })
+  answers.push(a)
+  return a
+}
+
+test('fake-plant: unknown unit name, bad page and a changed character are dropped; the verified quote survives', async () => {
+  const store = memoryStore()
+  const a = await ask('Brown Sound Deluxe fake-plant', { store })
+  assert.equal(a.ai.used, true)
+  assert.equal(a.ai.reason, 'ok')
+  assert.equal(a.status, 'ok')
+  const s = a.suggestions[0]
+  assert.equal(s.model_id, '1959slp')
+  assert.equal(s.source, 'ai_checked')
+  assert.deepEqual(s.why.map((w) => [w.page, w.quote]), [[28, 'Models of a 100 watt Superlead Plexi re-issue']])
+  assert.equal(s.unit_name, '1959SLP')
+  for (const w of s.why) assert.ok(checkQuote(w, pages).ok)
+  assert.ok(!a.suggestions.some((x) => x.unit_name === 'Brown Sound Deluxe'))
+  assert.ok(!isUnitName(models, 'Brown Sound Deluxe'))
+  assert.deepEqual(a.ai.dropped, [
+    { kind: 'unknown_model', detail: 'Brown Sound Deluxe' },
+    { kind: 'bad_page', detail: '1959SLP, p. 60' },
+    { kind: 'quote_not_on_page', detail: '1959SLP, p. 28' },
+    { kind: 'unknown_model', detail: 'Brown Sound Deluxe' },
+  ])
+  assert.deepEqual(a.general_knowledge, [{ text: 'FAKE general knowledge: a planted line for the tests.', label: GK_LABEL }])
+  assert.equal(fake.count(), 2)
+  assert.equal(store.calls.length, 2)
+  assert.deepEqual(store.calls.map((c) => [c.step, c.ok, c.input_tokens, c.cached_input_tokens, c.output_tokens]), [['pick', 1, 1500, 500, 400], ['cite', 1, 1500, 500, 400]])
+  assert.ok(a.ai.cost_cad > 0)
+  checkInvariants(a, { pages })
+})
+
+test('fake-puppets: general knowledge + search terms lead to USA IIC+ with a verified p. 270 quote', async () => {
+  const q = 'the rhythm tone on Master of Puppets fake-puppets'
+  // Control: without AI the guide can't support it.
+  assert.equal(answer('the rhythm tone on Master of Puppets', { models, pages }).status, 'no_guide_support')
+  const a = await ask(q)
+  assert.equal(a.status, 'ok')
+  const s = a.suggestions.find((x) => x.model_id === 'usa-iic-plus-and-usa-iic-plus-plus')
+  assert.ok(s, a.suggestions.map((x) => x.model_id).join(','))
+  assert.equal(s.source, 'ai_checked')
+  assert.equal(s.unit_name, 'USA IIC+')
+  assert.equal(s.why[0].page, 270)
+  assert.ok(checkQuote(s.why[0], pages).ok)
+  assert.equal(a.general_knowledge.length, 1)
+  assert.equal(a.general_knowledge[0].label, 'General knowledge (AI) — not from the guide')
+  assert.ok(!('page' in a.general_knowledge[0]) && !('said_by' in a.general_knowledge[0]))
+  assert.ok(a.understood.ai_terms.includes('metallica'), JSON.stringify(a.understood))
+  checkInvariants(a, { pages })
+})
+
+test('cap: AI_CAP_CAD below the estimate → spend_cap and zero requests', async () => {
+  const before = fake.count()
+  const store = memoryStore()
+  const a = await ask('Robben Ford fake-plant', { env: { ...env, AI_CAP_CAD: '0.0001' }, store })
+  assert.equal(a.ai.used, false)
+  assert.equal(a.ai.reason, 'spend_cap')
+  assert.equal(fake.count(), before)
+  assert.equal(before, 0)
+  assert.equal(store.calls.length, 0)
+  assert.equal(a.status, 'ok', 'the guide-search answer is still given')
+  // Spent so far counts: a store already at the cap also refuses.
+  const full = memoryStore()
+  full.calls.push({ cad: 1.999 })
+  const b = await ask('Robben Ford fake-plant', { store: full })
+  assert.equal(b.ai.reason, 'spend_cap')
+  assert.equal(fake.count(), 0)
+})
+
+test('cache: a second identical question makes no request and costs nothing', async () => {
+  const store = memoryStore()
+  const first = await ask('the rhythm tone on Master of Puppets fake-puppets', { store })
+  assert.equal(fake.count(), 2)
+  const second = await ask('  The rhythm tone on Master of Puppets   FAKE-puppets ', { store })
+  assert.equal(fake.count(), 2)
+  assert.equal(second.ai.used, true)
+  assert.equal(second.ai.reason, 'cached')
+  assert.equal(second.ai.cost_cad, 0)
+  assert.deepEqual(second.suggestions, first.suggestions)
+})
+
+test('fake 500 and bad JSON → ai.reason "error" and the guide-search answer', async () => {
+  for (const word of ['fake-error', 'fake-badjson']) {
+    const a = await ask(`Robben Ford ${word}`)
+    assert.equal(a.ai.used, false)
+    assert.equal(a.ai.reason, 'error')
+    const guide = answer(`Robben Ford ${word}`, { models, pages })
+    assert.deepEqual(a.suggestions, guide.suggestions)
+    assert.ok(a.suggestions.every((s) => s.source === 'guide_search'))
+    assert.deepEqual(a.general_knowledge, [])
+  }
+})
+
+test('off, no_key and guide_not_loaded make zero requests', async () => {
+  assert.equal((await ask('Robben Ford fake-plant', { ai: false })).ai.reason, 'off')
+  assert.equal((await ask('Robben Ford fake-plant', { env: { ...env, OPENAI_API_KEY: '' } })).ai.reason, 'no_key')
+  const nl = await ask('Robben Ford fake-plant', { pages: null })
+  assert.equal(nl.ai.reason, 'guide_not_loaded')
+  assert.equal(nl.status, 'ok')
+  assert.equal(fake.count(), 0)
+})
+
+test('request shape: bearer key, model, token limits, low reasoning, JSON mode', async () => {
+  await ask('Robben Ford fake-puppets')
+  const last = await http('/last')
+  assert.deepEqual(last, { step: 'cite', authorization: 'present', model: 'gpt-5.4-mini', max_completion_tokens: MAX_TOKENS.cite, reasoning_effort: 'low', response_format: { type: 'json_object' } })
+  assert.equal(MAX_TOKENS.pick, 1200)
+  assert.equal(MAX_TOKENS.cite, 2500)
+})
+
+test('spend math follows §5.8', () => {
+  const p = prices(env)
+  assert.equal(costUsd({ input: 1_000_000, cached: 0, output: 0 }, p), 0.75)
+  assert.equal(Math.round(costUsd({ input: 1500, cached: 500, output: 400 }, p) * 1e9), Math.round(((1000 * 0.75 + 500 * 0.075 + 400 * 4.5) / 1e6) * 1e9))
+  assert.equal(estimateCad(3000, 1200, p), ((1000 * 0.75 + 1200 * 4.5) / 1e6) * 1.3866)
+})
+
+test('the key string never appears in any Answer or thrown error', async () => {
+  // A fetch that fails with the key in its message must not leak it.
+  const leaky = async (_url, init) => {
+    throw new Error(`boom ${init.headers.authorization}`)
+  }
+  const a = await ask('Robben Ford', { fetchImpl: leaky })
+  assert.equal(a.ai.reason, 'error')
+  // Unreachable base URL.
+  const b = await ask('Slash', { env: { ...env, OPENAI_BASE_URL: 'http://127.0.0.1:9/v1' } })
+  assert.equal(b.ai.reason, 'error')
+  let thrown = ''
+  try {
+    await aiAnswer('Slash', { models, pages, env, store: null })
+  } catch (e) {
+    thrown = `${e.message}\n${e.stack}`
+  }
+  assert.ok(thrown, 'control: a broken store does throw')
+  assert.ok(!thrown.includes(KEY))
+  assert.ok(answers.length >= 10, 'control: answers from every scenario were collected')
+  for (const x of answers) assert.ok(!JSON.stringify(x).includes(KEY))
+  assert.ok(!JSON.stringify(answers).includes('DO-NOT-ECHO'))
+})

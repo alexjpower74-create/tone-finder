@@ -1,0 +1,131 @@
+#!/usr/bin/env node
+// Fake OpenAI chat-completions server for tests (docs/API.md §9). Never used for real calls.
+// POST /v1/chat/completions: scripted by a word in the query (fake-plant, fake-puppets, fake-error, fake-badjson).
+// GET /count, POST /reset, GET /last (request shape, never the key). Canned quotes are short strings chosen by the
+// tests: some verified on their page, some broken on purpose.
+import { createServer } from 'node:http'
+import { pathToFileURL } from 'node:url'
+
+export const SCENARIOS = {
+  'fake-plant': {
+    pick: {
+      general_knowledge: [{ text: 'FAKE general knowledge: a planted line for the tests.' }],
+      search_terms: [],
+      picks: [
+        { model_id: 'brit-brown-and-fas-brown', unit_name: 'Brown Sound Deluxe' },
+        { model_id: '1959slp', unit_name: '1959SLP' },
+      ],
+    },
+    cite: {
+      suggestions: [
+        {
+          model_id: '1959slp',
+          unit_name: '1959SLP',
+          citations: [
+            { page: 28, quote: 'Models of a 100 watt Superlead Plexi re-issue' }, // (i) verified on p. 28
+            { page: 60, quote: 'Turn up Presence in the Brit Brown model' }, // (ii) real, but p. 60 is another model
+            { page: 28, quote: 'Models of a 100 watt Superlead Plexy re-issue' }, // (iii) one changed character
+          ],
+        },
+        { model_id: 'brit-brown-and-fas-brown', unit_name: 'Brown Sound Deluxe', citations: [{ page: 60, quote: 'Turn up Presence in the Brit Brown model' }] },
+      ],
+    },
+  },
+  'fake-puppets': {
+    pick: {
+      general_knowledge: [{ text: 'FAKE: the rhythm guitars on Master of Puppets were recorded with a MESA/Boogie Mark IIC+.' }],
+      search_terms: ['metallica', 'mark iic+'],
+      picks: [{ model_id: 'usa-iic-plus-and-usa-iic-plus-plus', unit_name: 'USA IIC+' }],
+    },
+    cite: {
+      suggestions: [
+        { model_id: 'usa-iic-plus-and-usa-iic-plus-plus', unit_name: 'USA IIC+', citations: [{ page: 270, quote: 'also referred to as “Metallica’s IIC+”' }] },
+      ],
+    },
+  },
+}
+const DEFAULT = { pick: { general_knowledge: [], search_terms: [], picks: [] }, cite: { suggestions: [] } }
+export const USAGE = { prompt_tokens: 1500, completion_tokens: 400, prompt_tokens_details: { cached_tokens: 500 } }
+
+function queryOf(step, messages) {
+  const user = messages.find((m) => m.role === 'user')?.content || ''
+  if (step === 'pick') {
+    try {
+      return String(JSON.parse(user).query || '')
+    } catch {
+      return ''
+    }
+  }
+  return (/^QUERY: (.*)$/m.exec(user) || [])[1] || ''
+}
+
+export function startFake({ port = Number(process.env.TF_FAKE_AI_PORT || 8303), host = '127.0.0.1' } = {}) {
+  let count = 0
+  let last = null
+  const server = createServer((req, res) => {
+    const send = (status, body, type = 'application/json') => {
+      res.writeHead(status, { 'content-type': type })
+      res.end(typeof body === 'string' ? body : JSON.stringify(body))
+    }
+    if (req.method === 'GET' && req.url === '/count') return send(200, { count })
+    if (req.method === 'GET' && req.url === '/last') return send(200, last || {})
+    if (req.method === 'POST' && req.url === '/reset') {
+      count = 0
+      last = null
+      return send(200, { ok: true })
+    }
+    if (req.method !== 'POST' || req.url !== '/v1/chat/completions') return send(404, { error: 'not_found' })
+    let raw = ''
+    req.on('data', (c) => (raw += c))
+    req.on('end', () => {
+      count++
+      let body
+      try {
+        body = JSON.parse(raw)
+      } catch {
+        return send(400, { error: 'bad_request' })
+      }
+      const messages = Array.isArray(body.messages) ? body.messages : []
+      const system = messages.find((m) => m.role === 'system')?.content || ''
+      const step = system.includes('STEP: pick') ? 'pick' : system.includes('STEP: cite') ? 'cite' : 'unknown'
+      const query = queryOf(step, messages)
+      last = {
+        step,
+        authorization: /^Bearer \S+$/.test(req.headers.authorization || '') ? 'present' : 'missing',
+        model: body.model,
+        max_completion_tokens: body.max_completion_tokens,
+        reasoning_effort: body.reasoning_effort,
+        response_format: body.response_format,
+      }
+      if (query.includes('fake-error')) return send(500, { error: { message: 'fake server error' } })
+      const content = query.includes('fake-badjson')
+        ? 'this is not json'
+        : JSON.stringify((Object.entries(SCENARIOS).find(([k]) => query.includes(k))?.[1] || DEFAULT)[step] || {})
+      send(200, {
+        id: `fake-${count}`,
+        object: 'chat.completion',
+        model: body.model,
+        choices: [{ index: 0, message: { role: 'assistant', content }, finish_reason: 'stop' }],
+        usage: USAGE,
+      })
+    })
+  })
+  return new Promise((resolve, reject) => {
+    server.once('error', reject)
+    server.listen(port, host, () =>
+      resolve({
+        port: server.address().port,
+        count: () => count,
+        close: () => new Promise((r) => server.close(() => r())),
+      }),
+    )
+  })
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const fake = await startFake()
+  console.log(`fake-openai listening on 127.0.0.1:${fake.port}`)
+  const stop = () => fake.close().then(() => process.exit(0))
+  process.on('SIGINT', stop)
+  process.on('SIGTERM', stop)
+}

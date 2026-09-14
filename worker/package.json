@@ -1,0 +1,10 @@
+{
+  "name": "tone-finder-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local --port 8302",
+    "migrate:local": "wrangler d1 migrations apply tone-finder --local",
+    "test": "node tests/run.mjs"
+  }
+}
