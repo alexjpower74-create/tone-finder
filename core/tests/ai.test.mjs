@@ -12,6 +12,7 @@ import { spansBoxBreak, locateQuote, foldWithMap } from '../text.js'
 import { sectionTitles } from '../models.js'
 import { isUnitName } from '../models.js'
 import { checkInvariants } from './invariants.mjs'
+import { quoteShapeProblem } from './quote-shape.mjs'
 import { startFake } from '../../worker/tests/fake-openai.mjs'
 
 const read = (p) => JSON.parse(readFileSync(fileURLToPath(new URL(p, import.meta.url)), 'utf8'))
@@ -72,6 +73,22 @@ test('fake-plant: unknown unit name, bad page and a changed character are droppe
   assert.deepEqual(store.calls.map((c) => [c.step, c.ok, c.input_tokens, c.cached_input_tokens, c.output_tokens]), [['pick', 1, 1500, 500, 400], ['cite', 1, 1500, 500, 400]])
   assert.ok(a.ai.cost_cad > 0)
   checkInvariants(a, { pages })
+})
+
+test('fake-attrib: a citation opening with the previous passage’s "– Manual" is shown without it', async () => {
+  const cited = '– Manual Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed.'
+  assert.ok(pageText(pages, 188).includes(cited), 'control: the attribution really runs into the sentence on p. 188')
+  const a = await ask('AC30 chime fake-attrib')
+  const s = a.suggestions.find((x) => x.model_id === 'matchbox-d-30')
+  assert.ok(s && s.source === 'ai_checked', JSON.stringify(a.suggestions.map((x) => [x.model_id, x.source])) + JSON.stringify(a.ai.dropped))
+  assert.equal(s.why.length, 1)
+  assert.equal(s.why[0].page, 188)
+  assert.ok(s.why[0].quote.startsWith('Fractal Audio’s model is based on channel 1'), s.why[0].quote)
+  assert.ok(checkQuote(s.why[0], pages).ok)
+  for (const x of a.suggestions) for (const w of x.why) {
+    assert.equal(quoteShapeProblem(w.quote, pages.get(w.page), sectionTitles(models)), null, `${x.model_id}: ${w.quote}`)
+  }
+  assert.ok(!JSON.stringify(a.suggestions.map((x) => x.why)).includes('– Manual Fractal'))
 })
 
 test('fake-fold: a citation differing only in quote marks and case is located and shown as the page text', async () => {

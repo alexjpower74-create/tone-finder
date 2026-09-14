@@ -31,6 +31,19 @@ export const SCENARIOS = {
       ],
     },
   },
+  'fake-attrib': {
+    pick: { general_knowledge: [], search_terms: [], picks: [{ model_id: 'matchbox-d-30', unit_name: 'Matchbox D-30' }] },
+    cite: {
+      suggestions: [
+        {
+          model_id: 'matchbox-d-30',
+          unit_name: 'Matchbox D-30',
+          // The real model's p. 188 citation opens with the previous passage's attribution.
+          citations: [{ page: 188, quote: '– Manual Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed. It’s a favorite of many players, for clean tones with chime as well as crunchy work.' }],
+        },
+      ],
+    },
+  },
   'fake-fold': {
     pick: {
       general_knowledge: [],

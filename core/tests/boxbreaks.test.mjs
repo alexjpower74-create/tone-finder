@@ -110,3 +110,9 @@ test('round 4: running header and page-number footer are box breaks', () => {
   assert.deepEqual(splitAtBoxBreaks(HEADER[0][1], pages.get(108), titles), ['Class-A 30W (VOX AC30)', 'The Edge’s famous amp is a ’64 Top Boost AC30/6 model.'])
   assert.equal(cleanCut('• Bright: adds sparkle, and'), 'Bright: adds sparkle')
 })
+
+test('cleanCut strips a leading attribution with a known name only', () => {
+  assert.equal(cleanCut('– Manual Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed.'), 'Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed.')
+  assert.equal(cleanCut('- yek Turn up Treble'), 'Turn up Treble')
+  assert.equal(cleanCut('– Cab Packs 5, 7'), '– Cab Packs 5, 7', 'not an attribution name')
+})
