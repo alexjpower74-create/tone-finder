@@ -35,9 +35,18 @@ Slices make no paid calls: their tests use the fake OpenAI server.
 | 2026-09-14T19:26:18Z | lead | gpt-5.4-mini | pick | 5,714 | 0 | 178 | 0.00508650 | 0.00705 | Final demo run at main a911158: "Brown Sound Deluxe" |
 | 2026-09-14T19:26:20Z | lead | gpt-5.4-mini | cite | 5,169 | 0 | 409 | 0.00571725 | 0.00793 | Final demo run at main a911158: "Brown Sound Deluxe" |
 
+| 2026-09-14T19:30:59Z | tf1 tests (by accident) | gpt-5.4-mini | pick | 5,717 | 0 | 198 | 0.00517875 | 0.00718 | tf1's worker test run reached the lead's demo Worker on 8302 (DECISIONS 23); ledger id 17 |
+| 2026-09-14T19:31:05Z | tf1 tests (by accident) | gpt-5.4-mini | cite | 5,172 | 0 | 434 | 0.00583200 | 0.00809 | tf1's worker test run reached the lead's demo Worker on 8302 (DECISIONS 23); ledger id 18 |
+| 2026-09-14T19:31:08Z | tf1 tests (by accident) | gpt-5.4-mini | pick | 5,590 | 0 | 254 | 0.00533550 | 0.00740 | tf1's worker test run reached the lead's demo Worker on 8302 (DECISIONS 23); ledger id 19 |
+| 2026-09-14T19:31:10Z | tf1 tests (by accident) | gpt-5.4-mini | cite | 9,247 | 0 | 317 | 0.00836175 | 0.01159 | tf1's worker test run reached the lead's demo Worker on 8302 (DECISIONS 23); ledger id 20 |
+| 2026-09-14T19:31:13Z | tf1 tests (by accident) | gpt-5.4-mini | pick | 5,621 | 0 | 199 | 0.00511125 | 0.00709 | tf1's worker test run reached the lead's demo Worker on 8302 (DECISIONS 23); ledger id 21 |
+| 2026-09-14T19:31:16Z | tf1 tests (by accident) | gpt-5.4-mini | cite | 3,145 | 0 | 342 | 0.00389775 | 0.00540 | tf1's worker test run reached the lead's demo Worker on 8302 (DECISIONS 23); ledger id 22 |
+
 Check (smoke test): input 25,244 × 0.75 / 1M + output 1,450 × 4.50 / 1M = 0.018933 + 0.006525 = **US$0.025458**;
 × 1.3866 = CA$0.035300. Matches the Worker ledger (`GET /api/admin/spend`: spent_usd 0.025458, spent_cad 0.035300).
 
 Check (final demo run, 16 calls, ledger `GET /api/admin/spend` on the demo Worker): input 85,541 (cached 2,816) and output 4,699 tokens = **US$0.083400** × 1.3866 = CA$0.115643. A ninth question repeated "Van Halen brown sound" and came back `cached`, cost 0.
 
-**Running total: US$0.1089 · CA$0.1509 of CA$2.00** (20 calls).
+Check (accidental test calls, ids 17–22): 3 questions × pick + cite, input 34,492 and output 1,744 tokens = US$0.033717 × 1.3866 = CA$0.046752. tf1 first estimated 2 calls; the ledger shows 6.
+
+**Running total: US$0.1426 · CA$0.1977 of CA$2.00** (26 calls: 4 in the QA smoke test, 22 in the demo database).

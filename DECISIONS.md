@@ -143,3 +143,11 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     those folded and shows the page's own exact text (a changed letter, invented text or wrong page still fails);
     AI citations expand to their containing sentence; (2) at least 2 suggestions when 2 candidates exist ("Van Halen
     brown sound" had become Brit Brown alone); (3) the running header is never a why quote.
+
+23. **The lead's demo sat on the slices' dev ports (lead error, 17:05).** The detached demo was started on 8301/8302
+    while tf1 and tf2 were still testing on those ports. tf1's Worker tests bound nothing, waited on the demo's
+    health check, and ran their HTTP tests against the real Worker: 6 real AI calls (CA$0.0468, logged in
+    docs/spend.md) and some cached test questions in the demo database. tf2's app suite never started, and its
+    commit gate passed on the absence of a "failed" line. Both slices found it themselves: tf1's runner now refuses
+    busy ports, and tf2 reran on 8311 with a gate that requires "passed". Lesson for the finish: start the final demo
+    only after every slice has stopped.
