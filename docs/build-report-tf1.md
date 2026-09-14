@@ -1,5 +1,31 @@
 # Build report — tf1 (guide data, answer engine, AI step, Worker + D1)
 
+## Round 5 (fixes from the lead's first real AI calls)
+
+**Status:** DONE. Code commit **d85c4fb** (on top of main 89677e3). From my own worktree (fake AI on 8313 for core,
+Worker on 8302/8303/8352): core **77/77**, worker **16/16**. `models.json` is unchanged from round 4.
+
+1. **General knowledge about the guide is dropped (§5.6).** `sanitisePick` removes any item matching
+   `/guide|candidate|provided|model list|the list/i` before it can be shown. The pick prompt now says "Never write
+   general_knowledge about the guide, the guide candidates or the model list; only facts about songs, artists and
+   gear." `PROMPT_VERSION` moved from `tf-ai-1` to `tf-ai-2`, so cached answers made with the old prompt aren't
+   served. New fake scenario `fake-gk` sends three items: the real model's "The provided guide candidate points
+   to…", "From the model list, Brit Brown fits best." and one real fact. Only the fact survives.
+2. **`understood.matched_terms` and `ai_terms` are de-duplicated**, first occurrence kept. The AI's search terms
+   repeat the query's own phrases, so the re-search found them twice. `fake-gk` asks "Van Halen brown sound master"
+   with search terms ["van halen", "brown sound", "master"]; the test checks both lists have no repeats and that
+   "master" appears once.
+
+| Control | Break | Result |
+|---|---|---|
+| gk | the `GK_ABOUT_GUIDE` filter removed from `sanitisePick` | RED: fake-gk (all three items shown). Restored. |
+| dedupe | `uniq` made a no-op | RED: fake-gk ("matched_terms repeat: van halen,brown sound,master,van halen,brown sound,master"). Restored. |
+| after restore | — | core 77/77, worker 16/16 |
+
+Stopping here.
+
+---
+
 ## Round 4 (after the lead's grading of 01dce76)
 
 **Status:** DONE. Code commit **63a6e85**. Numbers from my own worktree (fake AI on 8313 for core; Worker on
