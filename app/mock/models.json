@@ -1,0 +1,7277 @@
+{
+ "schema": 1,
+ "guide": {
+  "title": "Yek's Guide to the Fractal Audio Amp Models",
+  "by": "Alexander van Engelen (yek); compiled by simviz",
+  "revision": "April 2017",
+  "firmware": "Quantum 7.02",
+  "pdf_pages": 301,
+  "pages_sha256": "8e770670b377c57cf55fe76c52409ecf4bb2f95d44f1a9f6ed79768587b1b2a3"
+ },
+ "conventions": [
+  {
+   "id": "high-low-inputs",
+   "quote": "If the actual amp has two inputs, the model is based on the input with the highest gain.",
+   "page": 12
+  },
+  {
+   "id": "no-master-volume",
+   "quote": "If the original amp has no Master Volume control, the Master control in the amp model will default at 10.",
+   "page": 12
+  },
+  {
+   "id": "two-gain-controls",
+   "quote": "If the original amp has two gain controls, the one that’s closest to the 1/4” input on the actual amp will be represented by Input Drive in the amp model, and the other one by Overdrive.",
+   "page": 12
+  },
+  {
+   "id": "single-tone-control",
+   "quote": "If the original amp only has a single Tone control, the control will be mapped to either Treble or Presence/Hi Cut in the amp model.",
+   "page": 12
+  },
+  {
+   "id": "taper-match",
+   "quote": "The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.",
+   "page": 12
+  },
+  {
+   "id": "soft-reset",
+   "quote": "A soft reset is performed by de-selecting and re-selecting the amp type in the Amp block. This resets most parameters, including Presence and Master, but leaves the Drive controls and Bass/Mid/Treble untouched.",
+   "page": 12
+  }
+ ],
+ "models": [
+  {
+   "id": "5f1-tweed",
+   "section": "5F1 Tweed (Fender Narrow Panel Tweed Champ, 5F1)",
+   "name": "5F1 Tweed",
+   "based_on": "Fender Narrow Panel Tweed Champ, 5F1",
+   "pages": {
+    "start": 13,
+    "end": 14
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "5F1 Tweed",
+     "evidence": "5F1 Tweed",
+     "page": 13
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": "1958-1964",
+    "circuit": "5F1",
+    "power": "5 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6V6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6V6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of Fender’s practice amp from the Tweed era",
+    "page": 13
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The original amp only has a Volume control, so leave everything else in the model at default for authenticity",
+     "page": 13,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single 6” or 8” Alnico speaker (Jensen P8T, Oxford 8EV)",
+     "page": 13
+    },
+    "stock_cabs": {
+     "quote": "1x8 – Cab Packs 2 and 4",
+     "page": 13
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "5f8-tweed",
+   "section": "5F8 Tweed (Keith Urban's Fender Narrow Panel high-powered Tweed Twin, 5F8)",
+   "name": "5F8 Tweed",
+   "based_on": "Keith Urban's Fender Narrow Panel high-powered Tweed Twin, 5F8",
+   "pages": {
+    "start": 15,
+    "end": 17
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "5F8 Tweed",
+     "evidence": "5F8 Tweed",
+     "page": 15
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": "1958-1960",
+    "circuit": "5F8",
+    "power": "80 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6/5881",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of Keith Urban’s Narrow Panel Tweed Twin",
+    "page": 15
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "It’s a dark sounding amp model when combined with its stock cab, so be like Keith Urban and turn up Treble and Presence",
+     "page": 15,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Keith Urban’s cabinet has two Two-Rock CR12 speakers, captured in the IR below.",
+     "page": 15
+    },
+    "stock_cabs": {
+     "quote": "2x12 Double Amp – Cab Pack 15",
+     "page": 15
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Treble",
+     "dir": "up",
+     "quote": "It’s a dark sounding amp model when combined with its stock cab, so be like Keith Urban and turn up Treble and Presence",
+     "page": 15
+    },
+    {
+     "knob": "Presence",
+     "dir": "up",
+     "quote": "It’s a dark sounding amp model when combined with its stock cab, so be like Keith Urban and turn up Treble and Presence",
+     "page": 15
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "6g4-super",
+   "section": "6G4 Super ('60 brown Fender Super, 6G4)",
+   "name": "6G4 Super",
+   "based_on": "'60 brown Fender Super, 6G4",
+   "pages": {
+    "start": 18,
+    "end": 19
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "6G4 Super",
+     "evidence": "6G4 Super",
+     "page": 18
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "6G4",
+    "power": "40 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "7025 (12AX7A Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a ’60 brown Fender Super Amp",
+    "page": 18
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "No Middle tone control, so keep it at default in the model for authenticity",
+     "page": 18,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Originally equipped with two Jensen 10” speakers.",
+     "page": 18
+    },
+    "stock_cabs": {
+     "quote": "2x12 Brown Super – Cab Pack 15",
+     "page": 18
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "6g12-concert",
+   "section": "6G12 Concert ('60 brown Fender Concert, 6G12)",
+   "name": "6G12 Concert",
+   "based_on": "'60 brown Fender Concert, 6G12",
+   "pages": {
+    "start": 20,
+    "end": 21
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "6G12 Concert",
+     "evidence": "6G12 Concert",
+     "page": 20
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "6G12",
+    "power": "40 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "7025 (12AX7A Syl)",
+    "power_tubes": "6L6/5881",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a ‘60 brown Fender Concert",
+    "page": 20
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The amp has a lot of clean headroom and bass.",
+     "page": 20,
+     "said_by": null
+    },
+    {
+     "quote": "Reduce bass and crank Input Drive to get a mild “brown” overdrive",
+     "page": 20,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Four 10” speakers (Jensen P10R / P10Q / C10R, Oxford 10K5), like a Bassman or Super Reverb",
+     "page": 20
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Drive",
+     "dir": "up",
+     "quote": "Reduce bass and crank Input Drive to get a mild “brown” overdrive",
+     "page": 20
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "59-bassguy",
+   "section": "59 Bassguy ('59 Fender Narrow Panel Tweed Bassman, 5F6-A)",
+   "name": "59 Bassguy",
+   "based_on": "'59 Fender Narrow Panel Tweed Bassman, 5F6-A",
+   "pages": {
+    "start": 22,
+    "end": 24
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "59 Bassguy",
+     "evidence": "59 Bassguy",
+     "page": 22
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "5F6-A",
+    "power": "40 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6/5881",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a “holy grail” 1959 Fender Tweed Bassman, the",
+    "page": 22
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn down Bass and turn up mids.",
+     "page": 22,
+     "said_by": null
+    },
+    {
+     "quote": "Or try Bass and Treble at 0, and Mid and Presence at 10",
+     "page": 22,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Four 10” Jensen P10Q or P10R speakers",
+     "page": 22
+    },
+    "stock_cabs": {
+     "quote": "4x10 Bassguy – Cab Packs 1 and 10",
+     "page": 22
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "Turn down Bass and turn up mids.",
+     "page": 22
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "65-bassguy",
+   "section": "65 Bassguy (Dweezil Zappa’s '65 blackface Fender Bassman, AB165)",
+   "name": "65 Bassguy",
+   "based_on": "Dweezil Zappa’s '65 blackface Fender Bassman, AB165",
+   "pages": {
+    "start": 25,
+    "end": 27
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "65 Bassguy",
+     "evidence": "65 Bassguy",
+     "page": 25
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "AB165",
+    "power": "50 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "7025 (12AX7A Syl)",
+    "power_tubes": "6L6/5881",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of both channels of a ‘65 Fender Bassman with AB165 circuit, owned by Dweezil Zappa.",
+    "page": 25
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn down Bass and disengage Bright Dweezil’s B-man: leave everything at default except Input Drive",
+     "page": 25,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with two Jensen 12” speakers (C12N, Oxford 12T6)",
+     "page": 25
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "Turn down Bass and disengage Bright Dweezil’s B-man: leave everything at default except Input Drive",
+     "page": 25
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "1959slp",
+   "section": "1959SLP (Marshall SLP1959, Vintage Re-Issue Series)",
+   "name": "1959SLP",
+   "based_on": "Marshall SLP1959, Vintage Re-Issue Series",
+   "pages": {
+    "start": 28,
+    "end": 31
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "1959SLP",
+     "evidence": "1959SLP",
+     "page": 28
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": "1993 to 1995",
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a 100 watt Superlead Plexi re-issue",
+    "page": 28
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Don't hesitate to turn Bass all the way down and turn up Middle and Treble.",
+     "page": 28,
+     "said_by": null
+    },
+    {
+     "quote": "Or just crank everything, like Eddie Van Halen",
+     "page": 28,
+     "said_by": null
+    },
+    {
+     "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+     "page": 28,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Marshall cabinet with Celestion G12M (greenbacks) or G12H speakers",
+     "page": 28
+    },
+    "stock_cabs": {
+     "quote": "Marshall stock cabs – Cab Packs",
+     "page": 28
+    },
+    "notes": []
+   },
+   "settings": [
+    {
+     "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+     "page": 28,
+     "said_by": null,
+     "context": null,
+     "unit_name": null,
+     "knobs": {
+      "Bass": 2,
+      "Mid": 8,
+      "Treble": 7.5
+     },
+     "other": []
+    }
+   ],
+   "directions": [
+    {
+     "knob": "Mid",
+     "dir": "up",
+     "quote": "Don't hesitate to turn Bass all the way down and turn up Middle and Treble.",
+     "page": 28
+    },
+    {
+     "knob": "Treble",
+     "dir": "up",
+     "quote": "Don't hesitate to turn Bass all the way down and turn up Middle and Treble.",
+     "page": 28
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "1987x",
+   "section": "1987X (Marshall 1987X, Vintage Re-issue Series)",
+   "name": "1987X",
+   "based_on": "Marshall 1987X, Vintage Re-issue Series",
+   "pages": {
+    "start": 32,
+    "end": 34
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "1987X",
+     "evidence": "1987X",
+     "page": 32
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": "90’s",
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a Marshall JMP 50 re-issue: a 50w Plexi.",
+    "page": 32
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The 1987X is bass-heavy, so don’t hesitate to turn that down",
+     "page": 32,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": {
+     "quote": "Marshall stock cabs – Cab Packs",
+     "page": 32
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "5153",
+   "section": "5153 (EVH 5150-III)",
+   "name": "5153",
+   "based_on": "EVH 5150-III",
+   "pages": {
+    "start": 35,
+    "end": 37
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "5153",
+     "evidence": "5153",
+     "page": 35
+    }
+   ],
+   "brands": [
+    "EVH"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 / 50 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "6L6/5881",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of all channels of Eddie Van Halen’s signature amp, popular with high gain players",
+    "page": 35
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The Blue channel of the 50 watt amp has about twice the gain compared to the 100 watt’s Blue channel.",
+     "page": 35,
+     "said_by": null
+    },
+    {
+     "quote": "You can simulate this with the Input Trim knob",
+     "page": 35,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "EVH 4x12 or 2x12 cabinet with Celestion G12EVH speakers",
+     "page": 35
+    },
+    "stock_cabs": {
+     "quote": "4x12 5153 – Cab Packs 5, 12 and 14",
+     "page": 35
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "ac-20",
+   "section": "AC-20 (Morgan AC20 Deluxe)",
+   "name": "AC-20",
+   "based_on": "Morgan AC20 Deluxe",
+   "pages": {
+    "start": 38,
+    "end": 39
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "AC-20",
+     "evidence": "AC-20",
+     "page": 38
+    }
+   ],
+   "brands": [
+    "Morgan"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "20 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl), EF86",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a Morgan AC-20, a VOX-type amp, with 12AX7 and EF86 preamp tubes",
+    "page": 38
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "For authenticity keep all tone controls in the models at default, except Hi-Cut.",
+     "page": 38,
+     "said_by": null
+    },
+    {
+     "quote": "Keep Drive low for clean tones.",
+     "page": 38,
+     "said_by": null
+    },
+    {
+     "quote": "Try the EF86 models with single-coils and 12AX7 with humbuckers",
+     "page": 38,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "1x12 or 2x12 cabinet with Celestion G12H or Celestion Gold speaker(s)",
+     "page": 38
+    },
+    "stock_cabs": {
+     "quote": "AC-20 – Cab Pack 4",
+     "page": 38
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "angle-severe",
+   "section": "Angle Severe (Engl Savage 120)",
+   "name": "Angle Severe",
+   "based_on": "Engl Savage 120",
+   "pages": {
+    "start": 40,
+    "end": 41
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Angle Severe",
+     "evidence": "Angle Severe",
+     "page": 40
+    }
+   ],
+   "brands": [
+    "Engl"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "120 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "6550",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6550"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of an Engl Savage 120, a very high gain amp, Channel 2 in “Rough” mode which emphasizes highs and lows",
+    "page": 40
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Angage the Boost switch",
+     "page": 40,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Engl cabinet with Celestion V30 or V60 speakers",
+     "page": 40
+    },
+    "stock_cabs": {
+     "quote": "4x12 German V30 (RW) – Cab Pack 19",
+     "page": 40
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "atomica",
+   "section": "Atomica (Cameron Atomica)",
+   "name": "Atomica",
+   "based_on": "Cameron Atomica",
+   "pages": {
+    "start": 42,
+    "end": 43
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Atomica",
+     "evidence": "Atomica",
+     "page": 42
+    }
+   ],
+   "brands": [
+    "Cameron"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (JJ)",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "High and low gain models of the Cameron Atomica, which reproduces the “brown sound” of a Jose Arrendendo-modified Super Lead Plexi",
+    "page": 42
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around 6",
+     "page": 42,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with Celestion G12H speakers",
+     "page": 42
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "up",
+     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around 6",
+     "page": 42
+    },
+    {
+     "knob": "Treble",
+     "dir": "up",
+     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around 6",
+     "page": 42
+    },
+    {
+     "knob": "Presence",
+     "dir": "up",
+     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around 6",
+     "page": 42
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "band-commander",
+   "section": "Band-Commander ('68 Fender Bandmaster, AB763)",
+   "name": "Band-Commander",
+   "based_on": "'68 Fender Bandmaster, AB763",
+   "pages": {
+    "start": 44,
+    "end": 45
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Band-Commander",
+     "evidence": "Band-Commander",
+     "page": 44
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "AB763",
+    "power": "40 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6/5881",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a ’68 silverface Fender Bandmaster with blackface AB763 circuit, screaming: “Play a John Mayer tune”",
+    "page": 44
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Sounds awesome at stock settings",
+     "page": 44,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Fender cabinet with two Jensen or Oxford 12” speakers",
+     "page": 44
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "big-hair",
+   "section": "Big Hair (FAS custom model)",
+   "name": "Big Hair",
+   "based_on": "FAS custom model",
+   "pages": {
+    "start": 46,
+    "end": 46
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Big Hair",
+     "evidence": "Big Hair",
+     "page": 46
+    }
+   ],
+   "brands": [
+    "Fractal Audio"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Custom amp model by Fractal Audio, similar to a ‘80’s JCM 800",
+    "page": 46
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "For more ‘80’s revival, add a “detune” Pitch block after the CAB block and a circular delay",
+     "page": 46,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "blanknshp-leeds",
+   "section": "Blanknshp Leeds (Blankenship Leeds 21)",
+   "name": "Blanknshp Leeds",
+   "based_on": "Blankenship Leeds 21",
+   "pages": {
+    "start": 47,
+    "end": 48
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Blanknshp Leeds",
+     "evidence": "Blanknshp Leeds",
+     "page": 47
+    }
+   ],
+   "brands": [
+    "Blankenship"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "18 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a boutique replica of an 18 watt Marshall Mini Bluesbreaker",
+    "page": 47
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Crank volume (amp model: Input Drive) and Tone (amp model: Treble), then use your guitar’s volume knob to control volume and amp gain",
+     "page": 47,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with one or two Celestion G12H or G12M speakers",
+     "page": 47
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "bludojai",
+   "section": "Bludojai (Bludotone Ojai)",
+   "name": "Bludojai",
+   "based_on": "Bludotone Ojai",
+   "pages": {
+    "start": 49,
+    "end": 51
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Bludojai",
+     "evidence": "Bludojai",
+     "page": 49
+    }
+   ],
+   "brands": [
+    "Bludotone"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6/5881",
+    "tonestack": "MID (Clean)"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Bludotone Ojai, a clone of Robben Ford’s “Tan” Dumble Overdrive Special",
+    "page": 49
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Maybe one of the easiest models to create a singing Dumble lead tone",
+     "page": 49,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "1x12 or 2x12 Bludotone cabinet with G12-65 speaker(s)",
+     "page": 49
+    },
+    "stock_cabs": {
+     "quote": "1x12 Bludo – Cab Pack 17",
+     "page": 49
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "bogfish",
+   "section": "Bogfish (Bogner Fish preamp)",
+   "name": "Bogfish",
+   "based_on": "Bogner Fish preamp",
+   "pages": {
+    "start": 52,
+    "end": 52
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Bogfish",
+     "evidence": "Bogfish",
+     "page": 52
+    }
+   ],
+   "brands": [
+    "Bogner"
+   ],
+   "specs": {
+    "years": "1990s",
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": "ECC83",
+    "power_tubes": null,
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Models of the Strato and Brown channels of a Bogner Fish preamp",
+    "page": 52
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "boutique",
+   "section": "Boutique (Matchless Chieftain)",
+   "name": "Boutique",
+   "based_on": "Matchless Chieftain",
+   "pages": {
+    "start": 53,
+    "end": 54
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Boutique",
+     "evidence": "Boutique",
+     "page": 53
+    }
+   ],
+   "brands": [
+    "Matchless"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "40 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL34",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Matchless Chieftain in normal and boosted modes",
+    "page": 53
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The Bass control has a very wide range, excessive amounts can cause floppiness and lack of definition at high volume settings.",
+     "page": 53,
+     "said_by": null
+    },
+    {
+     "quote": "Use Hi-Cut to tame the brightness",
+     "page": 53,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "2x12 Matchless cabinet with a G12M and a G12H speaker",
+     "page": 53
+    },
+    "stock_cabs": {
+     "quote": "2x12 Boutique – Cab Pack 10",
+     "page": 53
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "brit-800-brit-800-mod-and-brit-800-34",
+   "section": "Brit 800, Brit 800 Mod and Brit 800 #34 (Marshall JCM 800)",
+   "name": "Brit 800, Brit 800 Mod and Brit 800 #34",
+   "based_on": "Marshall JCM 800",
+   "pages": {
+    "start": 55,
+    "end": 57
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Brit 800",
+     "evidence": "Brit 800",
+     "page": 55
+    },
+    {
+     "name": "Brit 800 Mod",
+     "evidence": "Brit 800 Mod",
+     "page": 55
+    },
+    {
+     "name": "Brit 800 #34",
+     "evidence": "Brit 800 #34",
+     "page": 55
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34/6550",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34",
+     "6550"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models based on the Marshall JCM 800, the ‘80’s classic rock amp",
+    "page": 55
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "A stock JCM 800 is very harsh at lower volume levels.",
+     "page": 55,
+     "said_by": null
+    },
+    {
+     "quote": "To make it sound less brittle, turn up Master, or drastically reduce Treble and Presence",
+     "page": 55,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Marshall cabinet with G12M, G12H or V30 speakers",
+     "page": 55
+    },
+    "stock_cabs": {
+     "quote": "Marshall stock cabs – Cab Packs",
+     "page": 55
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Master",
+     "dir": "up",
+     "quote": "To make it sound less brittle, turn up Master, or drastically reduce Treble and Presence",
+     "page": 55
+    },
+    {
+     "knob": "Treble",
+     "dir": "down",
+     "quote": "To make it sound less brittle, turn up Master, or drastically reduce Treble and Presence",
+     "page": 55
+    },
+    {
+     "knob": "Presence",
+     "dir": "down",
+     "quote": "To make it sound less brittle, turn up Master, or drastically reduce Treble and Presence",
+     "page": 55
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "brit-afs100-and-brit-super",
+   "section": "Brit AFS100 and Brit Super (Marshall AFD100, Slash’s signature amp)",
+   "name": "Brit AFS100 and Brit Super",
+   "based_on": "Marshall AFD100, Slash’s signature amp",
+   "pages": {
+    "start": 58,
+    "end": 59
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Brit AFS100",
+     "evidence": "Brit AFS100",
+     "page": 58
+    },
+    {
+     "name": "Brit Super",
+     "evidence": "Brit Super",
+     "page": 58
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "6550/EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34",
+     "6550"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of Slash’s signature amp, providing the sounds of the Appetite for Destruction album.",
+    "page": 58
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "According to the amp’s manual, Slash sets all controls around 1 o’clock.",
+     "page": 58,
+     "said_by": null
+    },
+    {
+     "quote": "And use a Les Paul, of course More videos, clips and comments",
+     "page": 58,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Marshall cabinet with V30 speakers",
+     "page": 58
+    },
+    "stock_cabs": {
+     "quote": "Marshall stock cabs – Cab Packs",
+     "page": 58
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "brit-brown-and-fas-brown",
+   "section": "Brit Brown and FAS Brown (FAS custom models)",
+   "name": "Brit Brown and FAS Brown",
+   "based_on": "FAS custom models",
+   "pages": {
+    "start": 60,
+    "end": 61
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Brit Brown",
+     "evidence": "Brit Brown",
+     "page": 60
+    },
+    {
+     "name": "FAS Brown",
+     "evidence": "FAS Brown",
+     "page": 60
+    }
+   ],
+   "brands": [
+    "Fractal Audio"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Custom amp models by Fractal Audio, recreating EVH’s “Brown Sound”",
+    "page": 60
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn up Presence in the Brit Brown model",
+     "page": 60,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Presence",
+     "dir": "up",
+     "quote": "Turn up Presence in the Brit Brown model",
+     "page": 60
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "brit-jm45",
+   "section": "Brit JM45 (Marshall JTM 45)",
+   "name": "Brit JM45",
+   "based_on": "Marshall JTM 45",
+   "pages": {
+    "start": 62,
+    "end": 64
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Brit JM45",
+     "evidence": "Brit JM45",
+     "page": 62
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "30 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34 / 6L6 / KT66",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL34",
+     "6L6",
+     "KT66"
+    ]
+   },
+   "synopsis": {
+    "quote": "Marshall’s first, borrowing a lot from Fender’s Bassman",
+    "page": 62
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Without a Master Volume control, the JTM relies on power amp distortion.",
+     "page": 62,
+     "said_by": null
+    },
+    {
+     "quote": "To achieve a nice warm overdriven blues or rock tone, you need to turn up the volume and crank the tone controls which makes it a very loud amp in real life.",
+     "page": 62,
+     "said_by": null
+    },
+    {
+     "quote": "It’s bass-heavy, so turn down Bass or use the Cut switch, and turn up mids",
+     "page": 62,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 or 2x12 Marshall cabinet with greenbacks, G12M or G12H speakers",
+     "page": 62
+    },
+    "stock_cabs": {
+     "quote": "Marshall stock cabs – Cab Packs",
+     "page": 62
+    },
+    "notes": []
+   },
+   "settings": [
+    {
+     "quote": "Forum member Simeon’s suggested settings for a “Gary Moore” tone: Input Drive 3, Presence 3, stock cab 103, T808 with Drive 0, Tone 6 and Level 7.",
+     "page": 64,
+     "said_by": null,
+     "context": null,
+     "unit_name": null,
+     "knobs": {
+      "Drive": 3,
+      "Presence": 3
+     },
+     "other": []
+    }
+   ],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "It’s bass-heavy, so turn down Bass or use the Cut switch, and turn up mids",
+     "page": 62
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "brit-jvm",
+   "section": "Brit JVM (Marshall JVM410H)",
+   "name": "Brit JVM",
+   "based_on": "Marshall JVM410H",
+   "pages": {
+    "start": 65,
+    "end": 66
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Brit JVM",
+     "evidence": "Brit JVM",
+     "page": 65
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of all modes of the OD1 and OD2 channels of Marshall’s flagship amplifier, designed to cover Marshall’s trademark tones",
+    "page": 65
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The models have a lot of gain, so keep Input Drive low",
+     "page": 65,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Marshall cabinet with Celestion G12H and V30 speakers",
+     "page": 65
+    },
+    "stock_cabs": {
+     "quote": "Marshall stock cabs",
+     "page": 65
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "brit-pre",
+   "section": "Brit Pre (Marshall JMP-1 preamp)",
+   "name": "Brit Pre",
+   "based_on": "Marshall JMP-1 preamp",
+   "pages": {
+    "start": 67,
+    "end": 67
+   },
+   "refers_to": "jmpre-1-and-brit-pre",
+   "unit_names": [
+    {
+     "name": "Brit Pre",
+     "evidence": "Brit Pre",
+     "page": 67
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "brit-silver",
+   "section": "Brit Silver (Marshall Silver Jubilee)",
+   "name": "Brit Silver",
+   "based_on": "Marshall Silver Jubilee",
+   "pages": {
+    "start": 68,
+    "end": 69
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Brit Silver",
+     "evidence": "Brit Silver",
+     "page": 68
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of Marshall’s 100 watt Silver Jubilee, darker and thicker than a JCM 800 with more gain at lower levels",
+    "page": 68
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Allows higher Bass settings than a JCM 800 or Plexi Joe Bonamassa: Presence 5, Bass 10, Mid 7.5, Treble 4.5, Master 10, Gain 5",
+     "page": 68,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": {
+     "quote": "Marshall stock cabs – Cab Packs",
+     "page": 68
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "brit-super",
+   "section": "Brit Super (Marshall AFD100, Slash’s signature amp)",
+   "name": "Brit Super",
+   "based_on": "Marshall AFD100, Slash’s signature amp",
+   "pages": {
+    "start": 70,
+    "end": 70
+   },
+   "refers_to": "brit-afs100-and-brit-super",
+   "unit_names": [
+    {
+     "name": "Brit Super",
+     "evidence": "Brit Super",
+     "page": 70
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "buttery",
+   "section": "Buttery (Budda Twinmaster)",
+   "name": "Buttery",
+   "based_on": "Budda Twinmaster",
+   "pages": {
+    "start": 71,
+    "end": 72
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Buttery",
+     "evidence": "Buttery",
+     "page": 71
+    }
+   ],
+   "brands": [
+    "Budda"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "18 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "An “ear-tuned” custom model, loosely based on a late ‘90’s Budda Twinmaster",
+    "page": 71
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "A great crunchy amp model and simple to dial in: crank the Master and turn down Input Drive",
+     "page": 71,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Alnico speakers and/or greenbacks",
+     "page": 71
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack 6",
+     "page": 71
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Master",
+     "dir": "up",
+     "quote": "A great crunchy amp model and simple to dial in: crank the Master and turn down Input Drive",
+     "page": 71
+    },
+    {
+     "knob": "Drive",
+     "dir": "down",
+     "quote": "A great crunchy amp model and simple to dial in: crank the Master and turn down Input Drive",
+     "page": 71
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "ca-od-2",
+   "section": "CA OD-2 (Carol-Ann OD2)",
+   "name": "CA OD-2",
+   "based_on": "Carol-Ann OD2",
+   "pages": {
+    "start": 73,
+    "end": 75
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "CA OD-2",
+     "evidence": "CA OD-2",
+     "page": 73
+    }
+   ],
+   "brands": [
+    "Carol-Ann"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a Carol-Ann OD2, sort of a Dumble-style amp with characteristics of a modified Marshall",
+    "page": 73
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "It’s a dark amp",
+     "page": 73,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Classic Lead 80 or EV-L speakers",
+     "page": 73
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "ca-triptik",
+   "section": "CA Triptik (Carol-Ann Triptik)",
+   "name": "CA Triptik",
+   "based_on": "Carol-Ann Triptik",
+   "pages": {
+    "start": 76,
+    "end": 78
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "CA Triptik",
+     "evidence": "CA Triptik",
+     "page": 76
+    }
+   ],
+   "brands": [
+    "Carol-Ann"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of all three channels of Carol-Ann’s Triptik: “Dumble meets Marshall with a sprinkle of 5150 power amp”",
+    "page": 76
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "It’s a dark amp, don’t hesitate to increase Treble or Presence",
+     "page": 76,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Carol-Ann Triptik cabinet, various speakers",
+     "page": 76
+    },
+    "stock_cabs": {
+     "quote": "1x12 Triptik – Cab Pack 5 and OBOT The Robot",
+     "page": 76
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Treble",
+     "dir": "up",
+     "quote": "It’s a dark amp, don’t hesitate to increase Treble or Presence",
+     "page": 76
+    },
+    {
+     "knob": "Presence",
+     "dir": "up",
+     "quote": "It’s a dark amp, don’t hesitate to increase Treble or Presence",
+     "page": 76
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "ca-tucana",
+   "section": "CA Tucana (Carol-Ann Tucana 3)",
+   "name": "CA Tucana",
+   "based_on": "Carol-Ann Tucana 3",
+   "pages": {
+    "start": 79,
+    "end": 81
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "CA Tucana",
+     "evidence": "CA Tucana",
+     "page": 79
+    }
+   ],
+   "brands": [
+    "Carol-Ann"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "75 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "KT88",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "KT88"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Carol-Ann Tucana, according to Cliff: “one of the best amps in the world”",
+    "page": 79
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“Input gain on 10 o clock, gain on 2 o clock is a ‘70’s /’80’s lead tone, put the input level up to 2 o click and it's a very sustained lead tone or a very modern heavy rhythm tone”",
+     "page": 79,
+     "said_by": null
+    },
+    {
+     "quote": "– Alan Phillips",
+     "page": 79,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Carol-Ann cabinet, various speakers",
+     "page": 79
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack OBOT The Robot",
+     "page": 79
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "ca3-plus",
+   "section": "CA3+ (Custom Audio Amplifiers 3+ SE preamp)",
+   "name": "CA3+",
+   "based_on": "Custom Audio Amplifiers 3+ SE preamp",
+   "pages": {
+    "start": 82,
+    "end": 83
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "CA3+",
+     "evidence": "CA3+",
+     "page": 82
+    }
+   ],
+   "brands": [
+    "Custom Audio"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": "12AX7A",
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Models of all three channels of the CAE 3+ SE tube-based preamp, the classic studio preamp of the ‘90s",
+    "page": 82
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Everything at default suffices to create that typical studio clean tone of the ‘90s",
+     "page": 82,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "cali-leggy-and-legato-100",
+   "section": "Cali Leggy and Legato 100 (Carvin Legacy VL100, Steve Vai’s signature amp)",
+   "name": "Cali Leggy and Legato 100",
+   "based_on": "Carvin Legacy VL100, Steve Vai’s signature amp",
+   "pages": {
+    "start": 84,
+    "end": 85
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Cali Leggy",
+     "evidence": "Cali Leggy",
+     "page": 84
+    },
+    {
+     "name": "Legato 100",
+     "evidence": "Legato 100",
+     "page": 84
+    }
+   ],
+   "brands": [
+    "Carvin"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the Lead channel of Steve Vai’s first signature amp",
+    "page": 84
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Cali Leggy: “Drive 6.50, Bass 7.00, Middle and Treble 3.50, everything else default.",
+     "page": 84,
+     "said_by": null
+    },
+    {
+     "quote": "For higher gain, engage the Boost switch and turn down Drive”",
+     "page": 84,
+     "said_by": "yek"
+    },
+    {
+     "quote": "– yek Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)",
+     "page": 84,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "2x12 or 4x12 Legacy cabinet with V30 speakers",
+     "page": 84
+    },
+    "stock_cabs": {
+     "quote": "2x12 SV Legend – Cab Pack 10",
+     "page": 84
+    },
+    "notes": []
+   },
+   "settings": [
+    {
+     "quote": "\"SV's personal settings are: Drive: 7.5, Bass: 6, Mid: 4, Treble: 8, Presence: 8.",
+     "page": 85,
+     "said_by": null,
+     "context": null,
+     "unit_name": null,
+     "knobs": {
+      "Drive": 7.5,
+      "Bass": 6,
+      "Mid": 4,
+      "Treble": 8,
+      "Presence": 8
+     },
+     "other": []
+    }
+   ],
+   "directions": [
+    {
+     "knob": "Drive",
+     "dir": "down",
+     "quote": "For higher gain, engage the Boost switch and turn down Drive”",
+     "page": 84
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "cameron-ccv",
+   "section": "Cameron CCV (Cameron CCV-100)",
+   "name": "Cameron CCV",
+   "based_on": "Cameron CCV-100",
+   "pages": {
+    "start": 86,
+    "end": 88
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Cameron CCV",
+     "evidence": "Cameron CCV",
+     "page": 86
+    }
+   ],
+   "brands": [
+    "Cameron"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (JJ)",
+    "power_tubes": "EL34",
+    "tonestack": "Channel 1: PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a Cameron CCV that sounds like",
+    "page": 86
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "It’s a very bright amp",
+     "page": 86,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with Celestion G12H speakers",
+     "page": 86
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "capt-hook",
+   "section": "Capt Hook (HOOK Captain 34)",
+   "name": "Capt Hook",
+   "based_on": "HOOK Captain 34",
+   "pages": {
+    "start": 89,
+    "end": 91
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Capt Hook",
+     "evidence": "Capt Hook",
+     "page": 89
+    }
+   ],
+   "brands": [
+    "HOOK"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34",
+    "tonestack": "PRE /POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of all channels of the “Made in Holland” HOOK Captain 34",
+    "page": 89
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "To mimic the Pull Gain feature on the clean channel, select tonestack “Hook Clean 2”",
+     "page": 89,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with V30, G12H, G12-65 or WGS speakers",
+     "page": 89
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "car-roamer",
+   "section": "Car Roamer (Carr Rambler)",
+   "name": "Car Roamer",
+   "based_on": "Carr Rambler",
+   "pages": {
+    "start": 92,
+    "end": 94
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Car Roamer",
+     "evidence": "Car Roamer",
+     "page": 92
+    }
+   ],
+   "brands": [
+    "Carr"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "28 / 14 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the Carr Rambler, a modern take on the Fender Deluxe Reverb with extra chime, presence and headroom",
+    "page": 92
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Beware of the bass: there’s a lot of it, depending on the Mid position",
+     "page": 92,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "1x12, 2x12, 2x10 or 1x15 cabinet with Eminence speaker(s)",
+     "page": 92
+    },
+    "stock_cabs": {
+     "quote": "1x12 Roamer – Cab Pack 4",
+     "page": 92
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "citrus-a30",
+   "section": "Citrus A30 (Orange AD30HTC)",
+   "name": "Citrus A30",
+   "based_on": "Orange AD30HTC",
+   "pages": {
+    "start": 95,
+    "end": 96
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Citrus A30",
+     "evidence": "Citrus A30",
+     "page": 95
+    }
+   ],
+   "brands": [
+    "Orange"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "30 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "No",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of both channels of an Orange A30HTC",
+    "page": 95
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": {
+     "quote": "Orange 2x12 or 4x12 cabinet with V30 speakers",
+     "page": 95
+    },
+    "stock_cabs": {
+     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and 23",
+     "page": 95
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "citrus-bass-200",
+   "section": "Citrus Bass 200 (Orange AD200B)",
+   "name": "Citrus Bass 200",
+   "based_on": "Orange AD200B",
+   "pages": {
+    "start": 97,
+    "end": 98
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Citrus Bass 200",
+     "evidence": "Citrus Bass 200",
+     "page": 97
+    }
+   ],
+   "brands": [
+    "Orange"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "200 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "6550",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6550"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of an Orange AD200B bass amp",
+    "page": 97
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": {
+     "quote": "Orange 8x10 bass cabinet",
+     "page": 97
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "citrus-rv50",
+   "section": "Citrus RV50 (Orange Rockerverb 50 MK II)",
+   "name": "Citrus RV50",
+   "based_on": "Orange Rockerverb 50 MK II",
+   "pages": {
+    "start": 99,
+    "end": 100
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Citrus RV50",
+     "evidence": "Citrus RV50",
+     "page": 99
+    }
+   ],
+   "brands": [
+    "Orange"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of an Orange Rockerverb MK II",
+    "page": 99
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": {
+     "quote": "Orange 2x12 or 4x12 cabinet with V30 speakers",
+     "page": 99
+    },
+    "stock_cabs": {
+     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and 23",
+     "page": 99
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "citrus-terrier",
+   "section": "Citrus Terrier (Orange Tiny Terror)",
+   "name": "Citrus Terrier",
+   "based_on": "Orange Tiny Terror",
+   "pages": {
+    "start": 101,
+    "end": 102
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Citrus Terrier",
+     "evidence": "Citrus Terrier",
+     "page": 101
+    }
+   ],
+   "brands": [
+    "Orange"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "15 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL84",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a “lunchbox” Orange Tiny Terror in 15 watt mode",
+    "page": 101
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The amp only does dirty tones, it’s inaudible when clean.",
+     "page": 101,
+     "said_by": null
+    },
+    {
+     "quote": "The Tone control is actually a high-cut control in the power amp and is replicated by the Hi Cut parameter in the amp model.",
+     "page": 101,
+     "said_by": null
+    },
+    {
+     "quote": "Hi Cut set fully CCW is equivalent to the amp’s tone knob fully CW.",
+     "page": 101,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Orange 2x12 or 4x12 cabinet with V30 speakers",
+     "page": 101
+    },
+    "stock_cabs": {
+     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and 23",
+     "page": 101
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "class-a-15w-tb",
+   "section": "Class-A 15W TB (VOX AC15)",
+   "name": "Class-A 15W TB",
+   "based_on": "VOX AC15",
+   "pages": {
+    "start": 103,
+    "end": 106
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Class-A 15W TB",
+     "evidence": "Class-A 15W TB",
+     "page": 103
+    }
+   ],
+   "brands": [
+    "VOX"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "15 watt",
+    "master_volume": "No (on originals)",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a VOX AC15 Top Boost, AC30’s little brother",
+    "page": 103
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Try the 1x12 Bludo stock cab",
+     "page": 103,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single Alnico Blue or greenback",
+     "page": 103
+    },
+    "stock_cabs": {
+     "quote": "1x12 Class-A 15W – Cab Packs 1 and 21",
+     "page": 103
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "class-a-30w",
+   "section": "Class-A 30W (VOX AC30)",
+   "name": "Class-A 30W",
+   "based_on": "VOX AC30",
+   "pages": {
+    "start": 107,
+    "end": 109
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Class-A 30W",
+     "evidence": "Class-A 30W",
+     "page": 107
+    },
+    {
+     "name": "Class-A 30W BRT",
+     "evidence": "Class-A 30W BRT",
+     "page": 107
+    },
+    {
+     "name": "Class-A 30W TB",
+     "evidence": "Class-A 30W TB",
+     "page": 107
+    },
+    {
+     "name": "Class-A 30W HOT",
+     "evidence": "Class-A 30W HOT",
+     "page": 107
+    }
+   ],
+   "brands": [
+    "VOX"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "30 watt",
+    "master_volume": "No (on originals)",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Four models of a VOX AC30: • Class-A 30W: Normal channel of a non-Top Boost AC30 • Class-A 30W BRT: Bright channel of a non-Top Boost AC30 • Class-A 30W TB: Top Boost channel of the AC30 Hand-Wired • Class-A 30W HOT: Hot mode of the AC30 Hand-Wired",
+    "page": 107
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Try a Drive block before the Amp block, set to FET or SDD or Treb Boost Leave all tone controls in the “Hot” model at default for authenticity",
+     "page": 107,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Two Alnico Blue speakers or greenbacks",
+     "page": 107
+    },
+    "stock_cabs": {
+     "quote": "2x12 Class-A, 2x12 Top Boost, 2x12 ACROIX, 4x12 Beatle – Cab Packs 1, 2, 4, 6, 18, 21",
+     "page": 107
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "comet-60",
+   "section": "Comet 60 (Komet 60)",
+   "name": "Comet 60",
+   "based_on": "Komet 60",
+   "pages": {
+    "start": 110,
+    "end": 112
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Comet 60",
+     "evidence": "Comet 60",
+     "page": 110
+    }
+   ],
+   "brands": [
+    "Komet"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "EL34",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the Komet 60, a single channel amp without Master Volume, designed by Ken Fischer who also designed Trainwreck amplifiers",
+    "page": 110
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "A Touch Response switch lets you choose between Fast and Gradual response.",
+     "page": 110,
+     "said_by": null
+    },
+    {
+     "quote": "The model is based on the switch in the “Fast” position.",
+     "page": 110,
+     "said_by": null
+    },
+    {
+     "quote": "You can replicate the “Gradual” position by decreasing Input Trim to .250.",
+     "page": 110,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with Celestion Blue or greenback speakers",
+     "page": 110
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "comet-concourse",
+   "section": "Comet Concourse (Komet Concorde)",
+   "name": "Comet Concourse",
+   "based_on": "Komet Concorde",
+   "pages": {
+    "start": 113,
+    "end": 115
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Comet Concourse",
+     "evidence": "Comet Concourse",
+     "page": 113
+    }
+   ],
+   "brands": [
+    "Komet"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "EL34",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a Komet Concorde, similar to the Komet 60 but positioned more as a rock amp",
+    "page": 113
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "A Touch Response switch lets you choose between Fast and Gradual response.",
+     "page": 113,
+     "said_by": null
+    },
+    {
+     "quote": "The model is based on the switch in the “Fast” position.",
+     "page": 113,
+     "said_by": null
+    },
+    {
+     "quote": "You can replicate the “Gradual” position by decreasing Input Trim to .250",
+     "page": 113,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with Celestion Blue or greenback speakers",
+     "page": 113
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "corncob-m50",
+   "section": "Corncob M50 (Cornford MK50 II)",
+   "name": "Corncob M50",
+   "based_on": "Cornford MK50 II",
+   "pages": {
+    "start": 116,
+    "end": 117
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Corncob M50",
+     "evidence": "Corncob M50",
+     "page": 116
+    }
+   ],
+   "brands": [
+    "Cornford"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34 / 6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34",
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the overdrive channel of a Cornford MK50H II: “Plexi-meets-Modern tone with big cojones”",
+    "page": 116
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Add a Drive block (T808: Drive at zero, Level at 7) to make it less loose",
+     "page": 116,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Cornford cabinet with V30 speakers",
+     "page": 116
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "das-metall",
+   "section": "Das Metall (Diezel VH4)",
+   "name": "Das Metall",
+   "based_on": "Diezel VH4",
+   "pages": {
+    "start": 118,
+    "end": 118
+   },
+   "refers_to": "dizzy-v4-and-das-metall",
+   "unit_names": [
+    {
+     "name": "Das Metall",
+     "evidence": "Das Metall",
+     "page": 118
+    }
+   ],
+   "brands": [
+    "Diezel"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "deluxe-tweed",
+   "section": "Deluxe Tweed (Fender Tweed Deluxe, 5E3)",
+   "name": "Deluxe Tweed",
+   "based_on": "Fender Tweed Deluxe, 5E3",
+   "pages": {
+    "start": 119,
+    "end": 121
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Deluxe Tweed",
+     "evidence": "Deluxe Tweed",
+     "page": 119
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "12 – 15 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6V6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6V6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a 5E3 Fender Tweed Deluxe",
+    "page": 119
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Just a single Tone control, mapped to Treble in the amp model, turn it up!",
+     "page": 119,
+     "said_by": null
+    },
+    {
+     "quote": "Keep Bass, Mid and Master at default for authenticity and play a telecaster",
+     "page": 119,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single Jensen Alnico P12 speaker, or Marshall G12H or JBL D120",
+     "page": 119
+    },
+    "stock_cabs": {
+     "quote": "1x12 Tweed, 1x12 Deluxe Tweed – Cab Packs 1 and 4, ML USA Combos",
+     "page": 119
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "deluxe-verb",
+   "section": "Deluxe Verb ('65 blackface Fender Deluxe Reverb, AB763)",
+   "name": "Deluxe Verb",
+   "based_on": "'65 blackface Fender Deluxe Reverb, AB763",
+   "pages": {
+    "start": 122,
+    "end": 124
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Deluxe Verb",
+     "evidence": "Deluxe Verb",
+     "page": 122
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "AB763",
+    "power": "22 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "7025 (12AX7A Syl)",
+    "power_tubes": "6V6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6V6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a 1965 blackface Fender Deluxe Reverb with AB763 circuit",
+    "page": 122
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Chimey tone that breaks up nicely when pushed",
+     "page": 122,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single Jensen C12N, Oxford, JBL 120 or EV-12L speaker",
+     "page": 122
+    },
+    "stock_cabs": {
+     "quote": "1x12 Black, 1x12 Deluxe Verb – Cab Packs 1, 4 and 10",
+     "page": 122
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "dirty-shirley",
+   "section": "Dirty Shirley (Friedman Dirty Shirley)",
+   "name": "Dirty Shirley",
+   "based_on": "Friedman Dirty Shirley",
+   "pages": {
+    "start": 125,
+    "end": 127
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Dirty Shirley",
+     "evidence": "Dirty Shirley",
+     "page": 125
+    }
+   ],
+   "brands": [
+    "Friedman"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "40 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (JJ)",
+    "power_tubes": "6L6/5881",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of two versions of Friedman’s Dirty Shirley, his take on the JTM 45.",
+    "page": 125
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“We recommend starting the amp with the Bass on 6, the mids at around 7 or 8 and the treble and presence at 5.",
+     "page": 125,
+     "said_by": null
+    },
+    {
+     "quote": "Set the gain around 6 and then bring the master to taste”",
+     "page": 125,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 or 2x12 Friedman cabinet with G12M, G12-65, G12H or V30 speakers",
+     "page": 125
+    },
+    "stock_cabs": {
+     "quote": "4x12 Fractal stock cabs – Cab Pack 10",
+     "page": 125
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "div-13-cj11",
+   "section": "Div/13 CJ11 (Divided By 13 CJ 11)",
+   "name": "Div/13 CJ11",
+   "based_on": "Divided By 13 CJ 11",
+   "pages": {
+    "start": 128,
+    "end": 129
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Div/13 CJ11",
+     "evidence": "Div/13 CJ11",
+     "page": 128
+    }
+   ],
+   "brands": [
+    "Divided By 13"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "11 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6V6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6V6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Normal and Boosted modes of a Divided by 13 CJ 11, similar to a Fender Tweed Deluxe with more clean headroom",
+    "page": 128
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Bassy amp, works best with single coils.",
+     "page": 128,
+     "said_by": null
+    },
+    {
+     "quote": "Turn up the master",
+     "page": 128,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single G12M speaker",
+     "page": 128
+    },
+    "stock_cabs": {
+     "quote": "1x12 Division 13 – Cab Pack 1",
+     "page": 128
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "div-13-ft37",
+   "section": "Div/13 FT37 (Divided By 13 FTR 37)",
+   "name": "Div/13 FT37",
+   "based_on": "Divided By 13 FTR 37",
+   "pages": {
+    "start": 130,
+    "end": 131
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Div/13 FT37",
+     "evidence": "Div/13 FT37",
+     "page": 130
+    }
+   ],
+   "brands": [
+    "Divided By 13"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "37 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6V6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6V6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Normal and Boosted modes of channel 1 of a Divided By 13 FTR 37, voiced to sound like a big clean Fender",
+    "page": 130
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Crank Input Drive for a great tone",
+     "page": 130,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "2x12 cabinet with Celestion G12H and Alnico speakers",
+     "page": 130
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack 6",
+     "page": 130
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Drive",
+     "dir": "up",
+     "quote": "Crank Input Drive for a great tone",
+     "page": 130
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "dizzy-v4-and-das-metall",
+   "section": "Dizzy V4 and Das Metall (Diezel VH4)",
+   "name": "Dizzy V4 and Das Metall",
+   "based_on": "Diezel VH4",
+   "pages": {
+    "start": 132,
+    "end": 135
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Dizzy V4",
+     "evidence": "Dizzy V4",
+     "page": 132
+    },
+    {
+     "name": "Das Metall",
+     "evidence": "Das Metall",
+     "page": 132
+    },
+    {
+     "name": "Dizzy V4 Blue 2",
+     "evidence": "Dizzy V4 Blue 2",
+     "page": 132
+    },
+    {
+     "name": "Dizzy V4 Blue 3",
+     "evidence": "Dizzy V4 Blue 3",
+     "page": 132
+    },
+    {
+     "name": "Dizzy V4 Blue 4",
+     "evidence": "Dizzy V4 Blue 4",
+     "page": 132
+    },
+    {
+     "name": "Dizzy V4 Slvr 2",
+     "evidence": "Dizzy V4 Slvr 2",
+     "page": 132
+    },
+    {
+     "name": "Dizzy V4 Slvr 3",
+     "evidence": "Dizzy V4 Slvr 3",
+     "page": 132
+    },
+    {
+     "name": "Dizzy V4 Slvr 4",
+     "evidence": "Dizzy V4 Slvr 4",
+     "page": 132
+    }
+   ],
+   "brands": [
+    "Diezel"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [
+    {
+     "quote": "VH4s with blue faceplates sound darker than the later Silver ones For suggested settings, see the picture of Adam Jones’ VH4 below",
+     "page": 132,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Diezel cabinet with V30 or G12K-100 speakers",
+     "page": 132
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack 24",
+     "page": 132
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "double-verb",
+   "section": "Double Verb (Fender Twin Reverb)",
+   "name": "Double Verb",
+   "based_on": "Fender Twin Reverb",
+   "pages": {
+    "start": 136,
+    "end": 138
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Double Verb",
+     "evidence": "Double Verb",
+     "page": 136
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "AB763 AC568",
+    "power": "85 watt 100 watt",
+    "master_volume": "No No",
+    "negative_feedback": "Yes Yes",
+    "preamp_tubes": "7025 (12AX7A Syl) 7025 (12AX7A Syl)",
+    "power_tubes": "6L6 6L6",
+    "tonestack": "PRE PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a ‘66 blackface Fender Twin Reverb and a ’71 silverface model",
+    "page": 136
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Disengage the Bright switch if the sound is too harsh",
+     "page": 136,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Two Jensen 12” speakers",
+     "page": 136
+    },
+    "stock_cabs": {
+     "quote": "2x12 Double Verb – Cab Packs 1, 4, 15, 21",
+     "page": 136
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "dweezils-b-man",
+   "section": "Dweezil’s B-man (modded ’65 blackface Fender Bassman, AB165)",
+   "name": "Dweezil’s B-man",
+   "based_on": "modded ’65 blackface Fender Bassman, AB165",
+   "pages": {
+    "start": 139,
+    "end": 139
+   },
+   "refers_to": "65-bassguy",
+   "unit_names": [
+    {
+     "name": "Dweezil’s B-man",
+     "evidence": "Dweezil’s B-man",
+     "page": 139
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "energyball",
+   "section": "Energyball (Engl Powerball)",
+   "name": "Energyball",
+   "based_on": "Engl Powerball",
+   "pages": {
+    "start": 140,
+    "end": 141
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Energyball",
+     "evidence": "Energyball",
+     "page": 140
+    }
+   ],
+   "brands": [
+    "Engl"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the Lead channel of the original Engl Powerball, a high gain amp with lots of bass, great for aggressive, drop-tuned riff work",
+    "page": 140
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "It can be challenging to dial in: turn down Bass and Master and turn up Gain",
+     "page": 140,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Engl cabinet with V30s or V60s",
+     "page": 140
+    },
+    "stock_cabs": {
+     "quote": "4x12 German V30 (RW) – Cab Pack 19",
+     "page": 140
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "It can be challenging to dial in: turn down Bass and Master and turn up Gain",
+     "page": 140
+    },
+    {
+     "knob": "Master",
+     "dir": "down",
+     "quote": "It can be challenging to dial in: turn down Bass and Master and turn up Gain",
+     "page": 140
+    },
+    {
+     "knob": "Drive",
+     "dir": "up",
+     "quote": "It can be challenging to dial in: turn down Bass and Master and turn up Gain",
+     "page": 140
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "euro-blue-and-red",
+   "section": "Euro Blue and Red (Bogner Ecstasy, 20th Anniversary edition)",
+   "name": "Euro Blue and Red",
+   "based_on": "Bogner Ecstasy, 20th Anniversary edition",
+   "pages": {
+    "start": 142,
+    "end": 145
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Euro Blue",
+     "evidence": "Euro Blue",
+     "page": 142
+    },
+    {
+     "name": "Red",
+     "evidence": "Red",
+     "page": 142
+    }
+   ],
+   "brands": [
+    "Bogner"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "6L6 (modeled) or EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34",
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a 20th Anniversary Bogner Ecstasy • Blue in Vintage mode • Blue in Modern mode • Red in Vintage mode • Red in Modern mode",
+    "page": 142
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Generally considered to be a dark amp, but this can be adjusted through Treble, Presence and Bright",
+     "page": 142,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Bogner 4x12 or 2x12 cabinet with V30s",
+     "page": 142
+    },
+    "stock_cabs": {
+     "quote": "4x12 Uber V30 (RW), 1x12 Shiver, 4x12 German Boutique (RW) – Cab Pack 9",
+     "page": 142
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "euro-uber",
+   "section": "Euro Uber (Bogner Uberschall)",
+   "name": "Euro Uber",
+   "based_on": "Bogner Uberschall",
+   "pages": {
+    "start": 146,
+    "end": 147
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Euro Uber",
+     "evidence": "Euro Uber",
+     "page": 146
+    }
+   ],
+   "brands": [
+    "Bogner"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "120 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34 (modeled) / 6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34",
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the Bogner Uberschall, called",
+    "page": 146
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Keep Bass low and engage the Cut switch.",
+     "page": 146,
+     "said_by": null
+    },
+    {
+     "quote": "The Middle tone control has a large impact on the tone",
+     "page": 146,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Bogner 4x12 Uberkab with V30 and T75 speakers",
+     "page": 146
+    },
+    "stock_cabs": {
+     "quote": "4x12 Uber (RW) – Cab Packs 5 and 9",
+     "page": 146
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "fas-custom-models",
+   "section": "FAS custom models",
+   "name": "FAS custom models",
+   "based_on": null,
+   "pages": {
+    "start": 148,
+    "end": 149
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "FAS custom models",
+     "evidence": "FAS custom models",
+     "page": 148
+    }
+   ],
+   "brands": [
+    "Fractal Audio"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "fox-ods",
+   "section": "Fox ODS (Fuchs Overdrive Supreme)",
+   "name": "Fox ODS",
+   "based_on": "Fuchs Overdrive Supreme",
+   "pages": {
+    "start": 150,
+    "end": 152
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Fox ODS",
+     "evidence": "Fox ODS",
+     "page": 150
+    }
+   ],
+   "brands": [
+    "Fuchs"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Two models of the Overdrive channel of a Fuchs Overdrive Supreme, a Dumble-type amplifier with loads of gain",
+    "page": 150
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The models have lots of gain so keep Input Drive low",
+     "page": 150,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "2x12 or 4x12 cabinet with Eminence speakers",
+     "page": 150
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "friedman-be-and-hbe",
+   "section": "Friedman BE and HBE (Friedman BE-100)",
+   "name": "Friedman BE and HBE",
+   "based_on": "Friedman BE-100",
+   "pages": {
+    "start": 153,
+    "end": 156
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Friedman BE",
+     "evidence": "Friedman BE",
+     "page": 153
+    },
+    {
+     "name": "HBE",
+     "evidence": "HBE",
+     "page": 153
+    }
+   ],
+   "brands": [
+    "Friedman"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (JJ)",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of two versions of Friedman’s BE-100, the “ultimate modded Plexi”",
+    "page": 153
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Don't overlook the SAT switch, it’s a treat",
+     "page": 153,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Friedman cabinet with G12M, G12H or V30 speakers",
+     "page": 153
+    },
+    "stock_cabs": {
+     "quote": "4x12 Fractal stock cabs – Cab Pack 10",
+     "page": 153
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "friedman-sm-box",
+   "section": "Friedman SM Box (Friedman Small Box)",
+   "name": "Friedman SM Box",
+   "based_on": "Friedman Small Box",
+   "pages": {
+    "start": 157,
+    "end": 159
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Friedman SM Box",
+     "evidence": "Friedman SM Box",
+     "page": 157
+    }
+   ],
+   "brands": [
+    "Friedman"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "50 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (JJ)",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the high gain channel of Friedman’s Small Box, similar to the BE-100 but “grittier”",
+    "page": 157
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": {
+     "quote": "1x12, 2x12 or 4x12 Friedman cabinet with G12M, G12H or V30 speaker(s)",
+     "page": 157
+    },
+    "stock_cabs": {
+     "quote": "4x12 Fractal stock cabs – Cab Pack 10",
+     "page": 157
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "fryette-d60",
+   "section": "Fryette D60 (Fryette Deliverance 60)",
+   "name": "Fryette D60",
+   "based_on": "Fryette Deliverance 60",
+   "pages": {
+    "start": 160,
+    "end": 162
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Fryette D60",
+     "evidence": "Fryette D60",
+     "page": 160
+    }
+   ],
+   "brands": [
+    "Fryette"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "60 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "KT88",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "KT88"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of Fryette’s Deliverance 60H in low and high gain modes, popular with metal players",
+    "page": 160
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn up the gain controls and mids and reduce bass",
+     "page": 160,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Fryette cabinet with Eminence P50 or Fane F70G speakers",
+     "page": 160
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "gibtone-scout",
+   "section": "Gibtone Scout (’64 Gibson Scout)",
+   "name": "Gibtone Scout",
+   "based_on": "’64 Gibson Scout",
+   "pages": {
+    "start": 163,
+    "end": 164
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Gibtone Scout",
+     "evidence": "Gibtone Scout",
+     "page": 163
+    }
+   ],
+   "brands": [
+    "Gibson"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "17 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6AQ5 (EL84)",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a 1964 Gibson Scout, a simple 17 watt “jazzy” amplifier",
+    "page": 163
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The Scout’s only control is Volume.",
+     "page": 163,
+     "said_by": null
+    },
+    {
+     "quote": "If authenticity matters, stick to Input Drive and leave everything else at default",
+     "page": 163,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single 10” speaker",
+     "page": 163
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "herbie",
+   "section": "Herbie (Diezel Herbert)",
+   "name": "Herbie",
+   "based_on": "Diezel Herbert",
+   "pages": {
+    "start": 165,
+    "end": 167
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Herbie",
+     "evidence": "Herbie",
+     "page": 165
+    }
+   ],
+   "brands": [
+    "Diezel"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "180 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "KT66",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "KT66"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a Diezel Herbert, covers similar territory as the VH4 but voiced differently",
+    "page": 165
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Decrease bass by lowering Depth",
+     "page": 165,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Diezel cabinet with V30 or G12K-100 speakers",
+     "page": 165
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack 24",
+     "page": 165
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "hipower",
+   "section": "Hipower (Hiwatt DR103)",
+   "name": "Hipower",
+   "based_on": "Hiwatt DR103",
+   "pages": {
+    "start": 168,
+    "end": 170
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Hipower",
+     "evidence": "Hipower",
+     "page": 168
+    }
+   ],
+   "brands": [
+    "Hiwatt"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34",
+    "tonestack": "MID"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a Hiwatt DR103, a British amp with an unique tone stack and a brilliant chimey tone",
+    "page": 168
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "If you want it to roar, crank the Master as well as the channel volume and engage Boost",
+     "page": 168,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Hiwatt cabinet with Fane speakers",
+     "page": 168
+    },
+    "stock_cabs": {
+     "quote": "4x12 Hipower (RW), 4x12 WAT, 4x12 Starfound – Cab Pack 3",
+     "page": 168
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Master",
+     "dir": "up",
+     "quote": "If you want it to roar, crank the Master as well as the channel volume and engage Boost",
+     "page": 168
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "hot-kitty",
+   "section": "Hot Kitty (Bad Cat Hot Cat 30)",
+   "name": "Hot Kitty",
+   "based_on": "Bad Cat Hot Cat 30",
+   "pages": {
+    "start": 171,
+    "end": 172
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Hot Kitty",
+     "evidence": "Hot Kitty",
+     "page": 171
+    }
+   ],
+   "brands": [
+    "Bad Cat"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "30 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the dirty channel of a Bad Cat Hot Cat 30: pure Class A high gain",
+    "page": 171
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Crank the Master and turn up Hi Cut",
+     "page": 171,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Custom 12” Celestion",
+     "page": 171
+    },
+    "stock_cabs": {
+     "quote": "1x12 Hot Kitty – Cab Pack 1",
+     "page": 171
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Master",
+     "dir": "up",
+     "quote": "Crank the Master and turn up Hi Cut",
+     "page": 171
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "jazz-120",
+   "section": "Jazz 120 (Roland Jazz Chorus 120)",
+   "name": "Jazz 120",
+   "based_on": "Roland Jazz Chorus 120",
+   "pages": {
+    "start": 173,
+    "end": 174
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Jazz 120",
+     "evidence": "Jazz 120",
+     "page": 173
+    }
+   ],
+   "brands": [
+    "Roland"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "2x 60 watt",
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Model of the solid-state Roland Jazz Chorus 120, famous for its clean tones in jazz as well as metal tunes",
+    "page": 173
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn up Master",
+     "page": 173,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Two 12” Roland speakers (Silver Alnico)",
+     "page": 173
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack 21",
+     "page": 173
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Master",
+     "dir": "up",
+     "quote": "Turn up Master",
+     "page": 173
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "jmpre-1-and-brit-pre",
+   "section": "JMPre-1 and Brit Pre (Marshall JMP-1 preamp)",
+   "name": "JMPre-1 and Brit Pre",
+   "based_on": "Marshall JMP-1 preamp",
+   "pages": {
+    "start": 175,
+    "end": 177
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "JMPre-1",
+     "evidence": "JMPre-1",
+     "page": 175
+    },
+    {
+     "name": "Brit Pre",
+     "evidence": "Brit Pre",
+     "page": 175
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": "1990s",
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": "ECC83",
+    "power_tubes": null,
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Models of Marshall’s JMP-1 preamp",
+    "page": 175
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The visual tone control settings don’t line up to the actual amp due to a different tone stack",
+     "page": 175,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "jr-blues",
+   "section": "Jr Blues (Fender Blues Junior)",
+   "name": "Jr Blues",
+   "based_on": "Fender Blues Junior",
+   "pages": {
+    "start": 178,
+    "end": 180
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Jr Blues",
+     "evidence": "Jr Blues",
+     "page": 178
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "15 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL84",
+    "tonestack": "MID"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a Fender Blues Junior with the FAT switch On and Off",
+    "page": 178
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Use the FAT model and turn up Master to get the typical Blues Junior sound",
+     "page": 178,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single 12” Eminence Legend or Jensen C12N/P12R",
+     "page": 178
+    },
+    "stock_cabs": {
+     "quote": "1x8 Tweed, 1x12 Junior Blues – Cab Packs 2 and 10",
+     "page": 178
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Master",
+     "dir": "up",
+     "quote": "Use the FAT model and turn up Master to get the typical Blues Junior sound",
+     "page": 178
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "js410",
+   "section": "JS410 (Marshall JVM410HJS, Joe Satriani’s signature amp)",
+   "name": "JS410",
+   "based_on": "Marshall JVM410HJS, Joe Satriani’s signature amp",
+   "pages": {
+    "start": 181,
+    "end": 184
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "JS410",
+     "evidence": "JS410",
+     "page": 181
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Four models of Joe Satriani’s signature amp, Marshall’s JVM410HJS",
+    "page": 181
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“Joe said he puts all the tone controls at around 10:00. ”",
+     "page": 181,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with G12-75 speakers",
+     "page": 181
+    },
+    "stock_cabs": {
+     "quote": "Marshall stock cabs",
+     "page": 181
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "legato-100",
+   "section": "Legato 100 (Carvin Legacy VL100, Steve Vai’s signature amp)",
+   "name": "Legato 100",
+   "based_on": "Carvin Legacy VL100, Steve Vai’s signature amp",
+   "pages": {
+    "start": 185,
+    "end": 185
+   },
+   "refers_to": "cali-leggy-and-legato-100",
+   "unit_names": [
+    {
+     "name": "Legato 100",
+     "evidence": "Legato 100",
+     "page": 185
+    }
+   ],
+   "brands": [
+    "Carvin"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "matchbox-d-30",
+   "section": "Matchbox D-30 (Matchless DC-30)",
+   "name": "Matchbox D-30",
+   "based_on": "Matchless DC-30",
+   "pages": {
+    "start": 186,
+    "end": 189
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Matchbox D-30",
+     "evidence": "Matchbox D-30",
+     "page": 186
+    }
+   ],
+   "brands": [
+    "Matchless"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "30 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A Syl (Ch 1)",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of Channel 1 (12AX7) of a Matchless DC30, a VOX-type amp that started the boutique amp craze, and very popular in Nashville",
+    "page": 186
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The Master was bypassed when creating the model so keep this at default in the amp model",
+     "page": 186,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "2x12 Matchless cabinet with a G12M and a G12H speaker",
+     "page": 186
+    },
+    "stock_cabs": {
+     "quote": "2x12 Boutique – Cab Pack 10",
+     "page": 186
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "mr-z-hwy-66",
+   "section": "MR Z HWY 66 (Dr. Z Route 66)",
+   "name": "MR Z HWY 66",
+   "based_on": "Dr. Z Route 66",
+   "pages": {
+    "start": 190,
+    "end": 191
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "MR Z HWY 66",
+     "evidence": "MR Z HWY 66",
+     "page": 190
+    }
+   ],
+   "brands": [
+    "Dr. Z"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "32 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "EF86",
+    "power_tubes": "KT66",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "KT66"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a Dr.",
+    "page": 190
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "To put the amp into overdrive, turn up all three controls (Volume, Treble, Bass) Sound Clips DR Z Route 66 amplifier demo with Kingbee Tele and Z Best 212 Cabinet Dr Z Route 66 amplifier demo with Fender Stratocaster and Z Best 212 Cabinet More videos, clips and comments",
+     "page": 190,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single 12” V30, G12H, Alnico Blue or Dr.",
+     "page": 190
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "mr-z-mz",
+   "section": "Mr Z MZ (Dr. Z Maz)",
+   "name": "Mr Z MZ",
+   "based_on": "Dr. Z Maz",
+   "pages": {
+    "start": 192,
+    "end": 195
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Mr Z MZ",
+     "evidence": "Mr Z MZ",
+     "page": 192
+    }
+   ],
+   "brands": [
+    "Dr. Z"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "8 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a Dr.",
+    "page": 192
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The ratio Drive/Master is important to keep the tone tight",
+     "page": 192,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single 12” V30, G12H, Alnico Blue or Dr.",
+     "page": 192
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "nuclear-tone",
+   "section": "Nuclear-Tone (Swart Atomic Space Tone)",
+   "name": "Nuclear-Tone",
+   "based_on": "Swart Atomic Space Tone",
+   "pages": {
+    "start": 196,
+    "end": 198
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Nuclear-Tone",
+     "evidence": "Nuclear-Tone",
+     "page": 196
+    }
+   ],
+   "brands": [
+    "Swart"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "20 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6V6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6V6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the boutique Swart Atomic Space Tone",
+    "page": 196
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The amp’s Tone control is mapped to Treble in the model.",
+     "page": 196,
+     "said_by": null
+    },
+    {
+     "quote": "The amp’s Bias Tremolo has also been modeled",
+     "page": 196,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single 12” Mojotone BV-25m",
+     "page": 196
+    },
+    "stock_cabs": {
+     "quote": "1x12 Nuclear Tone – Cab Pack 10",
+     "page": 196
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "ods-100",
+   "section": "ODS-100 (Dumble Overdrive Special)",
+   "name": "ODS-100",
+   "based_on": "Dumble Overdrive Special",
+   "pages": {
+    "start": 199,
+    "end": 202
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "ODS-100",
+     "evidence": "ODS-100",
+     "page": 199
+    }
+   ],
+   "brands": [
+    "Dumble"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "HRM model: EL34",
+    "tonestack": "Clean model: MID"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Various models of a Dumble Overdrive Special, the most expensive amplifier available",
+    "page": 199
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Try the “ODS” factory preset",
+     "page": 199,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "2x12 or 4x12 cabinet with EV-L or G12-65 speakers",
+     "page": 199
+    },
+    "stock_cabs": {
+     "quote": "4x12 Rumble – Cab Pack 17",
+     "page": 199
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "plexi-models",
+   "section": "Plexi models (Marshall Plexi)",
+   "name": "Plexi models",
+   "based_on": "Marshall Plexi",
+   "pages": {
+    "start": 203,
+    "end": 207
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "PLEXI 100W",
+     "evidence": "PLEXI 100W",
+     "page": 203
+    },
+    {
+     "name": "PLEXI 100W 1970",
+     "evidence": "PLEXI 100W 1970",
+     "page": 203
+    },
+    {
+     "name": "PLEXI 50W",
+     "evidence": "PLEXI 50W",
+     "page": 203
+    },
+    {
+     "name": "PLEXI 50W HI 2",
+     "evidence": "PLEXI 50W HI 2",
+     "page": 203
+    },
+    {
+     "name": "PLEXI 50W 6550",
+     "evidence": "PLEXI 50W 6550",
+     "page": 203
+    }
+   ],
+   "brands": [
+    "Marshall"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt 100 watt 50 watt 50 watt 50 watt",
+    "master_volume": "No No No No No",
+    "negative_feedback": "Yes Yes Yes Yes Yes",
+    "preamp_tubes": "ECC83 ECC83 ECC83 ECC83 ECC83",
+    "power_tubes": "EL34 EL34 EL34 6550 EL34",
+    "tonestack": "POST POST POST POST POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL34",
+     "6550"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of various Marshall Plexi heads,",
+    "page": 203
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“My settings for a “typical” Plexi tone are Bass: 2, Mid: 8, Treble 7.5.",
+     "page": 203,
+     "said_by": null
+    },
+    {
+     "quote": "Adjust Presence to taste. ”",
+     "page": 203,
+     "said_by": "Cliff"
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Marshall cabinet with Celestion G12M (greenbacks) or G12H speakers – Several Cab Packs",
+     "page": 203
+    },
+    "stock_cabs": {
+     "quote": "Marshall stock cabs",
+     "page": 203
+    },
+    "notes": []
+   },
+   "settings": [
+    {
+     "quote": "“My settings for a “typical” Plexi tone are Bass: 2, Mid: 8, Treble 7.5.",
+     "page": 203,
+     "said_by": null,
+     "context": null,
+     "unit_name": null,
+     "knobs": {
+      "Bass": 2,
+      "Mid": 8,
+      "Treble": 7.5
+     },
+     "other": []
+    }
+   ],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "prince-tone",
+   "section": "Prince Tone (Fender Princeton)",
+   "name": "Prince Tone",
+   "based_on": "Fender Princeton",
+   "pages": {
+    "start": 208,
+    "end": 213
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Prince Tone",
+     "evidence": "Prince Tone",
+     "page": 208
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "5F2-A AA964 AA964",
+    "power": "4 ½ watt 12 watt 12 watt",
+    "master_volume": "No No No",
+    "negative_feedback": "Yes Yes Yes",
+    "preamp_tubes": "12AX7A (Syl) 7025 (12AX7A Syl) 7025 (12AX7A Syl)",
+    "power_tubes": "6V6 6V6 6V6",
+    "tonestack": "PRE MID MID"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6V6"
+    ]
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [
+    {
+     "quote": "The single Tone control is mapped to Treble.",
+     "page": 208,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "pvh-6160-block",
+   "section": "PVH 6160 Block (block letter EVH 5150 = Peavey 6505)",
+   "name": "PVH 6160 Block",
+   "based_on": "block letter EVH 5150 = Peavey 6505",
+   "pages": {
+    "start": 214,
+    "end": 216
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "PVH 6160 Block",
+     "evidence": "PVH 6160 Block",
+     "page": 214
+    }
+   ],
+   "brands": [
+    "Peavey",
+    "EVH"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "120 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (JJ)",
+    "power_tubes": "6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of the Lead channel of a “block letter” EVH 5150, Eddie Van Halen’s first signature amp",
+    "page": 214
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn down mids",
+     "page": 214,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with 12” Sheffield speakers",
+     "page": 214
+    },
+    "stock_cabs": {
+     "quote": "4x12 PVH Web, Manual Peavey 6505 Series 6505 Tube Guitar Amplifier Owner’s Manual",
+     "page": 214
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "pvh-6106-plus",
+   "section": "PVH 6106+ (Peavey 6160+ / EVH 5150-II)",
+   "name": "PVH 6106+",
+   "based_on": "Peavey 6160+ / EVH 5150-II",
+   "pages": {
+    "start": 217,
+    "end": 218
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "PVH 6106+",
+     "evidence": "PVH 6106+",
+     "page": 217
+    }
+   ],
+   "brands": [
+    "Peavey",
+    "EVH"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "120 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of Peavey’s 6505+, which is the same amp as the 5150-II, Eddie Van Halen’s second signature amp",
+    "page": 217
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Keep the mids low",
+     "page": 217,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with V30 speakers",
+     "page": 217
+    },
+    "stock_cabs": {
+     "quote": "4x12 PVH Web, Manual Peavey 6505 Series 6505 Tube Guitar Amplifier Owner’s Manual",
+     "page": 217
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "recto1-and-recto2",
+   "section": "Recto1 and Recto2 (MESA two-channel and three-channel Dual Rectifiers)",
+   "name": "Recto1 and Recto2",
+   "based_on": "MESA two-channel and three-channel Dual Rectifiers",
+   "pages": {
+    "start": 219,
+    "end": 222
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Recto1",
+     "evidence": "Recto1",
+     "page": 219
+    },
+    {
+     "name": "Recto2",
+     "evidence": "Recto2",
+     "page": 219
+    }
+   ],
+   "brands": [
+    "MESA/Boogie"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "6L6GC",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of MESA’s two-channel and three-channel Dual Rectifiers, the sound of Nu Metal",
+    "page": 219
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn down Bass, keep Master Volume low",
+     "page": 219,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 Rectifier cabinet with Vintage 30s",
+     "page": 219
+    },
+    "stock_cabs": {
+     "quote": "4x12 Recto, 4x12 USA, 4x12 Cali, 4x12 Petrucci – Cab Packs 5, 7, 13, 14, 21 and",
+     "page": 219
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "Turn down Bass, keep Master Volume low",
+     "page": 219
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "ruby-rocket",
+   "section": "Ruby Rocket (Paul Ruby Rocket)",
+   "name": "Ruby Rocket",
+   "based_on": "Paul Ruby Rocket",
+   "pages": {
+    "start": 223,
+    "end": 224
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Ruby Rocket",
+     "evidence": "Ruby Rocket",
+     "page": 223
+    }
+   ],
+   "brands": [
+    "Paul Ruby"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL84",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a Ruby Rocket, based on a Trainwreck Rocket, which in turn is based on a VOX",
+    "page": 223
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“I especially like the on-the-edge-of-breakup tone of the models.",
+     "page": 223,
+     "said_by": null
+    },
+    {
+     "quote": "Volume around 2.50, Bass at 3 (both models)”",
+     "page": 223,
+     "said_by": "yek"
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single or double Celestion G12M",
+     "page": 223
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "shiver",
+   "section": "Shiver (20th Anniversary Bogner Shiva)",
+   "name": "Shiver",
+   "based_on": "20th Anniversary Bogner Shiva",
+   "pages": {
+    "start": 225,
+    "end": 227
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Shiver",
+     "evidence": "Shiver",
+     "page": 225
+    }
+   ],
+   "brands": [
+    "Bogner"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "90 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "ECC83",
+    "power_tubes": "KT88",
+    "tonestack": "MID (Clean)"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "KT88"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Clean and Lead channels of a Bogner Shiva, 20th Anniversary model, known for its warm clean tone and woody, thick Bogner gain sound",
+    "page": 225
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "For beefy clean and overdrive tones, turn up Input Drive.",
+     "page": 225,
+     "said_by": null
+    },
+    {
+     "quote": "Turn up Treble a lot to make it less dark – yek",
+     "page": 225,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Bogner cabinet with Classic Lead 80 or V30 speakers",
+     "page": 225
+    },
+    "stock_cabs": {
+     "quote": "1x12 Shiver – Cab Packs 9 and 17",
+     "page": 225
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Drive",
+     "dir": "up",
+     "quote": "For beefy clean and overdrive tones, turn up Input Drive.",
+     "page": 225
+    },
+    {
+     "knob": "Treble",
+     "dir": "up",
+     "quote": "Turn up Treble a lot to make it less dark – yek",
+     "page": 225
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "solo-88-and-solo-x99",
+   "section": "Solo 88 and Solo X99 (Soldano X88R and X99 preamps)",
+   "name": "Solo 88 and Solo X99",
+   "based_on": "Soldano X88R and X99 preamps",
+   "pages": {
+    "start": 228,
+    "end": 229
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Solo 88",
+     "evidence": "Solo 88",
+     "page": 228
+    },
+    {
+     "name": "Solo X99",
+     "evidence": "Solo X99",
+     "page": 228
+    }
+   ],
+   "brands": [
+    "Soldano"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": "12AX7A",
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Models of Soldano X88R preamp and X99 preamps",
+    "page": 228
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "solo-100",
+   "section": "Solo 100 (Soldano SLO-100)",
+   "name": "Solo 100",
+   "based_on": "Soldano SLO-100",
+   "pages": {
+    "start": 230,
+    "end": 233
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Solo 100",
+     "evidence": "Solo 100",
+     "page": 230
+    }
+   ],
+   "brands": [
+    "Soldano"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of all channels of Soldano’s SLO-100 head, an amp used by Gary Moore, Eric Clapton and Mark Knopfler",
+    "page": 230
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“I like to run the Master high on the Lead model, keep Input Drive real low, increase the mids and turn down Treble.",
+     "page": 230,
+     "said_by": null
+    },
+    {
+     "quote": "This results in a very meaty and solid rock tone. which makes high push-ups really thick.”",
+     "page": 230,
+     "said_by": "yek"
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with Eminence V12 speakers",
+     "page": 230
+    },
+    "stock_cabs": {
+     "quote": "4x12 Solo (RW)",
+     "page": 230
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Treble",
+     "dir": "down",
+     "quote": "“I like to run the Master high on the Lead model, keep Input Drive real low, increase the mids and turn down Treble.",
+     "page": 230
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "spawn-nitrous",
+   "section": "Spawn Nitrous (Splawn Nitro)",
+   "name": "Spawn Nitrous",
+   "based_on": "Splawn Nitro",
+   "pages": {
+    "start": 234,
+    "end": 235
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Spawn Nitrous",
+     "evidence": "Spawn Nitrous",
+     "page": 234
+    }
+   ],
+   "brands": [
+    "Splawn"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "KT88",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "KT88"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Rhythm and Lead channels of a Splawn Nitro with KT88 tubes, voiced for a bigger low end and low mids",
+    "page": 234
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Use IRs with a lot of midrange, such as a Classic Leads 80 (Cali stock cab) and/or G12M, and decrease Bass",
+     "page": 234,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with G12M, G12-65 or V30 speakers",
+     "page": 234
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "Use IRs with a lot of midrange, such as a Classic Leads 80 (Cali stock cab) and/or G12M, and decrease Bass",
+     "page": 234
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "spawn-qrod",
+   "section": "Spawn Qrod (Splawn Quickrod)",
+   "name": "Spawn Qrod",
+   "based_on": "Splawn Quickrod",
+   "pages": {
+    "start": 236,
+    "end": 237
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Spawn Qrod",
+     "evidence": "Spawn Qrod",
+     "page": 236
+    }
+   ],
+   "brands": [
+    "Splawn"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "EL34",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Six models of the Overdrive channel of a Splawn Quickrod, a hot-rodded Marshall-type amp",
+    "page": 236
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "So easy to dial in: everything at stock.",
+     "page": 236,
+     "said_by": null
+    },
+    {
+     "quote": "Use an IR of a cabinet with G12-65 speakers",
+     "page": 236,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with G12-65 Creamback, Vintage 30 or G12M speakers",
+     "page": 236
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "suhr-badger-18",
+   "section": "Suhr Badger",
+   "name": "Suhr Badger 18",
+   "based_on": null,
+   "pages": {
+    "start": 238,
+    "end": 238
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Suhr Badger 18",
+     "evidence": "Suhr Badger 18",
+     "page": 238
+    }
+   ],
+   "brands": [
+    "Suhr"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Model of a Suhr Badger 18, an 18 watt EL84-powered amp, capable of achieving clear cleans to saturated leads",
+    "page": 238
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "For maximum headroom turn up the Master and keep Drive low, for an overdriven tone lower the Master and turn up Drive.",
+     "page": 238,
+     "said_by": null
+    },
+    {
+     "quote": "Lower bass and turn up mids",
+     "page": 238,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "1x12 or 2x12 cabinet with WGS Veteran 30 speaker(s)",
+     "page": 238
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack 17",
+     "page": 238
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Master",
+     "dir": "up",
+     "quote": "For maximum headroom turn up the Master and keep Drive low, for an overdriven tone lower the Master and turn up Drive.",
+     "page": 238
+    },
+    {
+     "knob": "Drive",
+     "dir": "up",
+     "quote": "For maximum headroom turn up the Master and keep Drive low, for an overdriven tone lower the Master and turn up Drive.",
+     "page": 238
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "suhr-badger-30",
+   "section": "Suhr Badger",
+   "name": "Suhr Badger 30",
+   "based_on": null,
+   "pages": {
+    "start": 239,
+    "end": 240
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Suhr Badger 30",
+     "evidence": "Suhr Badger 30",
+     "page": 239
+    }
+   ],
+   "brands": [
+    "Suhr"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Model of a Suhr Badger 30, a 30 watt EL34-powered amp, capable of achieving clear cleans to saturated leads.",
+    "page": 239
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn up the Master and mids",
+     "page": 239,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "1x12 or 2x12 cabinet with WGS Veteran 30 speaker(s)",
+     "page": 239
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack 17",
+     "page": 239
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Master",
+     "dir": "up",
+     "quote": "Turn up the Master and mids",
+     "page": 239
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "super-verb",
+   "section": "Super Verb ('64 blackface Fender Super Reverb, AB763)",
+   "name": "Super Verb",
+   "based_on": "'64 blackface Fender Super Reverb, AB763",
+   "pages": {
+    "start": 241,
+    "end": 243
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Super Verb",
+     "evidence": "Super Verb",
+     "page": 241
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "AB763",
+    "power": "40 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "7025 (12AX7A Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a modded 1964 Fender Super Reverb, popular for the SRV sound",
+    "page": 241
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Try the “magic six” settings",
+     "page": 241,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with four 10” speakers",
+     "page": 241
+    },
+    "stock_cabs": {
+     "quote": "4x10 Super, 2x10 Super – Cab Packs 1 and 22",
+     "page": 241
+    },
+    "notes": []
+   },
+   "settings": [
+    {
+     "quote": "“Magic Six“ settings work well: Volume 6, Bass 2, Middle 3, Treble 6 (6, 2x3, 6).",
+     "page": 243,
+     "said_by": null,
+     "context": null,
+     "unit_name": null,
+     "knobs": {
+      "Bass": 2,
+      "Mid": 3,
+      "Treble": 6
+     },
+     "other": []
+    }
+   ],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "supertweed",
+   "section": "Supertweed (FAS custom model)",
+   "name": "Supertweed",
+   "based_on": "FAS custom model",
+   "pages": {
+    "start": 244,
+    "end": 244
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Supertweed",
+     "evidence": "Supertweed",
+     "page": 244
+    }
+   ],
+   "brands": [
+    "Fractal Audio"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Custom amp model by Fractal Audio, based on a Tweed Deluxe",
+    "page": 244
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“Don't hesitate to set Input Drive really low (below 2) and everything else at stock”",
+     "page": 244,
+     "said_by": "yek"
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "supremo-trem",
+   "section": "Supremo Trem (Supro 1964T Dual-Tone)",
+   "name": "Supremo Trem",
+   "based_on": "Supro 1964T Dual-Tone",
+   "pages": {
+    "start": 245,
+    "end": 247
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Supremo Trem",
+     "evidence": "Supremo Trem",
+     "page": 245
+    }
+   ],
+   "brands": [
+    "Supro"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "24 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6973",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6973"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of (what’s assumed to be) a reissue series 1624T Dual Tone, a mid-heavy edgy and dirty amp, supposedly used by Jimmy Page on early Zep albums",
+    "page": 245
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“I keep all controls pretty much at default, except for Treble (= Tone)”",
+     "page": 245,
+     "said_by": "yek"
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "1x12″ Supro DT12",
+     "page": 245
+    },
+    "stock_cabs": {
+     "quote": "1x6 Oval, 1x15 Thunderbolt (RW), 2x12 Supremo – Cab Pack 2",
+     "page": 245
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "sv-bass",
+   "section": "SV Bass (Ampeg SVT)",
+   "name": "SV Bass",
+   "based_on": "Ampeg SVT",
+   "pages": {
+    "start": 248,
+    "end": 250
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "SV Bass",
+     "evidence": "SV Bass",
+     "page": 248
+    }
+   ],
+   "brands": [
+    "Ampeg"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "300 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7 (Syl)",
+    "power_tubes": "6550",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6550"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a 300 watt Ampeg SVT, maybe world’s most popular bass amp",
+    "page": 248
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with eight 10” speakers",
+     "page": 248
+    },
+    "stock_cabs": {
+     "quote": "8x10 SV Bass, 1x15 SV Bass, 4x10 SV Bass – Cab Packs 11 and 22",
+     "page": 248
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "thordendal",
+   "section": "Thordendal (pre-G3 Recto models)",
+   "name": "Thordendal",
+   "based_on": "pre-G3 Recto models",
+   "pages": {
+    "start": 251,
+    "end": 251
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Thordendal",
+     "evidence": "Thordendal",
+     "page": 251
+    }
+   ],
+   "brands": [],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Alternative (pre G3 modeling) models of MESA’s Dual Rectifier",
+    "page": 251
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "See Recto models",
+     "page": 251,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "See Recto models",
+     "page": 251
+    },
+    "stock_cabs": {
+     "quote": "See Recto models",
+     "page": 251
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "tremolo-lux",
+   "section": "Tremolo Lux (blackface Fender Tremolux, AA763)",
+   "name": "Tremolo Lux",
+   "based_on": "blackface Fender Tremolux, AA763",
+   "pages": {
+    "start": 252,
+    "end": 254
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Tremolo Lux",
+     "evidence": "Tremolo Lux",
+     "page": 252
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "AA763",
+    "power": "35 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "7025 (12AX7 Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a 1960’s Fender Tremolux, smaller than the Bandmaster, larger than the Deluxe",
+    "page": 252
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Sounds great at stock settings",
+     "page": 252,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with two 10” speakers",
+     "page": 252
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "tube-pre",
+   "section": "Tube Pre",
+   "name": "Tube Pre",
+   "based_on": null,
+   "pages": {
+    "start": 255,
+    "end": 255
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Tube Pre",
+     "evidence": "Tube Pre",
+     "page": 255
+    }
+   ],
+   "brands": [],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Model of a 12AX7 preamp tube, plus a power amp model",
+    "page": 255
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Use this to warm up a source This is not the model of a guitar amplifier.",
+     "page": 255,
+     "said_by": null
+    },
+    {
+     "quote": "It’s a generic model of a 12AX7 preamp tube, neutral and low-gain, with a power amp model added.",
+     "page": 255,
+     "said_by": null
+    },
+    {
+     "quote": "You can this model to warm up a source, such as vocals, an acoustic guitar or a synth, without much distortion.",
+     "page": 255,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "two-stone-j35",
+   "section": "Two Stone J35 (Two-Rock Jet 35)",
+   "name": "Two Stone J35",
+   "based_on": "Two-Rock Jet 35",
+   "pages": {
+    "start": 256,
+    "end": 257
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Two Stone J35",
+     "evidence": "Two Stone J35",
+     "page": 256
+    }
+   ],
+   "brands": [
+    "Two-Rock"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "35 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Two-Rock Jet 35, a Dumble-style amp with a unique ‘chirp’ on the pick attack and is said by Cliff to be one of the most unique amps he has modeled",
+    "page": 256
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Keep all tone controls at default when using the “1” model, for authenticity",
+     "page": 256,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with Celestion G12-65 speakers",
+     "page": 256
+    },
+    "stock_cabs": {
+     "quote": "2x12 Double Amp – Cab Pack 17",
+     "page": 256
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "tx-star",
+   "section": "TX Star (MESA Lone Star)",
+   "name": "TX Star",
+   "based_on": "MESA Lone Star",
+   "pages": {
+    "start": 258,
+    "end": 259
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "TX Star",
+     "evidence": "TX Star",
+     "page": 258
+    }
+   ],
+   "brands": [
+    "MESA/Boogie"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "10/50/100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of the Clean and Drive channels of a MESA Lone Star, Andy Timmons’ favorite amp",
+    "page": 258
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Clean model: turn down mids and bass and turn up Drive.",
+     "page": 258,
+     "said_by": null
+    },
+    {
+     "quote": "In the Lead model follow the standard MESA procedure: turn down bass and mids and turn up Overdrive",
+     "page": 258,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with Celestion C90 speakers",
+     "page": 258
+    },
+    "stock_cabs": {
+     "quote": "2x12 TX Star, 1x12 Shadow – Cab Pack 10",
+     "page": 258
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Drive",
+     "dir": "up",
+     "quote": "Clean model: turn down mids and bass and turn up Drive.",
+     "page": 258
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "usa-bass-400",
+   "section": "USA Bass 400 (MESA Bass 400)",
+   "name": "USA Bass 400",
+   "based_on": "MESA Bass 400",
+   "pages": {
+    "start": 260,
+    "end": 261
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "USA Bass 400",
+     "evidence": "USA Bass 400",
+     "page": 260
+    }
+   ],
+   "brands": [
+    "MESA/Boogie"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "500 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6550",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6550"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a MESA Boogie Bass 400, with Bass Shift disabled/enabled",
+    "page": 260
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": {
+     "quote": "MESA bass cabinet with eight 10” speakers",
+     "page": 260
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "usa-clean-usa-lead-usa-rhythm",
+   "section": "USA Clean / USA Lead / USA Rhythm (MESA/Boogie Mark IV)",
+   "name": "USA Clean / USA Lead / USA Rhythm",
+   "based_on": "MESA/Boogie Mark IV",
+   "pages": {
+    "start": 262,
+    "end": 265
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "USA Clean",
+     "evidence": "USA Clean",
+     "page": 262
+    },
+    {
+     "name": "USA Lead",
+     "evidence": "USA Lead",
+     "page": 262
+    },
+    {
+     "name": "USA Rhythm",
+     "evidence": "USA Rhythm",
+     "page": 262
+    }
+   ],
+   "brands": [
+    "MESA/Boogie"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "85 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Multiple models of MESA/Boogie’s Mark IV, famous for its smooth high gain tones and endorsement by John Petrucci",
+    "page": 262
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Keep bass and mids low, turn up both drives and use the 5-band GEQ (pre power amp) to fine-tune",
+     "page": 262,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with Celestion C90 speakers",
+     "page": 262
+    },
+    "stock_cabs": {
+     "quote": "4x12 USA, 4x12 Petrucci – Several Cab Packs",
+     "page": 262
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "usa-iic-plus-and-usa-iic-plus-plus",
+   "section": "USA IIC+ and USA IIC++ (MESA/Boogie Mark IIC+)",
+   "name": "USA IIC+ and USA IIC++",
+   "based_on": "MESA/Boogie Mark IIC+",
+   "pages": {
+    "start": 266,
+    "end": 271
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "USA IIC+",
+     "evidence": "USA IIC+",
+     "page": 266
+    },
+    {
+     "name": "USA IIC++",
+     "evidence": "USA IIC++",
+     "page": 266
+    }
+   ],
+   "brands": [
+    "MESA/Boogie"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "100 watt",
+    "master_volume": "Yes",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "yes",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a MESA/Boogie Mark IIC+, the amp that introduced guitar players to liquid, smooth lead tones and scooped high gain",
+    "page": 266
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "(IIC+) “My settings for a killer high-gain tone: Input Drive 8.1 / Overdrive 9-10 / Bass 1 / Midrang 1.8 / Treble 8.9 / Presence 4.5 / MV 4 / Bright Switch:ON / 80 4.8 / 240 2.6 / 750 -4.5 / 2200 -0.2 / 6600 0.”",
+     "page": 266,
+     "said_by": null
+    },
+    {
+     "quote": "(IIC++) Turn down bass and mids, compensate bass with 5-band GEQ (pre power amp) if necessary Sound Clips Mesa Boogie Mark IIc+ vs Mark III vs Mark IV John Petrucci Mark Five vs Mark IIC+ Comparison More videos, clips and comments",
+     "page": 266,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with EV-12L speakers",
+     "page": 266
+    },
+    "stock_cabs": {
+     "quote": "None – Cab Pack OBOT The Robot",
+     "page": 266
+    },
+    "notes": []
+   },
+   "settings": [
+    {
+     "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+     "page": 270,
+     "said_by": null,
+     "context": null,
+     "unit_name": "USA IIC+",
+     "knobs": {
+      "Drive": 8.1,
+      "Bass": 1,
+      "Mid": 1.8,
+      "Treble": 8.9,
+      "Master": 4,
+      "Presence": 4.5
+     },
+     "other": [
+      "Overdrive: 9-10",
+      "Level: -20 dB",
+      "Bright Switch ON",
+      "80 Hz: 4.8",
+      "240 Hz: 2.6",
+      "750 Hz: -4.5",
+      "2200: -0.2",
+      "6600: 0"
+     ]
+    }
+   ],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "usa-iic-plus-plus",
+   "section": "USA IIC++ (modded MESA/Boogie Mark IIC+)",
+   "name": "USA IIC++",
+   "based_on": "modded MESA/Boogie Mark IIC+",
+   "pages": {
+    "start": 272,
+    "end": 272
+   },
+   "refers_to": "usa-iic-plus-and-usa-iic-plus-plus",
+   "unit_names": [
+    {
+     "name": "USA IIC++",
+     "evidence": "USA IIC++",
+     "page": 272
+    }
+   ],
+   "brands": [
+    "MESA/Boogie"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": null,
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": null,
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "usa-pre",
+   "section": "USA Pre (MESA/Boogie TriAxis preamp)",
+   "name": "USA Pre",
+   "based_on": "MESA/Boogie TriAxis preamp",
+   "pages": {
+    "start": 273,
+    "end": 279
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "USA Pre",
+     "evidence": "USA Pre",
+     "page": 273
+    }
+   ],
+   "brands": [
+    "MESA/Boogie"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": null,
+    "negative_feedback": null,
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": null,
+    "tonestack": null
+   },
+   "facets": {
+    "master_volume": "unknown",
+    "power_tubes": []
+   },
+   "synopsis": {
+    "quote": "Models of a Mesa/Boogie TriAxis preamp, which covers tones from Mark I, Mark IIC+ and Mark IV",
+    "page": 273
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Dial down bass and mids, increase Treble, keep Presence at default and turn down the Bright knob, and change the 5-band GEQ into a V-shape",
+     "page": 273,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": null,
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Treble",
+     "dir": "up",
+     "quote": "Dial down bass and mids, increase Treble, keep Presence at default and turn down the Bright knob, and change the 5-band GEQ into a V-shape",
+     "page": 273
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "usa-sub-blues",
+   "section": "USA Sub Blues (MESA/Boogie Subway Blues)",
+   "name": "USA Sub Blues",
+   "based_on": "MESA/Boogie Subway Blues",
+   "pages": {
+    "start": 280,
+    "end": 281
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "USA Sub Blues",
+     "evidence": "USA Sub Blues",
+     "page": 280
+    }
+   ],
+   "brands": [
+    "MESA/Boogie"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "20 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A",
+    "power_tubes": "EL84",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of MESA’s Subway Blues, a simple blues",
+    "page": 280
+   },
+   "controls": null,
+   "tips": [],
+   "cab": {
+    "speaker": {
+     "quote": "Single Eminence 10” Black Shadow",
+     "page": 280
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "vibra-king",
+   "section": "Vibra-King (custom Fender Vibro-King)",
+   "name": "Vibra-King",
+   "based_on": "custom Fender Vibro-King",
+   "pages": {
+    "start": 282,
+    "end": 283
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Vibra-King",
+     "evidence": "Vibra-King",
+     "page": 282
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": "60 watt",
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "POST"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of a Fender Vibro-King, called by some",
+    "page": 282
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Use the FAT model and set the desired gain with Input Drive between 3 and 6",
+     "page": 282,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Cabinet with three 10” speakers",
+     "page": 282
+    },
+    "stock_cabs": {
+     "quote": "3x10 Vibrato King – Cab Pack 2",
+     "page": 282
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "vibrato-lux",
+   "section": "Vibrato Lux (Fender Vibrolux, 6G11)",
+   "name": "Vibrato Lux",
+   "based_on": "Fender Vibrolux, 6G11",
+   "pages": {
+    "start": 284,
+    "end": 285
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Vibrato Lux",
+     "evidence": "Vibrato Lux",
+     "page": 284
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "6G11",
+    "power": "35 watt",
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "7025 (12AX7A Syl)",
+    "power_tubes": "6L6",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a 1963 brown Fender Vibrolux, the amp used on Dire Straits’ first album",
+    "page": 284
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone”",
+     "page": 284,
+     "said_by": "yek"
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Combo with 10” or 12” speaker(s)",
+     "page": 284
+    },
+    "stock_cabs": {
+     "quote": "1x12 Brown, 1x12 Vibrato Lux, 2x10 Vibrato Lux – Cab Packs 1 and 10",
+     "page": 284
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone”",
+     "page": 284
+    },
+    {
+     "knob": "Treble",
+     "dir": "up",
+     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone”",
+     "page": 284
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "vibrato-verb",
+   "section": "Vibrato Verb (Fender Vibroverb)",
+   "name": "Vibrato Verb",
+   "based_on": "Fender Vibroverb",
+   "pages": {
+    "start": 286,
+    "end": 288
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Vibrato Verb",
+     "evidence": "Vibrato Verb",
+     "page": 286
+    }
+   ],
+   "brands": [
+    "Fender"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "AA763 AB763 N/A",
+    "power": "40 watt 40 watt 50 watt",
+    "master_volume": "No No No",
+    "negative_feedback": "Yes Yes Yes",
+    "preamp_tubes": "7025 (12AX7A Syl) 7025 (12AX7A Syl) 12AX7A (Syl)",
+    "power_tubes": "6L6 6L6 6L6",
+    "tonestack": "PRE PRE PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "6L6"
+    ]
+   },
+   "synopsis": {
+    "quote": "Models of various Fender Vibroverb amps, Stevie Ray Vaughan’s favorite",
+    "page": 286
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“I use the AA model with 1x15 Empire and Vibrato Verb cabs, dial back Bass and use Input Drive to set the desired amount of drive.",
+     "page": 286,
+     "said_by": null
+    },
+    {
+     "quote": "If you find the AA or CS model too dark, engage the Bright switch”",
+     "page": 286,
+     "said_by": "yek"
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "Single 15” speaker (Jensen, JBM or Eminence)",
+     "page": 286
+    },
+    "stock_cabs": {
+     "quote": "1x15 Thunderbolt, 1x15 Tweed Pro, 1x15 Empire, 2x12 Doubleshow – Cab Pack 21",
+     "page": 286
+    },
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  },
+  {
+   "id": "wrecker-express",
+   "section": "Wrecker Express (Trainwreck Express)",
+   "name": "Wrecker Express",
+   "based_on": "Trainwreck Express",
+   "pages": {
+    "start": 289,
+    "end": 290
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Wrecker Express",
+     "evidence": "Wrecker Express",
+     "page": 289
+    }
+   ],
+   "brands": [
+    "Trainwreck"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL34",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL34"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a Trainwreck Express, one of the most valuable amps on the world",
+    "page": 289
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Turn down Bass and turn off Bright",
+     "page": 289,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with Celestion G12Ms (greenbacks)",
+     "page": 289
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "Turn down Bass and turn off Bright",
+     "page": 289
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "wrecker-liverpool",
+   "section": "Wrecker Liverpool (Trainwreck Liverpool)",
+   "name": "Wrecker Liverpool",
+   "based_on": "Trainwreck Liverpool",
+   "pages": {
+    "start": 291,
+    "end": 292
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Wrecker Liverpool",
+     "evidence": "Wrecker Liverpool",
+     "page": 291
+    }
+   ],
+   "brands": [
+    "Trainwreck"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": null,
+    "power": null,
+    "master_volume": "No",
+    "negative_feedback": "Yes",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL84",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a Trainwreck Liverpool, a fusion between the Express (preamp) and Rocket (power amp), sort of Marshall meets VOX",
+    "page": 291
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "Maybe turn down Bass a little and you’re done",
+     "page": 291,
+     "said_by": null
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with Celestion G12Ms (greenbacks) or Alnicos",
+     "page": 291
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [
+    {
+     "knob": "Bass",
+     "dir": "down",
+     "quote": "Maybe turn down Bass a little and you’re done",
+     "page": 291
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "wrecker-rocket",
+   "section": "Wrecker Rocket (Trainwreck Rocket)",
+   "name": "Wrecker Rocket",
+   "based_on": "Trainwreck Rocket",
+   "pages": {
+    "start": 293,
+    "end": 295
+   },
+   "refers_to": null,
+   "unit_names": [
+    {
+     "name": "Wrecker Rocket",
+     "evidence": "Wrecker Rocket",
+     "page": 293
+    }
+   ],
+   "brands": [
+    "Trainwreck"
+   ],
+   "specs": {
+    "years": null,
+    "circuit": "Amp Model",
+    "power": null,
+    "master_volume": "No",
+    "negative_feedback": "No",
+    "preamp_tubes": "12AX7A (Syl)",
+    "power_tubes": "EL84",
+    "tonestack": "PRE"
+   },
+   "facets": {
+    "master_volume": "no",
+    "power_tubes": [
+     "EL84"
+    ]
+   },
+   "synopsis": {
+    "quote": "Model of a Trainwreck Rocket, a boutique amp based on a VOX AC30 Top Boost, with a tube rectifier",
+    "page": 293
+   },
+   "controls": null,
+   "tips": [
+    {
+     "quote": "“The model is quite bass-heavy, I have to turn Bass down and use Hi Cut to control the highs.",
+     "page": 293,
+     "said_by": null
+    },
+    {
+     "quote": "Other than that, I can pretty much leave all controls at default”",
+     "page": 293,
+     "said_by": "yek"
+    }
+   ],
+   "cab": {
+    "speaker": {
+     "quote": "4x12 cabinet with Celestion G12Ms (greenbacks) or Alnicos",
+     "page": 293
+    },
+    "stock_cabs": null,
+    "notes": []
+   },
+   "settings": [],
+   "directions": [],
+   "notes": []
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="api-base" content="http://127.0.0.1:8302">
+  <title>Binder · Tone Finder</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="site-header"><div class="wrap" id="site-header"></div></header>
+  <main class="wrap">
+    <div class="binder-head no-print">
+      <div>
+        <h1>Binder</h1>
+        <p class="muted">Picks saved on this device.</p>
+      </div>
+      <button class="btn btn-primary" type="button" id="print-btn">Print</button>
+    </div>
+    <p id="status" class="status no-print" role="status" aria-live="polite"></p>
+    <div id="binder" class="binder-list"></div>
+  </main>
+  <footer class="site-footer"><div class="wrap" id="site-footer"></div></footer>
+  <script type="module" src="binder.js"></script>
+</body>
+</html>

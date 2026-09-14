@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="api-base" content="http://127.0.0.1:8302">
+  <title>Models · Tone Finder</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="site-header"><div class="wrap" id="site-header"></div></header>
+  <main class="wrap">
+    <h1>Models</h1>
+    <section class="glass panel filters no-print">
+      <div>
+        <label for="name-filter">Filter by name</label>
+        <input id="name-filter" type="search" autocomplete="off" placeholder="e.g. Plexi, IIC+, Dumble">
+      </div>
+      <fieldset class="filter-group">
+        <legend>Brand</legend>
+        <div class="chips" id="brand-chips"></div>
+        <div id="more-brands-wrap"></div>
+      </fieldset>
+      <fieldset class="filter-group">
+        <legend>Power tubes</legend>
+        <div class="chips" id="tube-chips"></div>
+      </fieldset>
+      <fieldset class="filter-group">
+        <legend>Master volume</legend>
+        <div class="chips" id="mv-chips"></div>
+      </fieldset>
+    </section>
+    <p class="showing" id="showing" role="status" aria-live="polite"></p>
+    <ul class="model-list" id="model-list"></ul>
+  </main>
+  <footer class="site-footer"><div class="wrap" id="site-footer"></div></footer>
+  <script type="module" src="models.js"></script>
+</body>
+</html>
