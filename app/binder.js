@@ -1,6 +1,6 @@
 // Binder (docs/API.md §8): picks saved on the device, and a one-page-per-3-picks print.
 import { carry } from './api.js';
-import { headerLines, quoteHtml } from './card.js';
+import { headerLines, knobSourcesHtml, quoteHtml } from './card.js';
 import { GUESS_NOTE, hasGuess, knobSource } from './knobs.js';
 import { esc, renderShell } from './shell.js';
 import { listPicks, removePick, storageAvailable } from './store.js';
@@ -35,6 +35,7 @@ function pickHtml({ query, suggestion: s }) {
         .map((k) => `<tr data-kind="${esc(k.kind)}"><th scope="row">${esc(k.knob)}</th><td class="val">${esc(k.value)}</td><td>${esc(knobSource(k))}</td></tr>`)
         .join('')}</tbody>
     </table>
+    ${knobSourcesHtml(s.knobs, { small: true })}
     ${hasGuess(s.knobs) ? `<p class="guess-note small">Guess = ${GUESS_NOTE}</p>` : ''}
     ${cabLine(s.cab)}
     ${why ? quoteHtml(why) : ''}

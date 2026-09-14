@@ -296,6 +296,12 @@ Always seven, in this order: Drive, Bass, Mid, Treble, Master, Presence, Depth.
    side stays as it is (a clean Drive guess of 2.5 with "keep Drive low" stays 2.5, not 0.5). It adds
    `direction: { dir, quote, page }`. Guide values are never nudged.
 6. `other_settings`: the picked entry's `other` fragments as `{ text, quote, page }`, else `[]`.
+6b. **A page needs a sentence that states the value.** A `guide` or `guide_rule` knob keeps its page only if its quote
+   states that knob's value (`quoteSupportsKnob` in `core/knobs.js`): a settings sentence that parses to exactly
+   the value ("Bass 2, Mid 8, Treble 7.5"), or a sentence where the knob's label (including the model's `Label (=Knob)`
+   hints) is followed in the same sentence by a setting phrase and the value ("the Master control in the amp model
+   will default at 10"). Otherwise the knob is a starting guess. The p. 12 taper sentence names Master but states no
+   Master value, so it can never cite Master 10 (Onyx review; negative control in `core/tests/knob-sources.test.mjs`).
 7. `taper_note`: `{ "quote": "…", "page": 12 }` (the `taper-match` convention quote, exactly these two keys) whenever
    any knob has `kind: "guide"`, else `null`.
 
@@ -493,7 +499,10 @@ against yek's guide (rev. April 2017, written for Quantum 7.02). Page numbers ar
   type. Guide: solid teal ring + page pill. Guide rule: solid teal ring + "p. 12". Guess: dashed amber ring,
   the word "guess", and the visible sentence "starting guess — not from the guide" once under the dials whenever
   a guess is present (each guessed dial also carries it in its accessible name). Direction nudges listed under
-  the dials: "Presence nudged up: “Turn up Presence in the Brit Brown model” p. 60". `taper_note` in small type.
+  the dials: "Presence nudged up: “Turn up Presence in the Brit Brown model” p. 60". `taper_note` in small type, labelled "About knob tapers (not a knob setting):". **Under the dials, every
+  sentence that gives a knob its page is displayed** ("Bass 2 · Mid 8 · Treble 7.5: …", "Master 10 (the guide’s
+  rule): …") with the same page pill as the dial, so a pill always points at a sentence on the card that states that
+  value. The Binder and print show the same lines.
   **Cab**: speaker and stock cab quotes with pages (hidden when both null and no notes). Ares flags as an amber
   callout. Buttons: "Model details" and "Add to binder" / "In binder".
 - **Models** (`models.html`): "Filter by name" box; filter pill groups Brand (top 12 by count + "More brands"

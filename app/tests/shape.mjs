@@ -1,6 +1,11 @@
 // Shape checker for the HTTP JSON in docs/API.md §6 (and the Model of §3.1). Each check returns a list of
 // problems; [] means the shape is right. Extra keys are allowed; missing keys, wrong types and bad enums are not.
+import { quoteSupportsKnob } from '../../core/knobs.js';
+
 export const KNOBS = ['Drive', 'Bass', 'Mid', 'Treble', 'Master', 'Presence', 'Depth'];
+// A knob with a page must have a quote that states its value (API.md §4.3). The Worker uses each model's own
+// `Label (=Knob)` hints; the shape check doesn't have them, so it accepts the table plus the common hint sets.
+const HINT_SETS = [{}, { volume: 'Drive' }, { drive: 'Master', gain: 'Drive' }];
 export const GUESS_NOTE = 'starting guess — not from the guide';
 export const NO_SUPPORT = "I can't point to the guide for that.";
 export const GK_LABEL = 'General knowledge (AI) — not from the guide';
@@ -302,6 +307,8 @@ export function checkAnswer(a) {
             c.saidBy(k, kp);
           }
           if (k.kind === 'guide_rule') c.quote(k, kp);
+          if ((k.kind === 'guide' || k.kind === 'guide_rule') && typeof k.quote === 'string' && !HINT_SETS.some((h) => quoteSupportsKnob(k.knob, k.value, k.quote, h)))
+            c.fail(`${kp}: the quote doesn't state ${k.knob} ${k.value}, so it can't carry a page (API.md §4.3)`);
           if (k.kind === 'guess' && k.note !== GUESS_NOTE) c.fail(`${kp}.note: must be "${GUESS_NOTE}"`);
           if ('direction' in k) {
             if (k.kind !== 'guess') c.fail(`${kp}.direction: only a guess may be nudged`);

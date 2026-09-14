@@ -90,6 +90,27 @@ export function aresFlagsHtml(flags) {
     .join('');
 }
 
+// The sentence behind every knob that carries a page (docs/API.md §8): one line per supporting quote, naming the
+// knobs and values it states. A page pill on a dial always has its sentence displayed here.
+export function knobSourcesHtml(knobs, { small = false } = {}) {
+  const groups = [];
+  for (const k of knobs) {
+    if (k.kind !== 'guide' && k.kind !== 'guide_rule') continue;
+    let g = groups.find((x) => x.quote === k.quote && x.page === k.page);
+    if (!g) groups.push((g = { quote: k.quote, page: k.page, said_by: k.said_by ?? null, rule: k.kind === 'guide_rule', knobs: [] }));
+    g.knobs.push(k);
+  }
+  if (!groups.length) return '';
+  return `<ul class="nudges knob-sources">${groups
+    .map(
+      (g) =>
+        `<li data-testid="knob-source" data-knobs="${esc(g.knobs.map((k) => k.knob).join(','))}"><span class="nudge-label">${esc(
+          g.knobs.map((k) => `${k.knob} ${Number(k.value)}`).join(' · '),
+        )}${g.rule ? ' (the guide’s rule)' : ''}: </span>${quoteHtml(g, { small })}</li>`,
+    )
+    .join('')}</ul>`;
+}
+
 export function renderCard(s, { saved = false, query = '' } = {}) {
   const ai = s.source === 'ai_checked';
   const nudges = s.knobs.filter((k) => k.direction);
@@ -109,6 +130,7 @@ export function renderCard(s, { saved = false, query = '' } = {}) {
 
     <h3>Knobs</h3>
     <div class="dials">${s.knobs.map(dialHtml).join('')}</div>
+    ${knobSourcesHtml(s.knobs)}
     ${hasGuess(s.knobs) ? `<p class="guess-note" data-testid="guess-note">${GUESS_NOTE}</p>` : ''}
     ${
       nudges.length
@@ -125,7 +147,7 @@ export function renderCard(s, { saved = false, query = '' } = {}) {
         ? `<p class="other-settings">Other settings in the guide’s list: ${s.other_settings.map((o) => esc(o.text)).join(' · ')} ${pagePill(s.other_settings[0].page)}</p>`
         : ''
     }
-    ${s.taper_note ? `<div class="taper-note" data-testid="taper-note">${quoteHtml(s.taper_note, { small: true })}</div>` : ''}
+    ${s.taper_note ? `<div class="taper-note" data-testid="taper-note"><p class="small muted">About knob tapers (not a knob setting):</p>${quoteHtml(s.taper_note, { small: true })}</div>` : ''}
     ${cabHtml(s.cab)}
     ${aresFlagsHtml(s.ares_flags)}
     <div class="card-actions">

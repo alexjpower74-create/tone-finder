@@ -160,3 +160,12 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     (API.md §5.2b): no guide support + no general knowledge → no-support answer, no cite call; the pick prompt also
     says to return nothing for non-music requests; PROMPT_VERSION tf-ai-4. Both slices had already closed, so the
     lead made this small change in core/ai.js with a fake scenario, a test and a negative control, and reran QA.
+
+25. **Knob citations must show a sentence that states the value (Onyx review, lead fix).** On 1959SLP and PLEXI 100W
+    the Master dial read "10 · p. 12", but the card never displayed the p. 12 rule sentence ("…the Master control in
+    the amp model will default at 10."); the only p. 12 quote under the dials was the taper note, which names Master
+    but states no Master value. The same was true of guide settings (the "Bass 2, Mid 8, Treble 7.5" sentence wasn't
+    on the card). Fix: a knob keeps its page only if its quote states that value (else it's a starting guess); the
+    card, Binder and print display every supporting sentence with the dial's page; the taper note is labelled as not a
+    knob setting; tf2's shape checker enforces the rule on fixtures and the live Worker. Negative controls: the taper
+    sentence planted on Master 10 (engine → guess; shape check → rejected), and the sources list removed from the card.
