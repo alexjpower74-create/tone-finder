@@ -64,6 +64,33 @@ USA IIC+ `ai_checked` with the p. 270 quote and labelled general knowledge; cap 
 JSON → `error` with the same suggestions as the guide search; off / no_key / guide_not_loaded → 0 requests; request
 shape; spend math; a key-bearing thrown fetch error and an unreachable base URL never put the key in any Answer.
 
+## Step 5 — Worker: DONE
+
+`worker/wrangler.toml` (name `tone-finder`, `main = "src/index.js"`, `compatibility_date = "2026-09-01"` — the bundled
+workerd is 1.20260911 — D1 `DB` / `tone-finder` / `LOCAL-ONLY-set-at-deploy`, non-secret `[vars]` defaults),
+`migrations/0001_init.sql` (§7), `src/index.js` (§6 routes, CORS + OPTIONS 204, D1 spend/cache store, guide pages
+cached per isolate and keyed by the stored SHA, `models.json` imported as JSON, 500s never echo internals),
+`.dev.vars.example`, my gitignored `.dev.vars`, `package.json` (`dev`, `migrate:local`, `test`).
+`tests/run.mjs` wipes and migrates `.wrangler/test-state` and `.wrangler/test-state-cap`, starts the fake and two
+`wrangler dev --local` instances (8302, and 8352 with `AI_CAP_CAD:0.0001`; `TF_WORKER_CAP_PORT` overrides), waits for
+health, runs `node --test tests/`, and kills the process groups it started (ports checked free afterwards).
+`WRANGLER_SEND_METRICS=false` on every wrangler call. `tests/api.test.mjs`: 16/16, covering every item in the brief,
+plus a same-length wrong token, blank / missing / non-string / non-JSON queries, the 200-character edge, admin spend
+rows, and that `test-key` and the admin token never appear in any response body.
+
+## Step 6 — Scripts: DONE
+
+- `scripts/load-guide.mjs`: reads `worker/.dev.vars` (real env wins), posts pages 1–301, prints
+  `Loaded 301 pages into <url> (sha256 …)`. Errors print only the HTTP status and error code: a dead Worker gives
+  "could not reach the Worker at http://127.0.0.1:8399 (is it running?)" (81 bytes of output), a bad
+  `TF_GUIDE_DIR` gives `guide not found at …`; both exit 1.
+- `scripts/demo.mjs`: applies local migrations, starts the Worker (8302) and `node app/serve.mjs --port 8301`,
+  waits for both, loads the guide, prints "Open http://127.0.0.1:8301/". Checked with a throwaway app server
+  (`TF_APP_SERVE`, a test hook only, because `app/serve.mjs` is tf2's and not in this tree): health said
+  `loaded: true, sha_ok: true`, the app answered 200, Ctrl+C left 8301/8302 free; killing the app printed
+  "demo: app stopped (SIGTERM); stopping the rest." and both ports were free 5 s later. No guide text in either log.
+  Not yet run against tf2's real `app/serve.mjs`.
+
 ## Negative controls
 
 | # | Break | Expected red | Result |
@@ -75,9 +102,20 @@ shape; spend math; a key-bearing thrown fetch error and an unreachable base URL 
 | d | generic words can be strong | golden "Master of Puppets", "lead tone" | RED: exactly those two failed. Restored, 16/16. |
 | e | `if (spent + est > p.cap)` → `if (false)` | zero-request cap test | RED: cap test failed. Restored, 9/9. |
 | i | search indexes stubs as their own models | golden `never_ids` | RED: never_ids test + golden "Slash" and "Steve Vai" (stubs outranked their targets). Restored, 16/16. |
+| h (first try) | final comparison in `authorised()` → `return true` | 401 test | **VOID**: 16/16 still passed. The test only sent no token and "nope", which the length check refuses before the comparison. Test gap, fixed: a same-length wrong token is now sent to both admin routes (f23b0f7). |
+| h | (h1) the same break again; (h2) `authorised()` returns `true` on its first line | 401 test | RED both times: the 401 test and the 400/409 test (the refused post had loaded nothing; with the check gone it loads). Restored with `git checkout`, 16/16. |
 | f | one model spliced out of `data/models.json` | count/order test | RED: both rule 1 tests + 3 others. Restored from backup, 11/11 green. |
 | g | `QUOTE_BUDGET` 0.15 → 0.01 | budget test | RED: "quote budget 0.1296 > 0.01". Restored, 11/11 green. |
 
 ## Cross-slice needs
 
-- None yet. `scripts/demo.mjs` will call tf2's `app/serve.mjs` by path (step 6).
+- tf2: `scripts/demo.mjs` runs `node app/serve.mjs --port 8301` from the repo root and waits for `GET /` to answer
+  200. Please keep that contract.
+- tf2 mock: `taper_note` is `{ quote, page }` or `null` (Contract question 3); `ai.reason` is `"ok"` on a fresh AI
+  answer; drop details read `"1959SLP, p. 60"` (unit name, page) or just the name for `unknown_model` /
+  `no_verified_quote`.
+
+## Left undone
+
+- Nothing in the brief is left out. Not run by me: the demo against tf2's real `app/serve.mjs`, and any real AI
+  call (the lead's, under the CA$2 cap).
