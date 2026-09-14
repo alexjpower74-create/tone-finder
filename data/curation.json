@@ -1,0 +1,51 @@
+{
+  "_about": "tf1's hand decisions for scripts/build-models.mjs (docs/API.md §3, docs/DATA.md). Quotes here are short exact substrings of the guide page named; the build verifies each one and fails loudly on a miss. Everything not listed is derived mechanically from the guide and verified the same way.",
+  "title_names": {
+    "_note": "Section titles whose name part can't be split mechanically into unit names. Each value is the list of unit names taken from the title; each must occur in the title.",
+    "euro-blue-and-red": ["Euro Blue"],
+    "friedman-be-and-hbe": ["Friedman BE"]
+  },
+  "toc_expand": {
+    "_note": "Slash names in the table of contents that list variants. Value k: the last k words of the first part are replaced by each later part (API.md §3 rule 3). Other slash names stay whole (USA IIC+ BRT/DP, Div/13 CJ11).",
+    "Plexi 100W HIGH/JUMP/NRML": 1,
+    "Plexi 50W HI 1/JUMP/NRML": 2
+  },
+  "appendix_aliases": {
+    "_note": "Appendix name prefixes (pp. 295-298) that don't start with the model's own name.",
+    "SOLO 99": "solo-88-and-solo-x99"
+  },
+  "body_names": [
+    { "model": "euro-blue-and-red", "evidence": "Euro Red", "why": "The title says 'Euro Blue and Red'; the guide writes the unit name 'Euro Red' in the Euro Uber section's how-to." },
+    { "model": "prince-tone", "evidence": "Prince Tone Rev", "why": "Written as a model name in the Prince Tone section body." }
+  ],
+  "settings": [
+    { "model": "6g4-super", "page": 19, "quote": "All amp controls at default, Input Drive at 4, and you have a great vintage Fender tone." },
+    { "model": "1959slp", "page": 28, "quote": "My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5." },
+    { "model": "1959slp", "page": 31, "context": "JD Simo’s Settings:", "quote": "Bass:0, Mid:10, Treble:10, Volume:10 • Presence: to taste (around 5 or 6)", "other": ["Presence: to taste (around 5 or 6)"] },
+    { "model": "atomica", "page": 42, "quote": "increase Treble and Presence, set gain around 6" },
+    { "model": "brit-jm45", "page": 64, "quote": "Forum member Simeon’s suggested settings for a “Gary Moore” tone: Input Drive 3, Presence 3, stock cab 103, T808 with Drive 0, Tone 6 and Level 7.", "other": ["stock cab 103", "T808 with Drive 0, Tone 6 and Level 7"] },
+    { "model": "brit-silver", "page": 69, "quote": "Joe Bonamassa sets the controls on his Jubilee like this: Presence 5, Bass 10, Mid 7.5, Treble 4.5, Master 10, Gain 5." },
+    { "model": "ca-od-2", "page": 75, "quote": "Input Drive at 6.25 and Overdrive at 7.50. Bass at 3, Middle and Treble between 6-7, Presence at 6.", "other": ["Overdrive at 7.50", "Middle and Treble between 6-7"] },
+    { "model": "cali-leggy-and-legato-100", "page": 84, "unit_name": "Legato 100", "quote": "Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)", "other": ["Mid: 4/5"] },
+    { "model": "cali-leggy-and-legato-100", "page": 85, "quote": "SV's personal settings are: Drive: 7.5, Bass: 6, Mid: 4, Treble: 8, Presence: 8." },
+    { "model": "citrus-terrier", "page": 102, "quote": "Gain around 7, Hi-Cut at 6, and control the gain with the guitar’s volume knob.", "other": ["Hi-Cut at 6"] },
+    { "model": "comet-concourse", "page": 113, "quote": "Input Drive at around 4" },
+    { "model": "corncob-m50", "page": 117, "quote": "Try Input Drive 5, Overdrive 8, Bass 0, Middle 5, Treble 5, Presence 3.", "other": ["Overdrive 8"] },
+    { "model": "dirty-shirley", "page": 125, "quote": "gain around 6 and then bring the master to taste", "other": ["bring the master to taste"] },
+    { "model": "friedman-be-and-hbe", "page": 156, "quote": "Set the Gain around 8 and then bring the master up to taste.", "other": ["bring the master up to taste"] },
+    { "model": "mr-z-hwy-66", "page": 191, "quote": "Try Bass at 7, Treble maxed, Volume around 7 and the Ultra-Res 2x12 Boutique cab.", "other": ["Treble maxed", "the Ultra-Res 2x12 Boutique cab"] },
+    { "model": "nuclear-tone", "page": 198, "quote": "I set Input Drive around 4.00 for a clean tone" },
+    { "model": "plexi-models", "page": 203, "quote": "My settings for a “typical” Plexi tone are Bass: 2, Mid: 8, Treble 7.5." },
+    { "model": "ruby-rocket", "page": 224, "quote": "Volume around 2.50, Bass at 3 (both models)." },
+    { "model": "super-verb", "page": 243, "quote": "Volume 6, Bass 2, Middle 3, Treble 6 (6, 2x3, 6)." },
+    { "model": "usa-iic-plus-and-usa-iic-plus-plus", "page": 270, "unit_name": "USA IIC+", "context": "These were my settings for a killer high-gain tone:", "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON", "other": ["Overdrive: 9-10", "Level: -20 dB", "Bright Switch ON"] }
+  ],
+  "settings_left_out": [
+    { "model": "59-bassguy", "page": 22, "text": "Or try Bass and Treble at 0, and Mid and Presence at 10", "why": "Two labels share one number ('Bass and Treble at 0'); rule 6 only reads a number written right after its label, so Bass and Mid would be shown as guesses beside a guide value that contradicts them." },
+    { "model": "friedman-be-and-hbe", "page": 156, "text": "We recommend starting the amp on the BE channel with the Bass on 10, the Mids at around 6 …", "why": "'on 10' and 'Mids' are outside the rule 6 separators and labels, so only Treble and Presence would parse and Bass would contradict the quote." },
+    { "model": "cali-leggy-and-legato-100", "page": 85, "text": "Here’s what I settled on: Drive 6.50, Bass 7.00, Middle and Treble 3.50, everything else default.", "why": "'Middle and Treble 3.50' leaves Mid as a guess that contradicts the quote; the two Steve Vai settings on pp. 84-85 are kept." },
+    { "model": "div-13-ft37", "page": 131, "text": "Both sound great with Input Drive at 5 to 9.", "why": "A range, not a value (rule 6)." },
+    { "model": "vibra-king", "page": 282, "text": "set the desired gain with Input Drive between 3 and 6", "why": "A range, not a value (rule 6)." },
+    { "model": "usa-bass-400", "page": 261, "text": "Input 1 and Volume 1 …", "why": "Channel names with numbers, not settings." }
+  ]
+}
