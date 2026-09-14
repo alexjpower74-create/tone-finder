@@ -2,7 +2,7 @@
 
 Overnight build, 2026-09-14. Lead tf-lead (Opus 5 xhigh), slices tf1 (guide data, engine, AI step, Worker: 7
 rounds) and tf2 (app: 4 rounds + a final rebuild), both Opus 5 medium. Contract: `PLAN.md`, `docs/API.md`,
-`data/golden.json`. Every decision with its reason: `DECISIONS.md` (24 entries). Slice detail, with every negative
+`data/golden.json`. Every decision with its reason: `DECISIONS.md` (25 entries). Slice detail, with every negative
 control and its failure message: `docs/build-report-tf1.md`, `docs/build-report-tf2.md`.
 
 ## Final QA
