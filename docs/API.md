@@ -195,7 +195,8 @@ null (Worker before load-guide), in which case the only searchable text is the q
 - **Stop words** are never searched alone: a an and the of on in at to for with from by like my me i want need
   get some sort kind type tone tones sound sounds sounding song guitar guitars amp amps model models setting
   settings preset patch please how what that this those these is are be it its his her their do does make give
-  play playing.
+  play playing through into onto over under about via as or but than (the last eleven added from tf1's finding:
+  "banjo through a toaster" matched "through" in two tips).
 - **Generic words** are searched and scored but are never *strong*: clean crunch crunchy rhythm lead solo dirty
   distorted distortion overdrive overdriven drive gain master volume bass mid middle treble presence depth
   loud quiet warm bright dark fat big heavy.
@@ -224,15 +225,25 @@ null (Worker before load-guide), in which case the only searchable text is the q
 ### 4.2 A suggestion
 - `why`: 1–3 verified quotes from the model's pages, each a sentence containing a found term (prefer strong terms,
   then tips/synopsis, then distinct terms).
-- **Joined passages.** The text extraction glues separate boxes together without punctuation. On p. 28 the tip
-  "Or just crank everything, like Eddie Van Halen" runs straight into Cliff's "“My settings for a “typical” Plexi
-  tone are Bass 2, Mid 8, Treble 7.5.”", which reads as if Van Halen gave those settings. So, when picking any
-  quote (why, tips, notes, settings, cab notes, AI citations are checked as given), also split before an opening
-  `“` that directly follows a letter, digit or comma and a space (`/(?<=[A-Za-z0-9,]) (?=“)/`) and before an
-  attribution dash (` – ` followed by a capitalised name). Verification itself is unchanged. A stored or shown
-  quote must not contain such a join (a test checks `models.json` and every Answer). A sentence over 320 characters is cut to the clause (split on `; ` or
-  `, `) that holds the term, and must still verify. `said_by` is filled when the same quote is a stored tip, note
-  or settings quote that has one. `matched` lists the terms it contains.
+- **Joined passages (box breaks).** The text extraction glues separate boxes together. On p. 28 the tip "Or just
+  crank everything, like Eddie Van Halen" runs straight into Cliff's "“My settings for a “typical” Plexi tone are
+  Bass 2, Mid 8, Treble 7.5.", which reads as if Van Halen gave those settings; on p. 33 a Marshall quote runs on
+  through "– Marshall" into yek's next sentence. Exact-substring verification can't see that, so:
+  - A **box break** is a line break in the raw page text followed (after optional spaces or tabs) by an opening `“`
+    or by an attribution dash (`– ` or `- ` then a capital letter). `core/text.js` exports
+    `boxBreaks(rawPage) → number[]` (offsets in `pageText`, found by normalising each run between breaks and
+    joining the runs with one space, which gives exactly `pageText`) and `spansBoxBreak(quote, rawPage)` (true when
+    every occurrence of the quote on the page has a break strictly inside it).
+  - Every quote the build stores and every quote the engine shows (why, tips, notes, settings, cab notes) is split
+    at box breaks when it is picked, so it can only get shorter. A quote never ends with an attribution (" – Name"):
+    cut it and put the name in `said_by`. AI citations that span a box break are dropped as `quote_not_on_page`.
+  - Test: no quote in `models.json` and none in any golden-query Answer spans a box break, plus this table (the
+    lead checked it on the raw pages): spans → p. 28 "Or just crank everything, like Eddie Van Halen “My settings
+    for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.", p. 33 "These tonal characteristics are what define
+    this much respected all-valve head.” – Marshall The re-issue has two EL34 tubes", p. 125 "Set the gain around 6
+    and then bring the master to taste” – Manual"; doesn't span → p. 16 "The name “Twin” probably refers to the use
+    of two 12” speakers.", p. 28 "Plexis with 4x12 cabinets gave rise to the “Marshall stack”.", p. 146 "Model of the
+    Bogner Uberschall, called “Armageddon in a box” by Bogner".
 - `unit_name`: the model's unit name that appears in a `why` quote or the query (case-insensitive), else the first.
 
 ### 4.3 Knobs
@@ -247,7 +258,8 @@ Always seven, in this order: Drive, Bass, Mid, Treble, Master, Presence, Depth.
 5. A `directions` entry for a guessed knob nudges it (up +2, down −2, clamped 0–10) and adds
    `direction: { dir, quote, page }`. Guide values are never nudged.
 6. `other_settings`: the picked entry's `other` fragments as `{ text, quote, page }`, else `[]`.
-7. `taper_note`: the `taper-match` convention quote (p. 12) whenever any knob has `kind: "guide"`, else `null`.
+7. `taper_note`: `{ "quote": "…", "page": 12 }` (the `taper-match` convention quote, exactly these two keys) whenever
+   any knob has `kind: "guide"`, else `null`.
 
 ### 4.4 Cab
 `cab` is the model's stored `cab` object (a stub's target), unchanged.

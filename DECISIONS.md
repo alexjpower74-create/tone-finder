@@ -81,3 +81,11 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     gave Cliff's settings. Exact-substring verification can't catch a true-but-misleading splice, so quote
     selection also splits before an opening “ that follows a word and before an attribution dash, and a test
     checks no stored or shown quote contains such a join (API.md §4.2).
+
+15. **Box breaks replace the regex in #14 (16:40).** The regex from #14 was wrong: an opening “ after a word is
+    ordinary prose (“Twin”, “Marshall stack”, “The King of Fender Amps”), and it flagged 113 of tf1's quotes, nearly
+    all fine. The raw page text still has its line breaks, and a new box starts on a new line with “ or with an
+    attribution dash. That rule, checked on the raw pages, catches all five real splices the lead found (pp. 28,
+    33, 45, 125, 134) and none of seven quoted-term cases. Splitting there can only shorten a quote. Also adopted
+    from tf1: eleven more stop words ("banjo through a toaster" matched "through") and `taper_note` as
+    `{ quote, page }`.
