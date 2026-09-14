@@ -1,5 +1,35 @@
 # Build report — tf1 (guide data, answer engine, AI step, Worker + D1)
 
+## Round 7 (honest attribution)
+
+**Status:** DONE. Code commit **8bc2a58**. From my own worktree, off your demo's ports: core **83/83** (fake AI on
+8313), worker **16/16** (8322/8323/8372). `models.json` rebuilt with no changes: no stored quote opened with an
+attribution. Thanks for correcting the round-6 count (6 calls, CA$0.0468, not my estimate of 2).
+
+- **Leading attribution stripped.** `cleanCut` (core/text.js) now removes a leading "– Name " / "- Name ", using the
+  same attribution names as the build's `SAID_BY` (exported as `ATTRIBUTION_NAMES`). It never strips a dash
+  followed by a word that isn't a name ("– Cab Packs 5, 7" stays). Both paths call `cleanCut`: the AI citation
+  path after locate and expand, and the engine's why path, which already cut leading names and now also goes
+  through `cleanCut`. The cause on p. 188: "– Manual" is its own raw line, so it starts a box run, and the next line
+  "Fractal Audio’s model…" doesn't. Expanding the citation to its sentence therefore brought the attribution along.
+- **Tests.**
+  - Fake scenario `fake-attrib` cites the exact p. 188 text "– Manual Fractal Audio’s model is based on channel 1
+    (12AX7) with Master bypassed. It’s a favorite of many players, for clean tones with chime as well as crunchy
+    work." Matchbox D-30 is kept as `ai_checked`, and its why quote starts "Fractal Audio’s model is based on
+    channel 1…". A control checks the attribution really runs into the sentence on the page.
+  - `quote-shape.mjs` now also flags a quote that starts with an attribution dash. It runs on every quote in
+    `models.json`, every golden why quote and the fake-attrib answer.
+  - A `cleanCut` unit test covers a known name, a lower-case "yek" with a hyphen, and a non-name that is kept.
+
+| Control | Break | Result |
+|---|---|---|
+| lead-attrib | the leading-attribution replace removed from `cleanCut` | RED: fake-attrib (shown as "– Manual Fractal Audio’s model…") and the cleanCut unit test. Restored. |
+| after restore | — | core 83/83, worker 16/16 |
+
+Stopping here.
+
+---
+
 ## Round 6 (fixes from the lead's final real AI pass)
 
 **Read this first: my worker tests hit your running demo Worker once.** Your detached demo (main checkout, real
