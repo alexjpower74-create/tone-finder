@@ -8,7 +8,9 @@ import { guideAnswer, baseAnswer, buildSuggestion, GK_LABEL } from './answer.js'
 import { termRegex } from './search.js'
 import { foldForSearch } from './text.js'
 
-export const PROMPT_VERSION = 'tf-ai-1'
+export const PROMPT_VERSION = 'tf-ai-2'
+// §5.6: general knowledge that talks about the guide, the candidates or the model list is not general knowledge.
+export const GK_ABOUT_GUIDE = /guide|candidate|provided|model list|the list/i
 export const MAX_TOKENS = { pick: 1200, cite: 2500 }
 export const TIMEOUT_MS = 30000
 export const LIMITS = { general_knowledge: 3, gk_chars: 200, search_terms: 6, picks: 4, models: 4, page_chars: 12000, why: 3 }
@@ -18,6 +20,7 @@ const PICK_RULES = [
   'You help a guitarist find starting points on a Fractal Audio Axe-Fx II (Ares firmware) using only the amp models in the list you are given.',
   'Only choose model_id and unit_name values exactly as they appear in the list. Never invent or rename a model.',
   'Song, artist and gear facts go in general_knowledge (at most 3 items, each at most 200 characters). They are shown as general knowledge, not as guide facts.',
+  'Never write general_knowledge about the guide, the guide candidates or the model list; only facts about songs, artists and gear.',
   'search_terms: at most 6 short words or phrases (artist, amp or sound words) that could appear in the guide.',
   'picks: at most 4.',
   'Never mention Axe-Fx III, FM3 or FM9 models, Motor Drive or Transformer Grind.',
@@ -155,7 +158,7 @@ export function checkCitation(model, c, pages, titles = null) {
 function sanitisePick(content) {
   const gk = (Array.isArray(content.general_knowledge) ? content.general_knowledge : [])
     .map((g) => (typeof g === 'string' ? g : g?.text))
-    .filter((t) => typeof t === 'string' && normText(t) && normText(t).length <= LIMITS.gk_chars)
+    .filter((t) => typeof t === 'string' && normText(t) && normText(t).length <= LIMITS.gk_chars && !GK_ABOUT_GUIDE.test(t))
     .slice(0, LIMITS.general_knowledge)
     .map((t) => normText(t))
   const terms = (Array.isArray(content.search_terms) ? content.search_terms : [])

@@ -179,10 +179,12 @@ export function guideAnswer(query, { models: data, pages = null, extraTerms = []
   const own = extra.length ? search(q, { models: data, pages }) : res
   const ownTerms = new Set(own.understood.matched_terms)
   const out = baseAnswer(query, data)
+  // §5.6: de-duplicated, first occurrence order (the AI's search terms often repeat the query's own phrases).
+  const uniq = (list) => [...new Set(list)]
   out.understood = {
-    matched_terms: res.understood.matched_terms.filter((t) => ownTerms.has(t)),
+    matched_terms: uniq(res.understood.matched_terms.filter((t) => ownTerms.has(t))),
     unmatched_terms: own.understood.unmatched_terms,
-    ai_terms: res.understood.matched_terms.filter((t) => !ownTerms.has(t)),
+    ai_terms: uniq(res.understood.matched_terms.filter((t) => !ownTerms.has(t))),
     intent: own.understood.intent,
   }
   const used = new Set()
