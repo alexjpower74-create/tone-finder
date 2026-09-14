@@ -36,11 +36,14 @@ export function attribution(saidBy) {
   return saidBy.toLowerCase() === 'yek' ? 'yek' : `${saidBy}, quoted in the guide`;
 }
 
-export function quoteHtml(q, tag = 'p') {
+// A verified quote as a blockquote with a teal left edge. The text is shown exactly as verified: no added quote
+// marks, because many quotes carry the guide's own “ ” and added ones would double them (API.md §8).
+export function quoteHtml(q, { small = false } = {}) {
   const by = attribution(q.said_by);
-  return `<${tag} class="quote" data-testid="quote"><q>${esc(q.quote)}</q> ${pagePill(q.page)}${
-    by ? ` <span class="said-by">${esc(by)}</span>` : ''
-  }</${tag}>`;
+  return `<blockquote class="quote${small ? ' quote-small' : ''}" data-testid="quote">
+    <p class="quote-text">${esc(q.quote)}</p>
+    <p class="quote-meta">${pagePill(q.page)}${by ? ` <span class="said-by">${esc(by)}</span>` : ''}</p>
+  </blockquote>`;
 }
 
 const ICON_BOOK =
@@ -57,9 +60,9 @@ export function binderButton(saved) {
 export function cabHtml(cab) {
   if (!cab || (!cab.speaker && !cab.stock_cabs && !(cab.notes ?? []).length)) return '';
   const rows = [];
-  if (cab.speaker) rows.push(`<li><span class="muted">Speaker:</span> ${quoteHtml(cab.speaker, 'span')}</li>`);
-  if (cab.stock_cabs) rows.push(`<li><span class="muted">Stock cabs:</span> ${quoteHtml(cab.stock_cabs, 'span')}</li>`);
-  for (const n of cab.notes ?? []) rows.push(`<li>${quoteHtml(n, 'span')}</li>`);
+  if (cab.speaker) rows.push(`<li><div class="muted small">Speaker</div>${quoteHtml(cab.speaker)}</li>`);
+  if (cab.stock_cabs) rows.push(`<li><div class="muted small">Stock cabs</div>${quoteHtml(cab.stock_cabs)}</li>`);
+  for (const n of cab.notes ?? []) rows.push(`<li>${quoteHtml(n)}</li>`);
   return `<h3>Cab</h3><ul class="detail-list cab" data-testid="cab">${rows.join('')}</ul>`;
 }
 
@@ -68,7 +71,10 @@ export function aresFlagsHtml(flags) {
     .map(
       (f) => `<div class="ares-flag" role="note" data-testid="ares-flag">
         <strong>${esc(f.param)}:</strong> ${esc(f.advice)}
-        <div class="small muted">Mentioned here: “${esc(f.quote)}”${f.page ? ` ${pagePill(f.page)}` : ''}</div>
+        <div class="small muted">Mentioned here:</div>
+        <blockquote class="quote quote-small" data-testid="flag-quote">
+          <p class="quote-text">${esc(f.quote)}</p>${f.page ? `<p class="quote-meta">${pagePill(f.page)}</p>` : ''}
+        </blockquote>
       </div>`,
     )
     .join('');
@@ -99,7 +105,7 @@ export function renderCard(s, { saved = false, query = '' } = {}) {
         ? `<ul class="nudges">${nudges
             .map(
               (k) =>
-                `<li data-testid="nudge">${esc(k.knob)} nudged ${esc(k.direction.dir)}: <q>${esc(k.direction.quote)}</q> ${pagePill(k.direction.page)}</li>`,
+                `<li data-testid="nudge"><span class="nudge-label">${esc(k.knob)} nudged ${esc(k.direction.dir)}: </span>${quoteHtml(k.direction)}</li>`,
             )
             .join('')}</ul>`
         : ''
@@ -109,7 +115,7 @@ export function renderCard(s, { saved = false, query = '' } = {}) {
         ? `<p class="other-settings">Other settings in the guide’s list: ${s.other_settings.map((o) => esc(o.text)).join(' · ')} ${pagePill(s.other_settings[0].page)}</p>`
         : ''
     }
-    ${s.taper_note ? `<p class="taper-note" data-testid="taper-note"><q>${esc(s.taper_note.quote)}</q> ${pagePill(s.taper_note.page)}</p>` : ''}
+    ${s.taper_note ? `<div class="taper-note" data-testid="taper-note">${quoteHtml(s.taper_note, { small: true })}</div>` : ''}
     ${cabHtml(s.cab)}
     ${aresFlagsHtml(s.ares_flags)}
     <div class="card-actions">

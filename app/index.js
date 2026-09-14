@@ -82,7 +82,7 @@ function aresHtml(ares) {
       <summary>Sources</summary>
       <ul class="detail-list">${ares.sources
         .map(
-          (s) => `<li><blockquote><q>${esc(s.quote)}</q></blockquote>
+          (s) => `<li><blockquote class="quote quote-small" data-testid="source-quote"><p class="quote-text">${esc(s.quote)}</p></blockquote>
             <a class="src-link" href="${esc(s.url)}" target="_blank" rel="noreferrer">${esc(s.url)}</a>
             <span class="small">fetched ${esc(s.fetched)}</span></li>`,
         )

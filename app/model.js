@@ -46,7 +46,7 @@ function render({ model: m, conventions }, target) {
     .join('');
 
   const directions = m.directions
-    .map((d) => `<li>${esc(d.knob)} ${d.dir === 'up' ? 'up' : 'down'}: ${quoteHtml(d, 'span')}</li>`)
+    .map((d) => `<li><div class="muted small">${esc(d.knob)} ${d.dir === 'up' ? 'up' : 'down'}</div>${quoteHtml(d)}</li>`)
     .join('');
 
   const mvRule = m.facets.master_volume === 'no' ? conventions.find((c) => c.id === 'no-master-volume') : null;
@@ -75,7 +75,7 @@ function render({ model: m, conventions }, target) {
       </section>
       ${section('Synopsis', m.synopsis ? quoteHtml(m.synopsis) : '')}
       ${section('Controls', m.controls ? quoteHtml(m.controls) : '')}
-      ${section('Tips', m.tips.length ? `<ul class="detail-list">${m.tips.map((t) => `<li>${quoteHtml(t, 'div')}</li>`).join('')}</ul>` : '')}
+      ${section('Tips', m.tips.length ? `<ul class="detail-list">${m.tips.map((t) => `<li>${quoteHtml(t)}</li>`).join('')}</ul>` : '')}
       ${section('Settings', settings ? `<ul class="detail-list">${settings}</ul>` : '')}
       ${section('Directions', directions ? `<ul class="detail-list">${directions}</ul>` : '')}
       ${section('Master volume', mvRule ? quoteHtml(mvRule) : '')}
@@ -83,7 +83,7 @@ function render({ model: m, conventions }, target) {
         const cab = cabHtml(m.cab);
         return cab ? `<section class="glass panel">${cab.replace('<h3>Cab</h3>', '<h2>Cab</h2>')}</section>` : '';
       })()}
-      ${section('Notes', m.notes.length ? `<ul class="detail-list">${m.notes.map((n) => `<li>${quoteHtml(n, 'div')}</li>`).join('')}</ul>` : '')}
+      ${section('Notes', m.notes.length ? `<ul class="detail-list">${m.notes.map((n) => `<li>${quoteHtml(n)}</li>`).join('')}</ul>` : '')}
     </div>`;
 }
 

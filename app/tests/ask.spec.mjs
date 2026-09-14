@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { GK_LABEL, GUESS_NOTE, NO_SUPPORT, PAGE_PILL, press, tapExample, typeQuery, waitForAnswer } from './helpers.mjs';
+import { quotesIn, readFixture } from './fixtures.mjs';
+import { expectQuotesExact, GK_LABEL, GUESS_NOTE, NO_SUPPORT, PAGE_PILL, press, tapExample, typeQuery, waitForAnswer } from './helpers.mjs';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/index.html?mock=1');
@@ -13,7 +14,7 @@ async function expectCitedCards(page) {
   expect(n).toBeGreaterThanOrEqual(1);
   expect(n).toBeLessThanOrEqual(4);
   for (let i = 0; i < n; i++) {
-    const quotes = cards.nth(i).locator('.quote').filter({ has: page.locator('q') });
+    const quotes = cards.nth(i).getByTestId('quote');
     expect(await quotes.count(), `card ${i + 1} has no quote`).toBeGreaterThanOrEqual(1);
     const pills = cards.nth(i).getByTestId('quote').locator('.pill-page');
     expect(await pills.count(), `card ${i + 1} has no page pill`).toBeGreaterThanOrEqual(1);
@@ -160,4 +161,25 @@ test('Ares: planted flag callout and both release-note sources', async ({ page }
   for (const url of urls) await expect(sources.getByRole('link', { name: url })).toBeHidden();
   await press(sources.locator('summary'), ti);
   for (const url of urls) await expect(sources.getByRole('link', { name: url })).toBeVisible();
+});
+
+test('quotes are blockquotes with a teal edge and exactly the verified text (no added marks)', async ({ page }, ti) => {
+  const allowed = new Set(quotesIn(readFixture('answers.json')).map((q) => q.quote));
+  const chips = ['Van Halen brown sound', 'clean worship pad with sparkle', 'the rhythm tone on Master of Puppets', 'Robben Ford', 'AC30 chime', 'djent'];
+  let checked = 0;
+  for (const chip of chips) {
+    await tapExample(page, ti, chip);
+    await expect(page.locator('#status')).toContainText(chip);
+    checked += await expectQuotesExact(page, allowed);
+  }
+  await typeQuery(page, ti, 'JTM 45');
+  await expect(page.locator('#status')).toContainText('JTM 45');
+  checked += await expectQuotesExact(page, allowed);
+  expect(checked).toBeGreaterThan(20);
+
+  const edge = await page.getByTestId('quote').first().evaluate((el) => {
+    const cs = getComputedStyle(el);
+    return [cs.borderLeftStyle, cs.borderLeftColor];
+  });
+  expect(edge).toEqual(['solid', 'rgb(62, 224, 197)']);
 });
