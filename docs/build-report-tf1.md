@@ -4,6 +4,10 @@
 `core/models.js`, `core/brands.js`, `core/labels.js`, `scripts/build-models.mjs`, `core/tests/models.test.mjs` and
 `docs/DATA.md`. Ready for tf2's cross-review of the shapes.
 
+**All six steps DONE.** QA numbers from `rig qa --ref e8e456d` (QA worktree, ports fake 8307 / worker 8308 / cap
+8358): `npm run test:core` **56/56**, quote budget 876 quotes, 70,042 of 540,437 characters (12.96%);
+`npm run test:worker` **16/16**.
+
 ## Contract questions
 
 1. **Dweezil’s B-man is a stub by §0, but golden `stub_ids` leaves it out.** p. 139 holds only "Please refer to
