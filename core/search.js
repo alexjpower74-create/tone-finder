@@ -3,12 +3,16 @@ import { pageText } from './guide.js'
 import { foldForSearch, splitSentences, splitAtBoxBreaks } from './text.js'
 import { indexModels, resolvedModel } from './models.js'
 
-export const STOP_WORDS = new Set(
-  ('a an and the of on in at to for with from by like my me i want need get some sort kind type tone tones sound ' +
-    'sounds sounding song guitar guitars amp amps model models setting settings preset patch please how what that ' +
-    'this those these is are be it its his her their do does make give play playing ' +
-    'through into onto over under about via as or but than').split(' '),
+// Function words may not start or end an n-gram; filler words may end one ("brown sound") but not start one.
+export const FUNCTION_WORDS = new Set(
+  ('a an and the of on in at to for with from by like my me i want need get some sort kind type please how what that ' +
+    'this those these is are be it its his her their do does make give through into onto over under about via as or ' +
+    'but than').split(' '),
 )
+export const FILLER_WORDS = new Set(
+  'tone tones sound sounds sounding song guitar guitars amp amps model models setting settings preset patch play playing'.split(' '),
+)
+export const STOP_WORDS = new Set([...FUNCTION_WORDS, ...FILLER_WORDS])
 export const GENERIC_WORDS = new Set(
   ('clean crunch crunchy rhythm lead solo dirty distorted distortion overdrive overdriven drive gain master volume ' +
     'bass mid middle treble presence depth loud quiet warm bright dark fat big heavy').split(' '),
@@ -162,8 +166,12 @@ export function search(query, { models: data, pages = null }) {
       if (consumed.slice(i, i + n).some(Boolean)) continue
       const words = tokens.slice(i, i + n)
       if (n === 1 && STOP_WORDS.has(words[0])) continue
-      const theStart = n > 1 && words[0] === 'the'
-      if (n > 1 && ((STOP_WORDS.has(words[0]) && !theStart) || STOP_WORDS.has(words[n - 1]))) continue
+      if (n > 1) {
+        const first = words[0]
+        const theStart = first === 'the'
+        if ((FUNCTION_WORDS.has(first) && !theStart) || FILLER_WORDS.has(first)) continue
+        if (FUNCTION_WORDS.has(words[n - 1])) continue
+      }
       const term = words.join(' ')
       const hits = hitsFor(index, term)
       if (!hits.size) continue
@@ -173,22 +181,33 @@ export function search(query, { models: data, pages = null }) {
   }
   found.sort((a, b) => a.start - b.start)
 
+  // Generic: every word is generic once a leading "the" and filler words are set aside ("the rhythm", "rhythm tone").
+  const isGeneric = (f) => {
+    const core = f.words.filter((w, i) => !(i === 0 && w === 'the' && f.words.length > 1) && !FILLER_WORDS.has(w))
+    return core.length > 0 && core.every((w) => GENERIC_WORDS.has(w))
+  }
+  const nonGeneric = new Set(found.filter((f) => !isGeneric(f)).map((f) => f.term))
+  const foundN = Math.max(1, nonGeneric.size)
   const scored = []
   for (const entry of index) {
     let score = 0
     let strong = false
+    let covered = 0
     const terms = []
     for (const f of found) {
       const h = f.hits.get(entry.model.id)
       if (!h) continue
-      // A "the" n-gram whose other words are all generic ("the rhythm") is still generic.
-      const rest = f.words[0] === 'the' ? f.words.slice(1) : f.words
-      const generic = rest.every((w) => GENERIC_WORDS.has(w))
+      const generic = isGeneric(f)
       const isStrong = !generic && (f.df <= STRONG_DF_SHARE * N || h.weight >= 3)
       strong ||= isStrong
-      score += f.idf * h.weight * (f.words.length > 1 ? 1.5 : 1) * (1 + Math.log(h.hits))
+      if (!generic) covered++
+      // Term frequency only for body-text hits (§4.1).
+      const tf = h.weight === 1 ? 1 + Math.log(h.hits) : 1
+      score += f.idf * h.weight * (f.words.length > 1 ? 1.5 : 1) * tf
       terms.push({ term: f.term, weight: h.weight, strong: isStrong })
     }
+    // Coverage (§4.1): reward matching more of the query's non-generic terms.
+    score *= 0.5 + (0.5 * Math.max(1, covered)) / foundN
     if (strong) scored.push({ model: entry.model, score, terms })
   }
   const order = new Map(data.models.map((m, i) => [m.id, i]))

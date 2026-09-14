@@ -22,6 +22,9 @@ for (const g of golden.queries) {
     const detail = `status=${a.status} ids=${ids.join(',')} terms=${a.understood.matched_terms.join('|')}`
     if (g.status) assert.equal(a.status, g.status, detail)
     if (g.any_of) assert.ok(ids.some((id) => g.any_of.includes(id)), `any_of ${detail}`)
+    if (g.matched_includes) for (const t of g.matched_includes) assert.ok(a.understood.matched_terms.includes(t), `matched_includes ${t}: ${detail}`)
+    if (g.none_of) assert.ok(!ids.some((id) => g.none_of.includes(id)), `none_of ${detail}`)
+    for (const s of a.suggestions) for (const w of s.why) assert.ok(!/(?:[,;:]|\s(?:and|or|with))$/i.test(w.quote), `unclean cut in why: ${w.quote}`)
     if (g.min_suggestions) assert.ok(a.suggestions.length >= g.min_suggestions, `min_suggestions ${detail}`)
     if (golden.no_why_spans_box_break) {
       for (const s of a.suggestions) for (const w of s.why) assert.ok(!spansBoxBreak(w.quote, pages.get(w.page)), `${s.model_id} p. ${w.page} spans a box break: ${w.quote}`)

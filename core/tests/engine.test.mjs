@@ -151,3 +151,28 @@ test('understood: matched, unmatched, intent', () => {
   assert.equal(search('djent chug', { models, pages }).understood.intent, 'high_gain')
   assert.equal(search('edge of breakup blues', { models, pages }).understood.intent, 'edge')
 })
+
+test('which sentence first: a why sentence naming the model wins (Metallica → “Metallica’s IIC+”, p. 270)', () => {
+  const a = answer('Metallica', { models, pages })
+  const s = a.suggestions[0]
+  assert.equal(s.model_id, 'usa-iic-plus-and-usa-iic-plus-plus')
+  assert.equal(s.why[0].page, 270)
+  assert.match(s.why[0].quote, /Metallica’s IIC\+/)
+})
+
+test('coverage: a model matching one of two found terms scores exactly 0.75 × its single-term score', async () => {
+  const { search } = await import('../search.js')
+  const one = search('chime', { models, pages }).candidates
+  const both = search('The Edge chime', { models, pages }).candidates
+  const car1 = one.find((c) => c.model.id === 'car-roamer')
+  const car2 = both.find((c) => c.model.id === 'car-roamer')
+  assert.ok(car1 && car2, 'control: Car Roamer is a candidate for both queries')
+  assert.deepEqual(car2.terms.map((t) => t.term), ['chime'], 'control: it matches only "chime"')
+  assert.ok(Math.abs(car2.score - 0.75 * car1.score) < 1e-9, `${car2.score} vs 0.75 × ${car1.score}`)
+  const edge = search('the edge', { models, pages }).candidates.find((c) => c.model.id === 'class-a-30w')
+  const chime = search('chime', { models, pages }).candidates.find((c) => c.model.id === 'class-a-30w')
+  const classA = both.find((c) => c.model.id === 'class-a-30w')
+  assert.equal(classA.terms.length, 2)
+  // Both terms covered → factor 1, so its score is the plain sum (chime may fall outside the single-query top 4).
+  if (edge && chime) assert.ok(Math.abs(classA.score - (edge.score + chime.score)) < 1e-9)
+})

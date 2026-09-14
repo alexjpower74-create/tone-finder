@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadPages, loadSections } from '../core/tests/guide-node.mjs'
 import { pageText, pagesSha256, PDF_PAGES } from '../core/guide.js'
-import { normText, splitSentences, splitAtBoxBreaks, spansBoxBreak, cutAttribution } from '../core/text.js'
+import { normText, splitSentences, splitAtBoxBreaks, spansBoxBreak, cutAttribution, cleanCut } from '../core/text.js'
 import { checkQuote } from '../core/verify.js'
 import { brandsForSection } from '../core/brands.js'
 import { facetMasterVolume, facetPowerTubes } from '../core/models.js'
@@ -69,7 +69,7 @@ export function build({ pages, sections, curation, log = () => {} }) {
     for (const piece of splitAtBoxBreaks(quote, pages.get(page))) {
       if (CARD_LABEL.test(piece)) continue
       const cut = cutAttribution(piece, SAID_BY)
-      const q = cut.quote
+      const q = cleanCut(cut.quote)
       if (q.length < min || q.length > max || !verified(q, page) || spansBoxBreak(q, pages.get(page))) continue
       out.push({ quote: q, said_by: cut.said_by === 'Yek' ? 'yek' : cut.said_by })
     }
