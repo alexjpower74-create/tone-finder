@@ -51,6 +51,15 @@ Slices make no paid calls: their tests use the fake OpenAI server.
 | 2026-09-14T19:36:13Z | lead | gpt-5.4-mini | pick | 5,745 | 5,376 | 186 | 0.00151695 | 0.00210 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "clean worship pad with sparkle"; ledger id 29 |
 | 2026-09-14T19:36:14Z | lead | gpt-5.4-mini | cite | 6,909 | 6,400 | 271 | 0.00208125 | 0.00289 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "clean worship pad with sparkle"; ledger id 30 |
 
+| 2026-09-14T19:41:09Z | lead | gpt-5.4-mini | pick | 5,586 | 5,376 | 238 | 0.00163170 | 0.00226 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "the rhythm tone on Master of Puppets"; ledger id 31 |
+| 2026-09-14T19:41:11Z | lead | gpt-5.4-mini | cite | 7,464 | 4,864 | 276 | 0.00355680 | 0.00493 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "the rhythm tone on Master of Puppets"; ledger id 32 |
+| 2026-09-14T19:41:24Z | lead | gpt-5.4-mini | pick | 5,716 | 5,376 | 217 | 0.00163470 | 0.00227 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "Van Halen brown sound"; ledger id 33 |
+| 2026-09-14T19:41:26Z | lead | gpt-5.4-mini | cite | 4,893 | 0 | 417 | 0.00554625 | 0.00769 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "Van Halen brown sound"; ledger id 34 |
+| 2026-09-14T19:41:39Z | lead | gpt-5.4-mini | pick | 5,878 | 5,376 | 172 | 0.00155370 | 0.00215 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "AC30 chime"; ledger id 35 |
+| 2026-09-14T19:41:41Z | lead | gpt-5.4-mini | cite | 6,277 | 5,888 | 186 | 0.00157035 | 0.00218 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "AC30 chime"; ledger id 36 |
+| 2026-09-14T19:41:54Z | lead | gpt-5.4-mini | pick | 5,583 | 0 | 241 | 0.00527175 | 0.00731 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "banjo through a toaster"; ledger id 37 |
+| 2026-09-14T19:41:56Z | lead | gpt-5.4-mini | cite | 4,636 | 0 | 543 | 0.00592050 | 0.00821 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "banjo through a toaster"; ledger id 38 |
+
 Check (smoke test): input 25,244 × 0.75 / 1M + output 1,450 × 4.50 / 1M = 0.018933 + 0.006525 = **US$0.025458**;
 × 1.3866 = CA$0.035300. Matches the Worker ledger (`GET /api/admin/spend`: spent_usd 0.025458, spent_cad 0.035300).
 
@@ -60,4 +69,6 @@ Check (accidental test calls, ids 17–22): 3 questions × pick + cite, input 34
 
 Check (round-6 check, ids 23–30): US$0.021424 × 1.3866 = CA$0.029707; OpenAI prompt caching now covers most of each pick prompt. Demo ledger after it: 30 calls, US$0.138542, CA$0.192102.
 
-**Running total: US$0.1640 · CA$0.2274 of CA$2.00** (34 calls: 4 in the QA smoke test, 30 in the demo database).
+Check (final screenshots, ids 31–38): US$0.026686 × 1.3866 = CA$0.037002. Before them the answer cache was cleared (`DELETE FROM answer_cache` on the local database) so no answer made before the round-7 attribution fix is served; the ledger was kept. Demo ledger after it: 38 calls, US$0.165227, CA$0.229104.
+
+**Running total: US$0.1907 · CA$0.2644 of CA$2.00** (42 calls: 4 in the QA smoke test, 38 in the demo database).

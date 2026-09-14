@@ -142,7 +142,7 @@ test('fake-gk: general knowledge about the guide, candidates or model list is dr
 
 test('the pick prompt forbids guide talk in general knowledge, and the cache version moved on', async () => {
   const { PROMPT_VERSION } = await import('../ai.js')
-  assert.equal(PROMPT_VERSION, 'tf-ai-3')
+  assert.equal(PROMPT_VERSION, 'tf-ai-4')
   const src = readFileSync(fileURLToPath(new URL('../ai.js', import.meta.url)), 'utf8')
   assert.match(src, /Never write general_knowledge about the guide, the guide candidates or the model list/)
 })
@@ -154,6 +154,26 @@ test('fake-span: an AI citation that runs across a box break is dropped as quote
   assert.deepEqual(a.ai.dropped, [{ kind: 'quote_not_on_page', detail: '1959SLP, p. 28' }, { kind: 'no_verified_quote', detail: '1959SLP' }])
   assert.ok(a.suggestions.every((s) => s.source === 'guide_search'))
   assert.ok(!JSON.stringify(a).includes('Van Halen “My settings'))
+})
+
+test('fake-nonsense: no guide support and no general knowledge → still "I can\'t point to the guide for that", no cite call', async () => {
+  const q = 'banjo through a toaster fake-nonsense'
+  // Control: guide search alone can't support it (so the guard, not the search, decides).
+  assert.equal(answer(q, { models, pages }).status, 'no_guide_support')
+  const a = await ask(q)
+  assert.equal(a.status, 'no_guide_support')
+  assert.equal(a.message, "I can't point to the guide for that.")
+  assert.deepEqual(a.suggestions, [])
+  assert.deepEqual(a.general_knowledge, [])
+  assert.deepEqual(a.understood.ai_terms, [])
+  assert.equal(a.ai.used, true)
+  assert.equal(fake.count(), 1, 'only the pick call; no cite call')
+  checkInvariants(a, { pages })
+})
+
+test('the pick prompt tells the model to return nothing for requests that are not about music', async () => {
+  const src = readFileSync(fileURLToPath(new URL('../ai.js', import.meta.url)), 'utf8')
+  assert.match(src, /If the request is not about a guitar tone, song, artist, band, style or gear, return empty general_knowledge, search_terms and picks/)
 })
 
 test('fake-puppets: general knowledge + search terms lead to USA IIC+ with a verified p. 270 quote', async () => {

@@ -151,3 +151,12 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     commit gate passed on the absence of a "failed" line. Both slices found it themselves: tf1's runner now refuses
     busy ports, and tf2 reran on 8311 with a gate that requires "passed". Lesson for the finish: start the final demo
     only after every slice has stopped.
+
+24. **The AI may not turn nonsense into suggestions (lead fix, after both slices stopped).** The final screenshots
+    showed "banjo through a toaster" with AI on (the default) as "4 starting points" (Class-A 30W TB and friends):
+    real quotes, invented premise, and the page even said "Not in the guide: banjo, toaster". The brief says an
+    unsupported query gets "I can't point to the guide for that." The difference from Master of Puppets, which must
+    keep working: there the AI says what the query is about (general knowledge); for banjo it said nothing. Rule
+    (API.md §5.2b): no guide support + no general knowledge → no-support answer, no cite call; the pick prompt also
+    says to return nothing for non-music requests; PROMPT_VERSION tf-ai-4. Both slices had already closed, so the
+    lead made this small change in core/ai.js with a fake scenario, a test and a negative control, and reran QA.

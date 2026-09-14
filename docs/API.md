@@ -339,6 +339,12 @@ successful run is `ai.used: true, ai.reason: null`; `"cached"` and `"error"` are
    unknown or whose `unit_name` isn't one of that model's unit names is dropped (`unknown_model`). The rules tell
    the model: only choose from the list; song and artist facts go in general_knowledge; never mention Axe-Fx III,
    FM3 or FM9 models, Motor Drive or Transformer Grind.
+2b. **No guessing on unsupported queries.** When C0 is empty (guide search alone finds no support) and the pick
+   returns no general knowledge (after the guide-talk filter), stop: the answer is the guide-search no-support
+   answer ("I can't point to the guide for that."), `ai.used: true`, `ai.reason: null`, `ai_terms: []`, and no cite
+   call. The pick rules also tell the model to return nothing for requests that aren't about a guitar tone, song,
+   artist, band, style or gear. (A real call turned "banjo through a toaster" into four VOX-style cards with no
+   general knowledge; "the rhythm tone on Master of Puppets" still works because the AI says what it is about.)
 3. Guide search again with `query + " " + search_terms` → C1. Terms added this way are listed in
    `understood.ai_terms`.
 4. **Call B, "cite"**: for each surviving pick (and C1 not already picked, up to 4 models total), the model's

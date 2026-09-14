@@ -8,7 +8,7 @@ import { guideAnswer, baseAnswer, buildSuggestion, GK_LABEL } from './answer.js'
 import { termRegex } from './search.js'
 import { foldForSearch } from './text.js'
 
-export const PROMPT_VERSION = 'tf-ai-3'
+export const PROMPT_VERSION = 'tf-ai-4'
 // §5.6: general knowledge that talks about the guide, the candidates or the model list is not general knowledge.
 export const GK_ABOUT_GUIDE = /guide|candidate|provided|model list|the list/i
 export const MAX_TOKENS = { pick: 1200, cite: 2500 }
@@ -21,6 +21,7 @@ const PICK_RULES = [
   'Only choose model_id and unit_name values exactly as they appear in the list. Never invent or rename a model.',
   'Song, artist and gear facts go in general_knowledge (at most 3 items, each at most 200 characters). They are shown as general knowledge, not as guide facts.',
   'Never write general_knowledge about the guide, the guide candidates or the model list; only facts about songs, artists and gear.',
+  'If the request is not about a guitar tone, song, artist, band, style or gear, return empty general_knowledge, search_terms and picks.',
   'search_terms: at most 6 short words or phrases (artist, amp or sound words) that could appear in the guide.',
   'picks: at most 4.',
   'Never mention Axe-Fx III, FM3 or FM9 models, Motor Drive or Transformer Grind.',
@@ -255,6 +256,18 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
     }
   } catch (e) {
     return guideOnly(e.cap ? 'spend_cap' : 'error')
+  }
+
+  // §5.2b: when the guide can't support the query on its own, the AI may only help if it also says what the query
+  // is about (at least one general-knowledge item). Without that it is guessing: a real call turned "banjo through
+  // a toaster" into four VOX-style cards. Keep "I can't point to the guide for that." and make no cite call.
+  if (c0.answer.status === 'no_guide_support' && !gk.length) {
+    const a = c0.answer
+    a.understood = { ...a.understood, ai_terms: [] }
+    a.general_knowledge = []
+    a.ai = { used: true, reason: null, dropped, cost_cad: Math.round(costCad * 1e6) / 1e6 }
+    await store.putCache(key, a)
+    return a
   }
 
   // Search again with the AI's terms.

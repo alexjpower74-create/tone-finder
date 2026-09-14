@@ -93,6 +93,23 @@ export const SCENARIOS = {
       ],
     },
   },
+  'fake-nonsense': {
+    // A query the guide can't support, and no general knowledge: the real model still picked VOX-style amps.
+    pick: {
+      general_knowledge: [],
+      search_terms: ['chime', 'vox', 'bright', 'clean'],
+      picks: [{ model_id: 'class-a-30w', unit_name: 'Class-A 30W TB' }],
+    },
+    cite: {
+      suggestions: [
+        {
+          model_id: 'class-a-30w',
+          unit_name: 'Class-A 30W TB',
+          citations: [{ page: 109, quote: 'What also works well with VOX amps is to boost the signal at the input stage, for example by increasing Input Trim, or by adding a Drive such as FET Boost or SDD.' }],
+        },
+      ],
+    },
+  },
   'fake-puppets': {
     pick: {
       general_knowledge: [{ text: 'FAKE: the rhythm guitars on Master of Puppets were recorded with a MESA/Boogie Mark IIC+.' }],
