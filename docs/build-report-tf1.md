@@ -1,5 +1,111 @@
 # Build report — tf1 (guide data, answer engine, AI step, Worker + D1)
 
+## Round 2 (after the lead's review of 80f4ccb)
+
+**Status:** DONE except one golden expectation I couldn't meet under the contract's scoring (question R2-1). Code
+commit 61f197a. QA from `rig qa --ref 61f197a` (fake 8307 / worker 8308 / cap 8358): `npm run test:worker` **16/16**; `npm run test:core` **67/68** (the one red is golden "The Edge chime", R2-1), quote budget 866 quotes, 69,267 of 540,437 characters (12.82%). Honest note: the first core run in that worktree gave 57/69, with all 11 AI-suite tests failing in about 0.1 ms (the fake server's `before` hook, which binds 8307). An immediate rerun in the same worktree at the same sha gave the AI suite 10/10 and the core suite 67/68, and nothing was listening on 8307 when I checked. Most likely something else held 8307 briefly (another QA run?); not proven.
+
+### Contract answers applied
+- `ai.reason` is `null` on a fresh successful AI run (was `"ok"`). Answer.query echoes the query trimmed as typed.
+- Golden's six stubs are asserted exactly (the special case for Dweezil’s B-man is gone). Stop words and
+  `taper_note { quote, page }` as adopted.
+
+### Box breaks: DONE
+- `core/text.js`: `boxBreaks(rawPage)`, `spansBoxBreak(quote, rawPage)`, plus `splitAtBoxBreaks` (shortens only)
+  and `cutAttribution` (trailing " – Name" → `said_by`; a leading "– Name" is removed).
+- Build: every stored quote is split when picked; 21 got shorter. The curated JD Simo settings (p. 31) spanned a
+  bullet break, so the build refused it; it's now "Bass:0, Mid:10, Treble:10, Volume:10". All the known defects
+  are gone: 1987X p. 33, Band-Commander p. 45, Dizzy V4 p. 134, Dirty Shirley tip p. 125 (now ends
+  "…master to taste”", said_by "Manual").
+- Engine: page sentences are split at breaks before they become why candidates, and a candidate that still spans
+  a break is rejected. Super Verb p. 242, JMPre-1 p. 175 and Hipower p. 168 no longer splice.
+- AI: a citation that spans a break is dropped as `quote_not_on_page`. New fake scenario `fake-span` cites the exact
+  p. 28 splice: the drops are `quote_not_on_page` and then `no_verified_quote`.
+- Tests: `core/tests/boxbreaks.test.mjs` has the §4.2 six-case table (plus a control that each string really is on
+  its page), a break offset check on all 301 pages, the split and attribution helpers, and a check that none of the
+  866 quotes in models.json spans a break or ends with an attribution. Golden `no_why_spans_box_break` is checked
+  on every golden answer.
+
+### Quality: DONE
+- Score × (1 + ln(hits)). "Metallica" now puts USA IIC+ first (golden green).
+- Word variants: "sparkly clean" gives 4 cards, all quoting "sparkling clean" (golden `min_suggestions` 2 green).
+- "the" n-grams: allowed when "The X" occurs with a capital T not at a sentence start. Matching and hits for such a
+  term use that capitalised form, so Ruby Rocket's "edge-of-breakup" no longer counts.
+- Why quality: the first quote needs a strong term; the 2nd and 3rd need a strong term or must come from synopsis
+  or tips. Controls lines are never offered, and spec-table lines are rejected. A quote already shown under an
+  earlier card is skipped when the model has another usable sentence. A sentence over 320 characters is cut after
+  the clause holding the term, so it still starts at the sentence start; mid-sentence clause cuts are gone. A
+  candidate left with no why quote after these rules is dropped and ranks are renumbered.
+- Nudges: up → max(guess, 7), down → min(guess, 3). The direction is still attached when the value doesn't move
+  (clean Drive 2.5 with "keep Drive low" stays 2.5 and shows the tip).
+- Golden: 20 of 21 queries green with AI off; `min_suggestions` and `no_why_spans_box_break` supported.
+
+### Contract questions (round 2)
+- **R2-1. "The Edge chime" can't put Class-A 30W first under §4.1 as written.** Found terms: "the edge" (df 3)
+  and "chime" (df 8). Car Roamer: "chime" in its synopsis (weight 3) with 2 hits on its pages → 2.63 × 3 × (1 + ln 2)
+  = **13.36**. Class-A 30W: "The Edge" twice and "chime" once, both only in page text (weight 1). Its stored
+  synopsis is just "Four models of a VOX AC30:" → 3.57 × 1 × 1.5 × (1 + ln 2) + 2.63 = **11.68**. Class-A 30W
+  comes second, Deluxe Tweed ("Fender’s The Edge Deluxe amp") third. The engine isn't bent to pass. Options if you
+  want Class-A 30W first: weight a proper-name term above a single common word (for example ×2 for a "the" n-gram),
+  or count a multi-word proper name as weight 3 when it names the amp's owner. Either one is your call to put in §4.1.
+- **R2-2. "the" + generic word.** "the rhythm tone on Master of Puppets" found "the rhythm" (a capitalised
+  "The Rhythm" occurs mid-sentence), which made a generic word strong and broke golden. The engine treats a "the"
+  n-gram as generic when all its other words are generic. Please add that sentence to §4.1.
+- **R2-3. Drop detail wording.** §5.5 says "the model or unit name, and the page". The engine sends
+  `"1959SLP, p. 60"`; tf2's mock has `"USA IIC+: page 12"`. One format should go in the contract; I suggest
+  `"<unit name>, p. <n>"`, or just the name for `unknown_model` / `no_verified_quote`.
+- **R2-4 (quality, not contract).** For "Metallica" the USA IIC+ why quote is "Add Santana, Metallica, Keith Richards
+  etc." (p. 267, the first sentence in guide order), not the stronger p. 270 "Metallica’s IIC+" line. §4.2 has no
+  rule that prefers one weight-1 sentence over another. If you want one: prefer the sentence where the term sits
+  next to the model's unit name.
+
+### Cross-review of tf2 (rig/tf2 at 89bba5f; no tf2 files edited)
+Shapes, checked by running tf2's `app/tests/shape.mjs` on the mock and by diffing key paths against my engine's
+answers for the same queries:
+1. **`taper_note` has an extra `id` key** in every mock card (`id, quote, page`). The contract is exactly
+   `{ quote, page }`.
+2. **Drop detail wording differs** (R2-3): mock `"USA IIC+: page 12"`, real `"1959SLP, p. 60"`. If the app parses
+   the detail, it will break on real data.
+3. **Mock `ares_flags[].page` is `null` on a `where: "why"` flag.** The real engine sets the why quote's page there
+   (null only for `where: "ai"`).
+4. **Mock `app/mock/models.json` is pre data-ready.** Its `pages_sha256` differs from the real one, and 102 of 109
+   models differ in content. Every mock model has `controls: null`, empty `cab.notes` and empty `notes`, while the
+   real file fills them (key paths only in real: `controls.quote/page`, `cab.notes[]`, `notes[]` with `said_by`).
+   The Model detail page is untested against notes and cab notes. tf2's brief step 3 (copy from main) looks not done.
+5. **Mock canned answers predate round 2.** Mock "van halen brown sound" shows a `"brown sound"` matched term;
+   the real engine can't produce that ("sound" is a stop word, so the 2-gram is never formed). Real answers for the
+   mock's own queries now: Van Halen → Brit Brown, PVH 6160 Block, PVH 6106+, 6G4 Super; clean worship pad →
+   Capt Hook, AC-20, Bludojai, ODS-100; AC30 chime → Class-A 30W, Class-A 15W TB; JTM 45 → Brit JM45, Dirty Shirley.
+6. **Mock `off` variants are `null`** for six of seven queries. tf2's shape checker reports them as missing every key
+   if iterated. Harmless in the app if it only reads `on`, but worth a guard.
+7. Mock nudges `Bass 3 down` and `Presence 7 up` already match the new §4.3.5 rule. `ai.reason` null on used runs
+   matches.
+
+Live: tf2's shape checker against my Worker (scratch state, fake AI on 8303, guide loaded by
+`scripts/load-guide.mjs`) reported **no problems** for `/api/health`, `/api/models`,
+`/api/models?brand=Marshall&mv=no`, `/api/models/1959slp`, the 404 error body, and four `/api/ask` answers:
+"Van Halen brown sound" (ok, AI used, 4 cards), "banjo through a toaster" (no support), "…Master of Puppets
+fake-puppets" (ok, 2 cards) and "Brown Sound Deluxe fake-plant" (ok, 4 cards).
+
+### Demo against tf2's real app: DONE
+`npm run demo` logic with tf2's own `app/` from `git archive rig/tf2 app` (untracked copy under
+`worker/.wrangler/`): migrations applied, 301 pages loaded (sha256 6a0b9d75…), "Open http://127.0.0.1:8301/"; GET /
+→ 200 with `<meta name="api-base" content="http://127.0.0.1:8302">`; the Worker answered with
+`Access-Control-Allow-Origin: *`; Ctrl+C left 8301 and 8302 free. Not driven in a browser (tf2 / QA).
+
+### Negative controls (round 2)
+| # | Break | Result |
+|---|---|---|
+| a | `checkQuote` returns ok first | RED: 9 tests (changed character, wrong page, 3 sentences, page range, fake-plant, curated quote stopping the build, determinism). Restored. |
+| d | generic words can be strong | RED: golden "lead tone", "the rhythm tone on Master of Puppets", and AI fake-puppets. Restored. |
+| i | search indexes stubs as their own models | RED: golden never_ids, "Slash", "Steve Vai". Restored. |
+| box | `splitAtBoxBreaks` returns the quote unsplit | RED: the split test and build determinism (a rebuild keeps the p. 28, 33 and 125 splices). The golden no-span check stayed green, because the engine also rejects any candidate that spans a break, so there are two layers of protection. Restored. |
+| after restore | — | core 67/68 (only R2-1), worker 16/16 |
+
+---
+
+# Round 1
+
 **data ready** — `data/models.json` (109 models, schema 1) is committed on `rig/tf1` with `data/curation.json`,
 `core/models.js`, `core/brands.js`, `core/labels.js`, `scripts/build-models.mjs`, `core/tests/models.test.mjs` and
 `docs/DATA.md`. Ready for tf2's cross-review of the shapes.
