@@ -33,7 +33,8 @@ white, with ink only on text.
   page number, and never open with the previous passage's attribution. The p. 28 text "…like Eddie Van Halen “My
   settings…" is really two passages, and the second is Cliff's.
 - **Starting guesses** are labelled "starting guess — not from the guide". Guide numbers, and the guide's rule that
-  Master defaults to 10 on amps without a master volume (p. 12), show their page.
+  Master defaults to 10 on amps without a master volume (p. 12), show their page, and the sentence that states the
+  value is displayed right under the dials. A knob whose quote doesn't state its value can't carry a page.
 - **General knowledge** (songs, artists) only comes from the optional AI step. It's labelled "General knowledge (AI)
   — not from the guide". The AI can only pick models from the list, and its quotes are shown only if they're on
   the page it names.
@@ -46,13 +47,13 @@ white, with ink only on text.
 
 ## Tests
 
-Final QA from a QA worktree pinned to `287c9a4`, every exit code gated:
+Final QA from a QA worktree pinned to `cc5c223`, every exit code gated:
 
 | Suite | Passed | Failed | Skipped |
 |---|---|---|---|
-| core: data rules, quote checks, box breaks, engine, 23 golden queries, AI step on a fake server | 85 | 0 | 0 |
+| core: data rules, quote checks, box breaks, engine, knob citations, 23 golden queries, AI step on a fake server | 88 | 0 | 0 |
 | Worker HTTP API (`wrangler dev --local`) | 16 | 0 | 0 |
-| App, Playwright, chromium + webkit, 390 + 1280, real input | 183 | 0 | 117 (by design) |
+| App, Playwright, chromium + webkit, 390 + 1280, real input | 188 | 0 | 120 (by design) |
 | Live: app + shape checks against a real local Worker | 12 | 0 | 0 |
 
 More than 40 negative controls were made red and restored (`docs/build-report*.md`).

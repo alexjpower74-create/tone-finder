@@ -7,16 +7,16 @@ control and its failure message: `docs/build-report-tf1.md`, `docs/build-report-
 
 ## Final QA
 
-From the lead's QA worktree pinned with `rig qa --ref 287c9a4` (ports 8305–8309), every exit code gated:
+From the lead's QA worktree pinned with `rig qa --ref cc5c223` (ports 8305–8309), every exit code gated:
 
 | Suite | Sha | Passed | Failed | Skipped | Exit |
 |---|---|---|---|---|---|
-| core (`node --test core/tests`: data rules, quote checks, box breaks, engine, 23 golden queries, AI step on a fake OpenAI server) | 287c9a4 | 85 | 0 | 0 | 0 |
-| worker (`npm --prefix worker test`: HTTP API on `wrangler dev --local`, fake AI, low-cap instance) | 287c9a4 | 16 | 0 | 0 | 0 |
-| app (Playwright, chromium + webkit, 390 + 1280, real input, mock) | 287c9a4 | 183 | 0 | 117 | 0 |
-| live (the Ask journey + §6 shape checks against a real local Worker with the guide loaded) | 287c9a4 | 12 | 0 | 0 | 0 |
+| core (`node --test core/tests`: data rules, quote checks, box breaks, engine, knob citations, 23 golden queries, AI step on a fake OpenAI server) | cc5c223 | 88 | 0 | 0 | 0 |
+| worker (`npm --prefix worker test`: HTTP API on `wrangler dev --local`, fake AI, low-cap instance) | cc5c223 | 16 | 0 | 0 | 0 |
+| app (Playwright, chromium + webkit, 390 + 1280, real input, mock) | cc5c223 | 188 | 0 | 120 | 0 |
+| live (the Ask journey + §6 shape checks against a real local Worker with the guide loaded) | cc5c223 | 12 | 0 | 0 | 0 |
 
-The 117 app skips are by design: run-once data and server specs (serve, quotes, shape) skip on three of the four
+The 120 app skips are by design: run-once data and server specs (serve, quotes, shape) skip on three of the four
 projects, the phone-only spec skips on desktop, and `live.spec` skips without `TF_LIVE_API` (it ran separately, above).
 
 ## Real AI calls
@@ -43,7 +43,8 @@ guide for that." No key material in any log, answer or tracked file.
 | 24a54f4 | main, tf1 round 6 + tf2 round 4 | 81/81 | 16/16 | — |
 | d85ff29 | main + tf2 final | — | — | app 183 / 117 skipped; live 12/12 |
 | dab11d8 | main + tf1 round 7 | 83/83 | 16/16 | app 183 / 117; live 12/12 |
-| **287c9a4** | **lead fix: no AI suggestions for unsupported, unexplained queries** | **85/85** | **16/16** | **app 183 / 117; live 12/12** |
+| 287c9a4 | lead fix: no AI suggestions for unsupported, unexplained queries | 85/85 | 16/16 | app 183 / 117; live 12/12 |
+| **cc5c223** | **lead fix after Onyx's review: a knob's page needs a displayed sentence that states the value (#25)** | **88/88** | **16/16** | **app 188 / 120; live 12/12** |
 
 ## What the lead's own reading found (the slices' tests didn't)
 
@@ -53,6 +54,9 @@ guide for that." No key material in any log, answer or tracked file.
   page-number footers and leading attributions (#14, #15, #20, tf1 round 7).
 - **Ranking faults**, found by reading real answers to 23 realistic queries: Metallica, The Edge chime, sparkly
   clean, brown sound, SRV Texas blues (#16, #18).
+- **Onyx's review** caught one citation the lead missed: Master 10 was cited p. 12 while the card displayed only the
+  taper sentence, which names Master but states no value. Now every knob page has its sentence on the card, and a
+  quote that doesn't state the value can't carry a page (#25).
 - **The real model's quirks:** general knowledge about the guide itself (#21); citations lost to quote-mark and
   case differences (#22); nonsense queries turned into suggestions (#24).
 
