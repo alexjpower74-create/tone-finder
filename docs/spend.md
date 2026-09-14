@@ -60,6 +60,10 @@ Slices make no paid calls: their tests use the fake OpenAI server.
 | 2026-09-14T19:41:54Z | lead | gpt-5.4-mini | pick | 5,583 | 0 | 241 | 0.00527175 | 0.00731 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "banjo through a toaster"; ledger id 37 |
 | 2026-09-14T19:41:56Z | lead | gpt-5.4-mini | cite | 4,636 | 0 | 543 | 0.00592050 | 0.00821 | Final screenshots on the restarted demo (main dab11d8, answer cache cleared): "banjo through a toaster"; ledger id 38 |
 
+| 2026-09-14T19:46:46Z | lead | gpt-5.4-mini | pick | 5,614 | 0 | 211 | 0.00516000 | 0.00715 | Guard check on the demo Worker (main 287c9a4, tf-ai-4): "banjo through a toaster" (guard: no-support answer, pick call only); ledger id 39 |
+| 2026-09-14T19:46:48Z | lead | gpt-5.4-mini | pick | 5,617 | 0 | 326 | 0.00567975 | 0.00788 | Guard check on the demo Worker (main 287c9a4, tf-ai-4): "the rhythm tone on Master of Puppets" (still USA IIC++); ledger id 40 |
+| 2026-09-14T19:46:51Z | lead | gpt-5.4-mini | cite | 9,243 | 2,816 | 598 | 0.00772245 | 0.01071 | Guard check on the demo Worker (main 287c9a4, tf-ai-4): same question; ledger id 41 |
+
 Check (smoke test): input 25,244 × 0.75 / 1M + output 1,450 × 4.50 / 1M = 0.018933 + 0.006525 = **US$0.025458**;
 × 1.3866 = CA$0.035300. Matches the Worker ledger (`GET /api/admin/spend`: spent_usd 0.025458, spent_cad 0.035300).
 
@@ -71,4 +75,6 @@ Check (round-6 check, ids 23–30): US$0.021424 × 1.3866 = CA$0.029707; OpenAI 
 
 Check (final screenshots, ids 31–38): US$0.026686 × 1.3866 = CA$0.037002. Before them the answer cache was cleared (`DELETE FROM answer_cache` on the local database) so no answer made before the round-7 attribution fix is served; the ledger was kept. Demo ledger after it: 38 calls, US$0.165227, CA$0.229104.
 
-**Running total: US$0.1907 · CA$0.2644 of CA$2.00** (42 calls: 4 in the QA smoke test, 38 in the demo database).
+Check (guard check, ids 39–41): US$0.018562 × 1.3866 = CA$0.025738. Demo ledger after it: 41 calls, US$0.183789, CA$0.254842.
+
+**Running total: US$0.2092 · CA$0.2901 of CA$2.00** (45 calls: 4 in the QA smoke test, 41 in the demo database).
