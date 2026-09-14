@@ -1,0 +1,1749 @@
+{
+ "_about": "Canned answers for ?mock=1, built by app/tools/build-mock.mjs. Quotes are verified on their pages; scores are placeholders. The SAMPLE (test only) Ares flag is planted on purpose.",
+ "source": "derived from the local guide (pre data-ready)",
+ "health": {
+  "ok": true,
+  "models": 109,
+  "guide": {
+   "loaded": true,
+   "pages": 301,
+   "sha_ok": true
+  },
+  "ai": {
+   "configured": true,
+   "model": "gpt-5.4-mini",
+   "cap_cad": 2,
+   "spent_cad": 0.0412,
+   "calls": 6
+  }
+ },
+ "stop_words": [
+  "a",
+  "an",
+  "and",
+  "the",
+  "of",
+  "on",
+  "in",
+  "at",
+  "to",
+  "for",
+  "with",
+  "from",
+  "by",
+  "like",
+  "my",
+  "me",
+  "i",
+  "want",
+  "need",
+  "get",
+  "some",
+  "sort",
+  "kind",
+  "type",
+  "tone",
+  "tones",
+  "sound",
+  "sounds",
+  "sounding",
+  "song",
+  "guitar",
+  "guitars",
+  "amp",
+  "amps",
+  "model",
+  "models",
+  "setting",
+  "settings",
+  "preset",
+  "patch",
+  "please",
+  "how",
+  "what",
+  "that",
+  "this",
+  "those",
+  "these",
+  "is",
+  "are",
+  "be",
+  "it",
+  "its",
+  "his",
+  "her",
+  "their",
+  "do",
+  "does",
+  "make",
+  "give",
+  "play",
+  "playing"
+ ],
+ "generic_words": [
+  "clean",
+  "crunch",
+  "crunchy",
+  "rhythm",
+  "lead",
+  "solo",
+  "dirty",
+  "distorted",
+  "distortion",
+  "overdrive",
+  "overdriven",
+  "drive",
+  "gain",
+  "master",
+  "volume",
+  "bass",
+  "mid",
+  "middle",
+  "treble",
+  "presence",
+  "depth",
+  "loud",
+  "quiet",
+  "warm",
+  "bright",
+  "dark",
+  "fat",
+  "big",
+  "heavy"
+ ],
+ "no_support_template": {
+  "query": "",
+  "status": "no_guide_support",
+  "message": "I can't point to the guide for that.",
+  "understood": {
+   "matched_terms": [],
+   "unmatched_terms": [],
+   "ai_terms": [],
+   "intent": null
+  },
+  "ai": {
+   "used": false,
+   "reason": "off",
+   "dropped": [],
+   "cost_cad": 0
+  },
+  "general_knowledge": [],
+  "suggestions": [],
+  "ares": {
+   "firmware": "Ares",
+   "guide_firmware": "Quantum 7.02",
+   "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+   "sources": [
+    {
+     "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+     "fetched": "2026-09-14",
+     "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+    },
+    {
+     "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+     "fetched": "2026-09-14",
+     "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+    }
+   ]
+  },
+  "guide": {
+   "title": "Yek's Guide to the Fractal Audio Amp Models",
+   "revision": "April 2017",
+   "firmware": "Quantum 7.02"
+  }
+ },
+ "answers": {
+  "van halen brown sound": {
+   "on": {
+    "query": "Van Halen brown sound",
+    "status": "ok",
+    "message": null,
+    "understood": {
+     "matched_terms": [
+      "van halen",
+      "brown sound"
+     ],
+     "unmatched_terms": [],
+     "ai_terms": [],
+     "intent": null
+    },
+    "ai": {
+     "used": false,
+     "reason": "off",
+     "dropped": [],
+     "cost_cad": 0
+    },
+    "general_knowledge": [],
+    "suggestions": [
+     {
+      "rank": 1,
+      "model_id": "brit-brown-and-fas-brown",
+      "unit_name": "Brit Brown",
+      "section": "Brit Brown and FAS Brown (FAS custom models)",
+      "based_on": "FAS custom models",
+      "brands": [
+       "Fractal Audio"
+      ],
+      "pages": {
+       "start": 60,
+       "end": 61
+      },
+      "source": "guide_search",
+      "score": 14.2,
+      "why": [
+       {
+        "quote": "Eddie van Halen’s legendary “Brown Sound” probably is the most sought-after guitar tone: a Marshall Superlead Plexi, perhaps modded, with a Variac to run at lower than normal voltage, a 4x12 cabinet with JBLs or greenbacks, copious (panned) reverb and some EQ magic at the mixing table.",
+        "page": 60,
+        "said_by": null,
+        "matched": [
+         "brown sound",
+         "van halen"
+        ]
+       },
+       {
+        "quote": "Supposedly Eddie himself said: “There is a difference between being just loud and having what I call a warm, brown sound, which is a toney sound. ” Another story tells that the term “brown sound” originally was used to describe Alex Van Halen’s drum sound.",
+        "page": 60,
+        "said_by": null,
+        "matched": [
+         "brown sound",
+         "van halen"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Presence",
+        "value": 7,
+        "kind": "guess",
+        "note": "starting guess — not from the guide",
+        "direction": {
+         "dir": "up",
+         "quote": "Turn up Presence in the Brit Brown model",
+         "page": 60
+        }
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": null,
+       "stock_cabs": null,
+       "notes": []
+      },
+      "ares_flags": []
+     },
+     {
+      "rank": 2,
+      "model_id": "1959slp",
+      "unit_name": "1959SLP",
+      "section": "1959SLP (Marshall SLP1959, Vintage Re-Issue Series)",
+      "based_on": "Marshall SLP1959, Vintage Re-Issue Series",
+      "brands": [
+       "Marshall"
+      ],
+      "pages": {
+       "start": 28,
+       "end": 31
+      },
+      "source": "guide_search",
+      "score": 7.9,
+      "why": [
+       {
+        "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "page": 28,
+        "said_by": null,
+        "matched": [
+         "van halen"
+        ]
+       },
+       {
+        "quote": "Numerous guitar heroes played some kind of Plexi: Pete Townsend, Jimi Hendrix, Jimmy Page, Angus Young, Yngwie Malmsteen, Jeff Beck and of course Eddie Van Halen.",
+        "page": 29,
+        "said_by": null,
+        "matched": [
+         "van halen"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 2,
+        "kind": "guide",
+        "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "page": 28,
+        "said_by": null
+       },
+       {
+        "knob": "Mid",
+        "value": 8,
+        "kind": "guide",
+        "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "page": 28,
+        "said_by": null
+       },
+       {
+        "knob": "Treble",
+        "value": 7.5,
+        "kind": "guide",
+        "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "page": 28,
+        "said_by": null
+       },
+       {
+        "knob": "Master",
+        "value": 10,
+        "kind": "guide_rule",
+        "quote": "If the original amp has no Master Volume control, the Master control in the amp model will default at 10.",
+        "page": 12
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": {
+       "id": "taper-match",
+       "quote": "The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.",
+       "page": 12
+      },
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "4x12 Marshall cabinet with Celestion G12M (greenbacks) or G12H speakers",
+        "page": 28
+       },
+       "stock_cabs": {
+        "quote": "Marshall stock cabs – Cab Packs",
+        "page": 28
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     }
+    ],
+    "ares": {
+     "firmware": "Ares",
+     "guide_firmware": "Quantum 7.02",
+     "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+     "sources": [
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+       "fetched": "2026-09-14",
+       "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+      },
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+       "fetched": "2026-09-14",
+       "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      }
+     ]
+    },
+    "guide": {
+     "title": "Yek's Guide to the Fractal Audio Amp Models",
+     "revision": "April 2017",
+     "firmware": "Quantum 7.02"
+    }
+   },
+   "off": null
+  },
+  "clean worship pad with sparkle": {
+   "on": {
+    "query": "clean worship pad with sparkle",
+    "status": "ok",
+    "message": null,
+    "understood": {
+     "matched_terms": [
+      "sparkle",
+      "clean"
+     ],
+     "unmatched_terms": [
+      "worship",
+      "pad"
+     ],
+     "ai_terms": [],
+     "intent": "clean"
+    },
+    "ai": {
+     "used": false,
+     "reason": "off",
+     "dropped": [],
+     "cost_cad": 0
+    },
+    "general_knowledge": [],
+    "suggestions": [
+     {
+      "rank": 1,
+      "model_id": "ac-20",
+      "unit_name": "AC-20",
+      "section": "AC-20 (Morgan AC20 Deluxe)",
+      "based_on": "Morgan AC20 Deluxe",
+      "brands": [
+       "Morgan"
+      ],
+      "pages": {
+       "start": 38,
+       "end": 39
+      },
+      "source": "guide_search",
+      "score": 6.1,
+      "why": [
+       {
+        "quote": "Keep Drive low for clean tones.",
+        "page": 38,
+        "said_by": null,
+        "matched": [
+         "clean"
+        ]
+       },
+       {
+        "quote": "Don’t hesitate to use very low Drive settings for a clean tone.",
+        "page": 39,
+        "said_by": null,
+        "matched": [
+         "clean"
+        ]
+       },
+       {
+        "quote": "The amp’s modes are captured in separate amp models. 12AX7 is glassy and has sparkle, EF86 is full- bodied and fat.",
+        "page": 39,
+        "said_by": null,
+        "matched": [
+         "sparkle"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 2.5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 10,
+        "kind": "guide_rule",
+        "quote": "If the original amp has no Master Volume control, the Master control in the amp model will default at 10.",
+        "page": 12
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "1x12 or 2x12 cabinet with Celestion G12H or Celestion Gold speaker(s)",
+        "page": 38
+       },
+       "stock_cabs": {
+        "quote": "AC-20 – Cab Pack 4",
+        "page": 38
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     },
+     {
+      "rank": 2,
+      "model_id": "deluxe-verb",
+      "unit_name": "Deluxe Verb",
+      "section": "Deluxe Verb ('65 blackface Fender Deluxe Reverb, AB763)",
+      "based_on": "'65 blackface Fender Deluxe Reverb, AB763",
+      "brands": [
+       "Fender"
+      ],
+      "pages": {
+       "start": 122,
+       "end": 124
+      },
+      "source": "guide_search",
+      "score": 5.4,
+      "why": [
+       {
+        "quote": "The DR is a small/medium-sized amp with an ability to deliver both sparkling clean tones and low wattage breakup at 22W with 6V6 tubes and relatively small transformers (power and output).",
+        "page": 123,
+        "said_by": null,
+        "matched": [
+         "sparkling",
+         "clean"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 2.5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 10,
+        "kind": "guide_rule",
+        "quote": "If the original amp has no Master Volume control, the Master control in the amp model will default at 10.",
+        "page": 12
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "Single Jensen C12N, Oxford, JBL 120 or EV-12L speaker",
+        "page": 122
+       },
+       "stock_cabs": {
+        "quote": "1x12 Black, 1x12 Deluxe Verb – Cab Packs 1, 4 and 10",
+        "page": 122
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     }
+    ],
+    "ares": {
+     "firmware": "Ares",
+     "guide_firmware": "Quantum 7.02",
+     "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+     "sources": [
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+       "fetched": "2026-09-14",
+       "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+      },
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+       "fetched": "2026-09-14",
+       "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      }
+     ]
+    },
+    "guide": {
+     "title": "Yek's Guide to the Fractal Audio Amp Models",
+     "revision": "April 2017",
+     "firmware": "Quantum 7.02"
+    }
+   },
+   "off": null
+  },
+  "the rhythm tone on master of puppets": {
+   "on": {
+    "query": "the rhythm tone on Master of Puppets",
+    "status": "ok",
+    "message": null,
+    "understood": {
+     "matched_terms": [
+      "metallica",
+      "mark iic+"
+     ],
+     "unmatched_terms": [
+      "puppets"
+     ],
+     "ai_terms": [
+      "metallica",
+      "mark iic+"
+     ],
+     "intent": "crunch"
+    },
+    "ai": {
+     "used": true,
+     "reason": null,
+     "cost_cad": 0.0031,
+     "dropped": [
+      {
+       "kind": "unknown_model",
+       "detail": "Brown Sound Deluxe"
+      },
+      {
+       "kind": "bad_page",
+       "detail": "USA IIC+: page 12"
+      }
+     ]
+    },
+    "general_knowledge": [
+     {
+      "text": "Master of Puppets is a 1986 Metallica album and song. Its rhythm guitar tone is widely credited to a MESA/Boogie Mark IIC+.",
+      "label": "General knowledge (AI) — not from the guide"
+     }
+    ],
+    "suggestions": [
+     {
+      "rank": 1,
+      "model_id": "usa-iic-plus-and-usa-iic-plus-plus",
+      "unit_name": "USA IIC+",
+      "section": "USA IIC+ and USA IIC++ (MESA/Boogie Mark IIC+)",
+      "based_on": "MESA/Boogie Mark IIC+",
+      "brands": [
+       "MESA/Boogie"
+      ],
+      "pages": {
+       "start": 266,
+       "end": 271
+      },
+      "source": "ai_checked",
+      "score": 9.6,
+      "why": [
+       {
+        "quote": "Quantum firmware 3.03 brought us the ”IIC++” model, also referred to as “Metallica’s IIC+” .",
+        "page": 270,
+        "said_by": null,
+        "matched": [
+         "metallica"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 8.1,
+        "kind": "guide",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270,
+        "said_by": null
+       },
+       {
+        "knob": "Bass",
+        "value": 1,
+        "kind": "guide",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270,
+        "said_by": null
+       },
+       {
+        "knob": "Mid",
+        "value": 1.8,
+        "kind": "guide",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270,
+        "said_by": null
+       },
+       {
+        "knob": "Treble",
+        "value": 8.9,
+        "kind": "guide",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270,
+        "said_by": null
+       },
+       {
+        "knob": "Master",
+        "value": 4,
+        "kind": "guide",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270,
+        "said_by": null
+       },
+       {
+        "knob": "Presence",
+        "value": 4.5,
+        "kind": "guide",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270,
+        "said_by": null
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": {
+       "id": "taper-match",
+       "quote": "The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.",
+       "page": 12
+      },
+      "other_settings": [
+       {
+        "text": "Overdrive: 9-10",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270
+       },
+       {
+        "text": "Level: -20 dB",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270
+       },
+       {
+        "text": "Bright Switch ON",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270
+       },
+       {
+        "text": "80 Hz: 4.8",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270
+       },
+       {
+        "text": "240 Hz: 2.6",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270
+       },
+       {
+        "text": "750 Hz: -4.5",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270
+       },
+       {
+        "text": "2200: -0.2",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270
+       },
+       {
+        "text": "6600: 0",
+        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "page": 270
+       }
+      ],
+      "cab": {
+       "speaker": {
+        "quote": "Cabinet with EV-12L speakers",
+        "page": 266
+       },
+       "stock_cabs": {
+        "quote": "None – Cab Pack OBOT The Robot",
+        "page": 266
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     },
+     {
+      "rank": 2,
+      "model_id": "recto1-and-recto2",
+      "unit_name": "Recto1",
+      "section": "Recto1 and Recto2 (MESA two-channel and three-channel Dual Rectifiers)",
+      "based_on": "MESA two-channel and three-channel Dual Rectifiers",
+      "brands": [
+       "MESA/Boogie"
+      ],
+      "pages": {
+       "start": 219,
+       "end": 222
+      },
+      "source": "guide_search",
+      "score": 3.2,
+      "why": [
+       {
+        "quote": "Limp Bizkit, Linkin Park, Incubus, Korn, Metallica...",
+        "page": 219,
+        "said_by": null,
+        "matched": [
+         "metallica"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 6,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 3,
+        "kind": "guess",
+        "note": "starting guess — not from the guide",
+        "direction": {
+         "dir": "down",
+         "quote": "Turn down Bass, keep Master Volume low",
+         "page": 219
+        }
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "4x12 Rectifier cabinet with Vintage 30s",
+        "page": 219
+       },
+       "stock_cabs": {
+        "quote": "4x12 Recto, 4x12 USA, 4x12 Cali, 4x12 Petrucci – Cab Packs 5, 7, 13, 14, 21 and",
+        "page": 219
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     }
+    ],
+    "ares": {
+     "firmware": "Ares",
+     "guide_firmware": "Quantum 7.02",
+     "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+     "sources": [
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+       "fetched": "2026-09-14",
+       "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+      },
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+       "fetched": "2026-09-14",
+       "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      }
+     ]
+    },
+    "guide": {
+     "title": "Yek's Guide to the Fractal Audio Amp Models",
+     "revision": "April 2017",
+     "firmware": "Quantum 7.02"
+    }
+   },
+   "off": {
+    "query": "the rhythm tone on Master of Puppets",
+    "status": "no_guide_support",
+    "message": "I can't point to the guide for that.",
+    "understood": {
+     "matched_terms": [],
+     "unmatched_terms": [
+      "puppets"
+     ],
+     "ai_terms": [],
+     "intent": "crunch"
+    },
+    "ai": {
+     "used": false,
+     "reason": "off",
+     "dropped": [],
+     "cost_cad": 0
+    },
+    "general_knowledge": [],
+    "suggestions": [],
+    "ares": {
+     "firmware": "Ares",
+     "guide_firmware": "Quantum 7.02",
+     "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+     "sources": [
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+       "fetched": "2026-09-14",
+       "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+      },
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+       "fetched": "2026-09-14",
+       "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      }
+     ]
+    },
+    "guide": {
+     "title": "Yek's Guide to the Fractal Audio Amp Models",
+     "revision": "April 2017",
+     "firmware": "Quantum 7.02"
+    }
+   }
+  },
+  "robben ford": {
+   "on": {
+    "query": "Robben Ford",
+    "status": "ok",
+    "message": null,
+    "understood": {
+     "matched_terms": [
+      "robben ford"
+     ],
+     "unmatched_terms": [],
+     "ai_terms": [],
+     "intent": null
+    },
+    "ai": {
+     "used": false,
+     "reason": "off",
+     "dropped": [],
+     "cost_cad": 0
+    },
+    "general_knowledge": [],
+    "suggestions": [
+     {
+      "rank": 1,
+      "model_id": "bludojai",
+      "unit_name": "Bludojai",
+      "section": "Bludojai (Bludotone Ojai)",
+      "based_on": "Bludotone Ojai",
+      "brands": [
+       "Bludotone"
+      ],
+      "pages": {
+       "start": 49,
+       "end": 51
+      },
+      "source": "guide_search",
+      "score": 15.8,
+      "why": [
+       {
+        "quote": "Models of the Bludotone Ojai, a clone of Robben Ford’s “Tan” Dumble Overdrive Special",
+        "page": 49,
+        "said_by": null,
+        "matched": [
+         "robben ford"
+        ]
+       },
+       {
+        "quote": "When you Dumble, you say Robben Ford, and vice versa.",
+        "page": 49,
+        "said_by": null,
+        "matched": [
+         "robben ford"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "1x12 or 2x12 Bludotone cabinet with G12-65 speaker(s)",
+        "page": 49
+       },
+       "stock_cabs": {
+        "quote": "1x12 Bludo – Cab Pack 17",
+        "page": 49
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     },
+     {
+      "rank": 2,
+      "model_id": "ods-100",
+      "unit_name": "ODS-100",
+      "section": "ODS-100 (Dumble Overdrive Special)",
+      "based_on": "Dumble Overdrive Special",
+      "brands": [
+       "Dumble"
+      ],
+      "pages": {
+       "start": 199,
+       "end": 202
+      },
+      "source": "guide_search",
+      "score": 11.3,
+      "why": [
+       {
+        "quote": "Famous Dumble players include Robben Ford, Larry Carlton, John Mayer, Carlos Santana, Keith Urban, SRV, Eric Johnson, Joe Bonamassa.",
+        "page": 199,
+        "said_by": null,
+        "matched": [
+         "robben ford"
+        ]
+       },
+       {
+        "quote": "There’s always a lot of talk on the internet forums about Robben Ford's Dumble tone.",
+        "page": 199,
+        "said_by": null,
+        "matched": [
+         "robben ford"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "2x12 or 4x12 cabinet with EV-L or G12-65 speakers",
+        "page": 199
+       },
+       "stock_cabs": {
+        "quote": "4x12 Rumble – Cab Pack 17",
+        "page": 199
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     }
+    ],
+    "ares": {
+     "firmware": "Ares",
+     "guide_firmware": "Quantum 7.02",
+     "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+     "sources": [
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+       "fetched": "2026-09-14",
+       "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+      },
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+       "fetched": "2026-09-14",
+       "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      }
+     ]
+    },
+    "guide": {
+     "title": "Yek's Guide to the Fractal Audio Amp Models",
+     "revision": "April 2017",
+     "firmware": "Quantum 7.02"
+    }
+   },
+   "off": null
+  },
+  "ac30 chime": {
+   "on": {
+    "query": "AC30 chime",
+    "status": "ok",
+    "message": null,
+    "understood": {
+     "matched_terms": [
+      "ac30",
+      "chime"
+     ],
+     "unmatched_terms": [],
+     "ai_terms": [],
+     "intent": "clean"
+    },
+    "ai": {
+     "used": false,
+     "reason": "off",
+     "dropped": [],
+     "cost_cad": 0
+    },
+    "general_knowledge": [],
+    "suggestions": [
+     {
+      "rank": 1,
+      "model_id": "class-a-30w",
+      "unit_name": "Class-A 30W",
+      "section": "Class-A 30W (VOX AC30)",
+      "based_on": "VOX AC30",
+      "brands": [
+       "VOX"
+      ],
+      "pages": {
+       "start": 107,
+       "end": 109
+      },
+      "source": "guide_search",
+      "score": 12.7,
+      "why": [
+       {
+        "quote": "Four models of a VOX AC30: • Class-A 30W: Normal channel of a non-Top Boost AC30 • Class-A 30W BRT: Bright channel of a non-Top Boost AC30 • Class-A 30W TB: Top Boost channel of the AC30 Hand-Wired • Class-A 30W HOT: Hot mode of the AC30 Hand-Wired",
+        "page": 107,
+        "said_by": null,
+        "matched": [
+         "ac30"
+        ]
+       },
+       {
+        "quote": "The VOX AC30 flagship amplifier came to life in ’59 because the existing AC15 simply wasn’t loud enough and artists such as The Shadows asked for louder ones..",
+        "page": 107,
+        "said_by": null,
+        "matched": [
+         "ac30"
+        ]
+       },
+       {
+        "quote": "The Top Boost circuit, aka “Brilliance”, was added later, adding Bass and Treble controls and creating the well-known VOX “chime” .",
+        "page": 108,
+        "said_by": null,
+        "matched": [
+         "chime"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 2.5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 10,
+        "kind": "guide_rule",
+        "quote": "If the original amp has no Master Volume control, the Master control in the amp model will default at 10.",
+        "page": 12
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "Two Alnico Blue speakers or greenbacks",
+        "page": 107
+       },
+       "stock_cabs": {
+        "quote": "2x12 Class-A, 2x12 Top Boost, 2x12 ACROIX, 4x12 Beatle – Cab Packs 1, 2, 4, 6, 18, 21",
+        "page": 107
+       },
+       "notes": []
+      },
+      "ares_flags": [
+       {
+        "param": "Transformer Grind",
+        "where": "why",
+        "quote": "SAMPLE (test only): add Transformer Grind to taste",
+        "page": null,
+        "advice": "Your firmware doesn't have this control. Skip this step: Fractal replaced it with Speaker Compression (Spkr Comp), which resets to 3.0."
+       }
+      ]
+     },
+     {
+      "rank": 2,
+      "model_id": "class-a-15w-tb",
+      "unit_name": "Class-A 15W TB",
+      "section": "Class-A 15W TB (VOX AC15)",
+      "based_on": "VOX AC15",
+      "brands": [
+       "VOX"
+      ],
+      "pages": {
+       "start": 103,
+       "end": 106
+      },
+      "source": "guide_search",
+      "score": 8.4,
+      "why": [
+       {
+        "quote": "Model of a VOX AC15 Top Boost, AC30’s little brother",
+        "page": 103,
+        "said_by": null,
+        "matched": [
+         "ac30"
+        ]
+       },
+       {
+        "quote": "The AC15 was developed before the AC30.",
+        "page": 103,
+        "said_by": null,
+        "matched": [
+         "ac30"
+        ]
+       },
+       {
+        "quote": "The Top Boost circuit was added later, adding gain and Bass and Treble controls, and the well-known VOX “chime” .",
+        "page": 104,
+        "said_by": null,
+        "matched": [
+         "chime"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 2.5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 10,
+        "kind": "guide_rule",
+        "quote": "If the original amp has no Master Volume control, the Master control in the amp model will default at 10.",
+        "page": 12
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "Single Alnico Blue or greenback",
+        "page": 103
+       },
+       "stock_cabs": {
+        "quote": "1x12 Class-A 15W – Cab Packs 1 and 21",
+        "page": 103
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     }
+    ],
+    "ares": {
+     "firmware": "Ares",
+     "guide_firmware": "Quantum 7.02",
+     "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+     "sources": [
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+       "fetched": "2026-09-14",
+       "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+      },
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+       "fetched": "2026-09-14",
+       "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      }
+     ]
+    },
+    "guide": {
+     "title": "Yek's Guide to the Fractal Audio Amp Models",
+     "revision": "April 2017",
+     "firmware": "Quantum 7.02"
+    }
+   },
+   "off": null
+  },
+  "djent": {
+   "on": {
+    "query": "djent",
+    "status": "ok",
+    "message": null,
+    "understood": {
+     "matched_terms": [
+      "djent"
+     ],
+     "unmatched_terms": [],
+     "ai_terms": [],
+     "intent": "high_gain"
+    },
+    "ai": {
+     "used": false,
+     "reason": "off",
+     "dropped": [],
+     "cost_cad": 0
+    },
+    "general_knowledge": [],
+    "suggestions": [
+     {
+      "rank": 1,
+      "model_id": "thordendal",
+      "unit_name": "Thordendal",
+      "section": "Thordendal (pre-G3 Recto models)",
+      "based_on": "pre-G3 Recto models",
+      "brands": [],
+      "pages": {
+       "start": 251,
+       "end": 251
+      },
+      "source": "guide_search",
+      "score": 4.9,
+      "why": [
+       {
+        "quote": "Not only known for djent-style metal, he’s also an accomplished fusion-type lead player.",
+        "page": 251,
+        "said_by": null,
+        "matched": [
+         "djent"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 7,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "See Recto models",
+        "page": 251
+       },
+       "stock_cabs": {
+        "quote": "See Recto models",
+        "page": 251
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     }
+    ],
+    "ares": {
+     "firmware": "Ares",
+     "guide_firmware": "Quantum 7.02",
+     "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+     "sources": [
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+       "fetched": "2026-09-14",
+       "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+      },
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+       "fetched": "2026-09-14",
+       "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      }
+     ]
+    },
+    "guide": {
+     "title": "Yek's Guide to the Fractal Audio Amp Models",
+     "revision": "April 2017",
+     "firmware": "Quantum 7.02"
+    }
+   },
+   "off": null
+  },
+  "jtm 45": {
+   "on": {
+    "query": "JTM 45",
+    "status": "ok",
+    "message": null,
+    "understood": {
+     "matched_terms": [
+      "jtm 45"
+     ],
+     "unmatched_terms": [],
+     "ai_terms": [],
+     "intent": null
+    },
+    "ai": {
+     "used": false,
+     "reason": "off",
+     "dropped": [],
+     "cost_cad": 0
+    },
+    "general_knowledge": [],
+    "suggestions": [
+     {
+      "rank": 1,
+      "model_id": "brit-jm45",
+      "unit_name": "Brit JM45",
+      "section": "Brit JM45 (Marshall JTM 45)",
+      "based_on": "Marshall JTM 45",
+      "brands": [
+       "Marshall"
+      ],
+      "pages": {
+       "start": 62,
+       "end": 64
+      },
+      "source": "guide_search",
+      "score": 10.2,
+      "why": [
+       {
+        "quote": "It was a hit and a vintage JTM 45 is worth a lot, listing #6 on Vintage Guitar’s list of most valuable amps. 2245 is Marshall’s model number.",
+        "page": 62,
+        "said_by": null,
+        "matched": [
+         "jtm 45"
+        ]
+       },
+       {
+        "quote": "More history “Despite being derived virtually point-by-point from Fender’s 5F6-A Bassman schematic, British components give the JTM45 a tone all its own.” – Vintage Guitar It’s a different kind of Marshall, compared to the later Plexis.",
+        "page": 62,
+        "said_by": null,
+        "matched": [
+         "jtm45"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 3,
+        "kind": "guide",
+        "quote": "Forum member Simeon’s suggested settings for a “Gary Moore” tone: Input Drive 3, Presence 3, stock cab 103, T808 with Drive 0, Tone 6 and Level 7.",
+        "page": 64,
+        "said_by": null
+       },
+       {
+        "knob": "Bass",
+        "value": 3,
+        "kind": "guess",
+        "note": "starting guess — not from the guide",
+        "direction": {
+         "dir": "down",
+         "quote": "It’s bass-heavy, so turn down Bass or use the Cut switch, and turn up mids",
+         "page": 62
+        }
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 10,
+        "kind": "guide_rule",
+        "quote": "If the original amp has no Master Volume control, the Master control in the amp model will default at 10.",
+        "page": 12
+       },
+       {
+        "knob": "Presence",
+        "value": 3,
+        "kind": "guide",
+        "quote": "Forum member Simeon’s suggested settings for a “Gary Moore” tone: Input Drive 3, Presence 3, stock cab 103, T808 with Drive 0, Tone 6 and Level 7.",
+        "page": 64,
+        "said_by": null
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": {
+       "id": "taper-match",
+       "quote": "The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.",
+       "page": 12
+      },
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "4x12 or 2x12 Marshall cabinet with greenbacks, G12M or G12H speakers",
+        "page": 62
+       },
+       "stock_cabs": {
+        "quote": "Marshall stock cabs – Cab Packs",
+        "page": 62
+       },
+       "notes": []
+      },
+      "ares_flags": []
+     }
+    ],
+    "ares": {
+     "firmware": "Ares",
+     "guide_firmware": "Quantum 7.02",
+     "note": "yek's guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling \"should sound very similar\".",
+     "sources": [
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+       "fetched": "2026-09-14",
+       "quote": "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm."
+      },
+      {
+       "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+       "fetched": "2026-09-14",
+       "quote": "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      }
+     ]
+    },
+    "guide": {
+     "title": "Yek's Guide to the Fractal Audio Amp Models",
+     "revision": "April 2017",
+     "firmware": "Quantum 7.02"
+    }
+   },
+   "off": null
+  }
+ }
+}

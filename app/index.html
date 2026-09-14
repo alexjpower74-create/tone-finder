@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="api-base" content="http://127.0.0.1:8302">
+  <title>Tone Finder</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="site-header"><div class="wrap" id="site-header"></div></header>
+  <main class="wrap">
+    <section class="glass panel no-print">
+      <form class="ask-form" id="ask-form" role="search" novalidate>
+        <label for="q">What tone are you after?</label>
+        <div class="ask-row">
+          <input id="q" name="q" type="search" placeholder="e.g. Van Halen brown sound" maxlength="200"
+                 autocomplete="off" enterkeyhint="search">
+          <button class="btn btn-primary" type="submit">Find starting points</button>
+        </div>
+        <div class="chips" id="examples" role="group" aria-label="Examples"></div>
+        <div class="ai-line" id="ai-line"></div>
+      </form>
+    </section>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <div id="answer"></div>
+  </main>
+  <footer class="site-footer"><div class="wrap" id="site-footer"></div></footer>
+  <script type="module" src="index.js"></script>
+</body>
+</html>
