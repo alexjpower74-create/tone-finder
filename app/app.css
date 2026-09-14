@@ -154,6 +154,17 @@ label { font-weight: 600; }
 .understood { font-size: 0.95rem; color: var(--text-2); }
 .understood strong { color: var(--text); font-weight: 600; }
 .status { min-height: 1.5em; }
+.ask-form > * { min-width: 0; }
+#status { margin: 32px 0 8px; scroll-margin-top: 8px; }
+#status:focus, .no-support h2:focus { outline: none; }
+/* Phones: the example chips sit in one contained row that scrolls sideways; the page never does. */
+@media (max-width: 600px) {
+  .chips.examples {
+    flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; max-width: 100%;
+    padding-bottom: 6px; scroll-padding-inline: 8px; scrollbar-width: thin;
+  }
+  .chips.examples .chip { flex: none; white-space: nowrap; }
+}
 .error { color: var(--danger); }
 
 .results { display: grid; gap: 16px; margin-top: 16px; }
@@ -182,9 +193,13 @@ details[open] > summary::before { transform: rotate(45deg); }
 .unit-name { font-size: 1.75rem; font-weight: 800; line-height: 1.15; margin: 0; letter-spacing: -0.01em; } /* 31.5px */
 .section-line { color: var(--text-2); font-size: 0.95rem; }
 
-.quote { margin: 0 0 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-.quote q { quotes: "“" "”"; font-style: normal; }
+/* Quotes: a teal left edge, the verified text exactly, no added marks (API.md §8). */
+.quote { margin: 0 0 14px; padding: 2px 0 2px 14px; border-left: 3px solid var(--teal); }
+.quote-text { margin: 0 0 6px; }
+.quote-meta { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
 .quote .said-by { color: var(--text-2); font-size: 0.85rem; }
+.quote-small { font-size: 0.85rem; color: var(--text-2); border-left-width: 2px; }
+.nudge-label { display: block; margin-bottom: 4px; }
 
 .dials { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 12px 8px; margin: 4px 0 8px; }
 .dial { display: grid; justify-items: center; gap: 2px; text-align: center; margin: 0; }
@@ -272,6 +287,7 @@ details[open] > summary::before { transform: rotate(45deg); }
   .print-page + .print-page { break-before: page; }
   .pick { break-inside: avoid; padding: 6pt 0 8pt !important; }
   .guess-note { color: #000 !important; }
+  .quote { border-left: 1pt solid #000 !important; padding: 0 0 0 6pt !important; margin: 4pt 0 !important; }
   .unit-name { font-size: 16pt; color: #000; }
   .pick-query, .muted, .small, .spec-table th { color: #000 !important; }
   .knob-table th, .knob-table td { border-bottom: 0.5pt solid #999; padding: 2pt 4pt; font-size: 10pt; }

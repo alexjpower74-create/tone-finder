@@ -54,8 +54,9 @@ function understoodHtml(u) {
 }
 
 // "Brown Sound Deluxe: not an Axe-Fx II model in the guide", "USA IIC+: quote not on page 12".
+// detail is "<unit name>, p. <n>", or just the name (API.md §5.5); the older "<name>: page <n>" still reads.
 export function dropText({ kind, detail }) {
-  const m = String(detail).match(/^(.*?):\s*page\s+(\d+)$/i);
+  const m = String(detail).match(/^(.*?)(?:,\s*p\.\s*|:\s*page\s+)(\d+)$/i);
   const name = m ? m[1] : detail;
   const page = m ? m[2] : null;
   switch (kind) {
@@ -66,7 +67,7 @@ export function dropText({ kind, detail }) {
     case 'quote_not_on_page':
       return page ? `${name}: quote not on page ${page}` : `${name}: quote not on the page`;
     case 'quote_too_long':
-      return `${detail}: quote too long to check`;
+      return page ? `${name}: quote on page ${page} too long to check` : `${name}: quote too long to check`;
     case 'no_verified_quote':
       return `${name}: no quote we could check`;
     default:
@@ -82,7 +83,7 @@ function aresHtml(ares) {
       <summary>Sources</summary>
       <ul class="detail-list">${ares.sources
         .map(
-          (s) => `<li><blockquote><q>${esc(s.quote)}</q></blockquote>
+          (s) => `<li><blockquote class="quote quote-small" data-testid="source-quote"><p class="quote-text">${esc(s.quote)}</p></blockquote>
             <a class="src-link" href="${esc(s.url)}" target="_blank" rel="noreferrer">${esc(s.url)}</a>
             <span class="small">fetched ${esc(s.fetched)}</span></li>`,
         )
@@ -124,6 +125,17 @@ function renderAnswer(a) {
   answerEl.innerHTML = parts.join('');
 }
 
+// After a search, put focus on the results summary (or the no-support heading) and bring it into view, so on a
+// phone the first card's name is on screen without a manual scroll.
+function revealAnswer(a) {
+  const target = a.status === 'ok' ? statusEl : answerEl.querySelector('.no-support h2');
+  if (!target) return;
+  target.setAttribute('tabindex', '-1');
+  target.focus({ preventScroll: true });
+  const narrow = globalThis.matchMedia?.('(max-width: 600px)').matches;
+  target.scrollIntoView({ block: narrow ? 'start' : 'nearest' });
+}
+
 async function run(raw, { updateUrl = true } = {}) {
   const query = raw.trim();
   if (!query) {
@@ -149,6 +161,7 @@ async function run(raw, { updateUrl = true } = {}) {
     renderAnswer(a);
     statusEl.textContent =
       a.status === 'ok' ? `${a.suggestions.length} starting ${a.suggestions.length === 1 ? 'point' : 'points'} for “${query}”.` : '';
+    revealAnswer(a);
   } catch (e) {
     if (mine !== seq) return;
     current = null;

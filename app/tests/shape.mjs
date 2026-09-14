@@ -247,7 +247,14 @@ export function checkAnswer(a) {
     if (c.key(ai, 'dropped', 'array', `${p}.ai`)) {
       ai.dropped.forEach((d, i) => {
         if (c.key(d, 'kind', 'string', `${p}.ai.dropped[${i}]`)) c.oneOf(d.kind, DROP_KINDS, `${p}.ai.dropped[${i}].kind`);
-        c.key(d, 'detail', 'string', `${p}.ai.dropped[${i}]`);
+        // §5.5: "<unit name>, p. <n>", or just the name for unknown_model and no_verified_quote.
+        if (c.key(d, 'detail', 'string', `${p}.ai.dropped[${i}]`)) {
+          const nameOnly = d.kind === 'unknown_model' || d.kind === 'no_verified_quote';
+          const withPage = /^.+, p\. \d+$/.test(d.detail);
+          if (nameOnly ? withPage : !withPage) {
+            c.fail(`${p}.ai.dropped[${i}].detail: "${d.detail}" (want ${nameOnly ? 'just the name' : '"<unit name>, p. <n>"'} for ${d.kind})`);
+          }
+        }
       });
     }
   }

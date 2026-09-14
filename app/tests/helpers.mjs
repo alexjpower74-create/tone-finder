@@ -78,6 +78,40 @@ export async function expectStaticTags(page) {
   expect(failures).toEqual([]);
 }
 
+// Every rendered quote (why, tips, notes, settings, cab, nudges, taper note, Ares flag and source quotes) is a
+// blockquote whose text is exactly one of the verified quotes in `allowed`: no <q>, no CSS-added marks, and a left
+// edge. Exact equality means no text starts or ends with a mark the verified quote doesn't have.
+export async function expectQuotesExact(page, allowed) {
+  const rows = await page.evaluate(() =>
+    [...document.querySelectorAll('[data-testid="quote"], [data-testid="flag-quote"], [data-testid="source-quote"]')].map((bq) => {
+      const text = bq.querySelector('.quote-text');
+      const pseudo = (el, which) => (el ? getComputedStyle(el, which).content : 'none');
+      return {
+        tag: bq.tagName.toLowerCase(),
+        text: text ? text.textContent : null,
+        marks: [pseudo(bq, '::before'), pseudo(bq, '::after'), pseudo(text, '::before'), pseudo(text, '::after')],
+        qs: bq.querySelectorAll('q').length,
+        edge: getComputedStyle(bq).borderLeftStyle,
+      };
+    }),
+  );
+  const problems = [];
+  for (const r of rows) {
+    if (r.tag !== 'blockquote') problems.push(`not a blockquote: ${r.text}`);
+    if (r.text === null) {
+      problems.push('quote without .quote-text');
+      continue;
+    }
+    if (!allowed.has(r.text)) problems.push(`not exactly a verified quote: ${JSON.stringify(r.text)}`);
+    if (r.qs) problems.push(`<q> inside: ${r.text.slice(0, 40)}`);
+    if (r.marks.some((c) => c && c !== 'none' && c !== 'normal')) problems.push(`CSS-added marks ${JSON.stringify(r.marks)}: ${r.text.slice(0, 40)}`);
+    if (r.edge === 'none') problems.push(`no left edge: ${r.text.slice(0, 40)}`);
+  }
+  expect(rows.length, 'no quotes rendered').toBeGreaterThan(0);
+  expect(problems).toEqual([]);
+  return rows.length;
+}
+
 export async function expectNoHorizontalScroll(page) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow, 'page scrolls horizontally').toBeLessThanOrEqual(0);

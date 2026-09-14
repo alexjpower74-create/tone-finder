@@ -1,5 +1,6 @@
 // Binder (docs/API.md §8): picks saved on the device, and a one-page-per-3-picks print.
 import { carry } from './api.js';
+import { headerLines, quoteHtml } from './card.js';
 import { GUESS_NOTE, hasGuess, knobSource } from './knobs.js';
 import { esc, renderShell } from './shell.js';
 import { listPicks, removePick, storageAvailable } from './store.js';
@@ -15,10 +16,11 @@ const statusEl = document.getElementById('status');
 document.getElementById('print-btn').addEventListener('click', () => window.print());
 
 function cabLine(cab) {
-  const bits = [];
-  if (cab?.speaker) bits.push(`“${esc(cab.speaker.quote)}” (p. ${cab.speaker.page})`);
-  if (cab?.stock_cabs) bits.push(`Stock cabs: “${esc(cab.stock_cabs.quote)}” (p. ${cab.stock_cabs.page})`);
-  return `<p class="small"><strong>Cab:</strong> ${bits.length ? bits.join(' · ') : 'the guide has no cab line for this model.'}</p>`;
+  if (!cab?.speaker && !cab?.stock_cabs) return '<p class="small"><strong>Cab:</strong> the guide has no cab line for this model.</p>';
+  return `<div class="pick-cab"><p class="small"><strong>Cab</strong></p>
+    ${cab.speaker ? quoteHtml(cab.speaker, { small: true }) : ''}
+    ${cab.stock_cabs ? `<p class="small muted">Stock cabs</p>${quoteHtml(cab.stock_cabs, { small: true })}` : ''}
+  </div>`;
 }
 
 function pickHtml({ query, suggestion: s }) {
@@ -26,7 +28,7 @@ function pickHtml({ query, suggestion: s }) {
   return `<article class="pick glass panel" data-testid="pick" data-model-id="${esc(s.model_id)}">
     <p class="pick-query">For “${esc(query)}”</p>
     <h2 class="unit-name">${esc(s.unit_name)}</h2>
-    <p class="section-line">Section: ${esc(s.section)}</p>
+    ${headerLines(s)}
     <table class="knob-table">
       <thead><tr><th scope="col">Knob</th><th scope="col">Value</th><th scope="col">Source</th></tr></thead>
       <tbody>${s.knobs
@@ -35,7 +37,7 @@ function pickHtml({ query, suggestion: s }) {
     </table>
     ${hasGuess(s.knobs) ? `<p class="guess-note small">Guess = ${GUESS_NOTE}</p>` : ''}
     ${cabLine(s.cab)}
-    ${why ? `<p class="quote"><q>${esc(why.quote)}</q> <span class="pill pill-page">p. ${Number(why.page)}</span></p>` : ''}
+    ${why ? quoteHtml(why) : ''}
     <div class="card-actions no-print">
       <a class="btn" href="${esc(carry(`model.html?id=${encodeURIComponent(s.model_id)}`))}">Model details</a>
       <button type="button" class="btn" data-action="remove" data-model-id="${esc(s.model_id)}" data-query="${esc(query)}">Remove</button>

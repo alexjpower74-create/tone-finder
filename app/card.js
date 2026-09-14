@@ -1,18 +1,49 @@
 // Suggestion card (docs/API.md §8).
 import { carry } from './api.js';
 import { dialHtml, GUESS_NOTE, hasGuess } from './knobs.js';
-import { esc, pagePill } from './shell.js';
+import { esc, pagePill, pageRange } from './shell.js';
+
+// The name parts of a section title: "Brit Brown and FAS Brown (FAS custom models)" → ["brit brown", "fas brown"].
+export function namePartsOf(section) {
+  const cut = section.indexOf(' (');
+  const name = cut >= 0 ? section.slice(0, cut) : section;
+  return name
+    .split(/, | and | \/ /)
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+const FAS_CUSTOM = /^FAS custom model/i;
+
+// "Based on Marshall SLP1959, Vintage Re-Issue Series · pp. 28–31", plus "Guide section: …" only when the unit
+// name isn't one of the section title's name parts (the title would otherwise just repeat based_on).
+export function headerLines(s) {
+  let basedOn = null;
+  if ((s.based_on && FAS_CUSTOM.test(s.based_on)) || (!s.based_on && FAS_CUSTOM.test(s.section))) {
+    basedOn = 'Fractal Audio custom model (no real amp)';
+  } else if (s.based_on) {
+    basedOn = `Based on ${s.based_on}`;
+  }
+  const first = [basedOn, pageRange(s.pages)].filter(Boolean).join(' · ');
+  const showSection = !namePartsOf(s.section).includes(String(s.unit_name).toLowerCase());
+  return `<p class="section-line" data-testid="based-on">${esc(first)}</p>${
+    showSection ? `<p class="section-line" data-testid="guide-section">Guide section: ${esc(s.section)}</p>` : ''
+  }`;
+}
 
 export function attribution(saidBy) {
   if (!saidBy) return '';
   return saidBy.toLowerCase() === 'yek' ? 'yek' : `${saidBy}, quoted in the guide`;
 }
 
-export function quoteHtml(q, tag = 'p') {
+// A verified quote as a blockquote with a teal left edge. The text is shown exactly as verified: no added quote
+// marks, because many quotes carry the guide's own “ ” and added ones would double them (API.md §8).
+export function quoteHtml(q, { small = false } = {}) {
   const by = attribution(q.said_by);
-  return `<${tag} class="quote" data-testid="quote"><q>${esc(q.quote)}</q> ${pagePill(q.page)}${
-    by ? ` <span class="said-by">${esc(by)}</span>` : ''
-  }</${tag}>`;
+  return `<blockquote class="quote${small ? ' quote-small' : ''}" data-testid="quote">
+    <p class="quote-text">${esc(q.quote)}</p>
+    <p class="quote-meta">${pagePill(q.page)}${by ? ` <span class="said-by">${esc(by)}</span>` : ''}</p>
+  </blockquote>`;
 }
 
 const ICON_BOOK =
@@ -29,9 +60,9 @@ export function binderButton(saved) {
 export function cabHtml(cab) {
   if (!cab || (!cab.speaker && !cab.stock_cabs && !(cab.notes ?? []).length)) return '';
   const rows = [];
-  if (cab.speaker) rows.push(`<li><span class="muted">Speaker:</span> ${quoteHtml(cab.speaker, 'span')}</li>`);
-  if (cab.stock_cabs) rows.push(`<li><span class="muted">Stock cabs:</span> ${quoteHtml(cab.stock_cabs, 'span')}</li>`);
-  for (const n of cab.notes ?? []) rows.push(`<li>${quoteHtml(n, 'span')}</li>`);
+  if (cab.speaker) rows.push(`<li><div class="muted small">Speaker</div>${quoteHtml(cab.speaker)}</li>`);
+  if (cab.stock_cabs) rows.push(`<li><div class="muted small">Stock cabs</div>${quoteHtml(cab.stock_cabs)}</li>`);
+  for (const n of cab.notes ?? []) rows.push(`<li>${quoteHtml(n)}</li>`);
   return `<h3>Cab</h3><ul class="detail-list cab" data-testid="cab">${rows.join('')}</ul>`;
 }
 
@@ -40,7 +71,10 @@ export function aresFlagsHtml(flags) {
     .map(
       (f) => `<div class="ares-flag" role="note" data-testid="ares-flag">
         <strong>${esc(f.param)}:</strong> ${esc(f.advice)}
-        <div class="small muted">Mentioned here: “${esc(f.quote)}”${f.page ? ` ${pagePill(f.page)}` : ''}</div>
+        <div class="small muted">Mentioned here:</div>
+        <blockquote class="quote quote-small" data-testid="flag-quote">
+          <p class="quote-text">${esc(f.quote)}</p>${f.page ? `<p class="quote-meta">${pagePill(f.page)}</p>` : ''}
+        </blockquote>
       </div>`,
     )
     .join('');
@@ -58,7 +92,7 @@ export function renderCard(s, { saved = false, query = '' } = {}) {
           : '<span class="pill pill-search" data-testid="source-pill">Guide search</span>'
       }
     </div>
-    <p class="section-line">Section: ${esc(s.section)}${s.based_on ? ` · based on ${esc(s.based_on)}` : ''}</p>
+    ${headerLines(s)}
 
     <h3>Why</h3>
     ${s.why.map((w) => quoteHtml(w)).join('')}
@@ -71,7 +105,7 @@ export function renderCard(s, { saved = false, query = '' } = {}) {
         ? `<ul class="nudges">${nudges
             .map(
               (k) =>
-                `<li data-testid="nudge">${esc(k.knob)} nudged ${esc(k.direction.dir)}: <q>${esc(k.direction.quote)}</q> ${pagePill(k.direction.page)}</li>`,
+                `<li data-testid="nudge"><span class="nudge-label">${esc(k.knob)} nudged ${esc(k.direction.dir)}: </span>${quoteHtml(k.direction)}</li>`,
             )
             .join('')}</ul>`
         : ''
@@ -81,7 +115,7 @@ export function renderCard(s, { saved = false, query = '' } = {}) {
         ? `<p class="other-settings">Other settings in the guide’s list: ${s.other_settings.map((o) => esc(o.text)).join(' · ')} ${pagePill(s.other_settings[0].page)}</p>`
         : ''
     }
-    ${s.taper_note ? `<p class="taper-note" data-testid="taper-note"><q>${esc(s.taper_note.quote)}</q> ${pagePill(s.taper_note.page)}</p>` : ''}
+    ${s.taper_note ? `<div class="taper-note" data-testid="taper-note">${quoteHtml(s.taper_note, { small: true })}</div>` : ''}
     ${cabHtml(s.cab)}
     ${aresFlagsHtml(s.ares_flags)}
     <div class="card-actions">

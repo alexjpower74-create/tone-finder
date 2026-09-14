@@ -1,8 +1,9 @@
-// Guide text helpers for the mock builder and the app's tests: page parsing, the §0 quote check, and splitting
-// passages the text extraction glued together. Pure ESM, no dependencies.
+// Guide text helpers for the mock builder and the app's tests: page parsing, the §0 quote check, and box breaks
+// (API.md §4.2). Pure ESM, no dependencies. tf1's core/text.js will export boxBreaks/spansBoxBreak with the same
+// contract; once that is on main the builder can import it instead of this copy.
 
 // Every run of whitespace (space, tab, newline, U+00A0) → one space, then trim. Nothing else.
-export const normText = (s) => String(s ?? '').replace(/[\s ]+/g, ' ').trim();
+export const normText = (s) => String(s ?? '').replace(/[\s ]+/g, ' ').trim();
 
 // §0 rule 2. A fresh RegExp per call: /g regexes carry state.
 const sentenceBreak = () => /[.!?][”"’)]*\s+(?=[A-Z“"‘(])/g;
@@ -31,6 +32,7 @@ export function makeVerifier(rawPages) {
   const text = new Map([...rawPages].map(([n, t]) => [n, normText(t)]));
   return {
     text,
+    raw: (n) => rawPages.get(n) ?? null,
     pageText: (n) => text.get(n) ?? null,
     // §0: normalised, 12–320 characters, at most 2 sentences, integer page 1–301, exact substring of that page.
     isVerified(quote, page) {
@@ -41,46 +43,85 @@ export function makeVerifier(rawPages) {
   };
 }
 
-// ---------- joined passages (lead, round 2) ----------
-// The extraction glues separate boxes without punctuation: `…like Eddie Van Halen “My settings for a …`.
-// Split before an opening “ that follows a letter, digit or comma and a space, and before an attribution dash.
-// Two refinements, so real quoted words survive (see the build report's contract questions):
-//  - a short inline quote is not a new passage: “Brown Sound”, “typical” (closing ” within 3 words, no “ inside);
-//  - the dash only counts when it directly follows a closing quote mark or sentence punctuation
-//    (“… to taste.” – Cliff), not a list separator like "Marshall stock cabs – Cab Packs".
-const OPEN_QUOTE_JOIN = /(?<=[A-Za-z0-9,]) (?=“)/g;
-const DASH_JOIN = /(?<=[”"’.!?]) (?=– (?:[A-Z]|yek\b))/g;
+// ---------- box breaks (API.md §4.2) ----------
+// A box break is a raw line break followed (after optional spaces or tabs) by an opening “, an attribution dash
+// ("– " or "- " then a capital), a bullet "• ", or a card label at the start of the line.
+const BOX_BREAK =
+  /\r?\n(?=[ \t]*(?:“|[–-] [A-Z]|• |(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls) |More videos, clips and comments))/g;
 
-function isInlineQuote(s, open) {
-  const close = s.indexOf('”', open + 1);
-  if (close < 0) return false;
-  const inner = s.slice(open + 1, close);
-  return !inner.includes('“') && inner.trim().split(/\s+/).length <= 3;
-}
-
-// Indexes of the spaces where a joined passage should be cut.
-export function joinPoints(s) {
-  const cuts = new Set();
-  for (const m of String(s).matchAll(OPEN_QUOTE_JOIN)) if (!isInlineQuote(s, m.index + 1)) cuts.add(m.index);
-  for (const m of String(s).matchAll(DASH_JOIN)) cuts.add(m.index);
-  return [...cuts].sort((a, b) => a - b);
-}
-
-export const hasJoin = (s) => joinPoints(s).length > 0;
-
-// Raw regex hits the refinement lets through (reported, not failed).
-export const rawOpenQuoteHits = (s) => [...String(s).matchAll(OPEN_QUOTE_JOIN)].length;
-
-// Sentences, then cut at joins. Every piece is an exact substring of the normalised input.
-export function splitPassages(text) {
-  const out = [];
-  for (const s of splitSentences(text)) {
-    let start = 0;
-    for (const cut of joinPoints(s)) {
-      out.push(s.slice(start, cut).trim());
-      start = cut + 1;
-    }
-    out.push(s.slice(start).trim());
+// The page split into box runs, each normalised: joining them with one space gives exactly pageText.
+export function boxRuns(rawPage) {
+  const raw = String(rawPage ?? '');
+  const runs = [];
+  let from = 0;
+  for (const m of raw.matchAll(BOX_BREAK)) {
+    runs.push(raw.slice(from, m.index));
+    from = m.index;
   }
-  return out.filter(Boolean);
+  runs.push(raw.slice(from));
+  return runs.map(normText).filter(Boolean);
+}
+
+// Offsets in pageText where a new box starts (never 0).
+export function boxBreaks(rawPage) {
+  const offsets = [];
+  let length = 0;
+  for (const run of boxRuns(rawPage)) {
+    if (length) {
+      length += 1;
+      offsets.push(length);
+    }
+    length += run.length;
+  }
+  return offsets;
+}
+
+// True when every occurrence of the quote on the page has a break strictly inside it.
+export function spansBoxBreak(quote, rawPage) {
+  const q = String(quote ?? '');
+  const text = normText(rawPage);
+  let at = q ? text.indexOf(q) : -1;
+  if (at < 0) return false;
+  const breaks = boxBreaks(rawPage);
+  for (; at >= 0; at = text.indexOf(q, at + 1)) {
+    const end = at + q.length;
+    if (!breaks.some((o) => o > at && o < end)) return false;
+  }
+  return true;
+}
+
+// A picked quote cut at the box breaks inside it (only ever shorter). A quote that doesn't span comes back whole.
+export function splitAtBoxBreaks(quote, rawPage) {
+  if (!spansBoxBreak(quote, rawPage)) return [quote];
+  const text = normText(rawPage);
+  const at = text.indexOf(quote);
+  const end = at + quote.length;
+  const pieces = [];
+  let from = at;
+  for (const cut of boxBreaks(rawPage).filter((o) => o > at && o < end)) {
+    pieces.push(text.slice(from, cut).trim());
+    from = cut;
+  }
+  pieces.push(text.slice(from, end).trim());
+  return pieces.filter(Boolean);
+}
+
+// Clean cuts (API.md §4.2): never start with a bullet, never end on a comma, semicolon, colon or a dangling
+// "and" / "or" / "with". Trimming keeps an exact substring; the caller drops the quote if it gets too short.
+export function cleanCut(quote) {
+  let q = String(quote).trim().replace(/^•\s+/, '');
+  let prev;
+  do {
+    prev = q;
+    q = q.replace(/\s*[,;:]$/, '').replace(/\s+(?:and|or|with)$/, '').trim();
+  } while (q !== prev);
+  return q;
+}
+
+// A quote never ends with an attribution: " – yek" is cut off and becomes said_by.
+const ATTRIBUTION_TAIL = /\s[–-]\s(yek|Yek|Cliff|Legendary Tones|Marshall|MESA|Manual)$/;
+export function cutAttribution(quote) {
+  const m = String(quote).match(ATTRIBUTION_TAIL);
+  if (!m) return { quote, said_by: null };
+  return { quote: quote.slice(0, m.index).trim(), said_by: m[1] === 'Yek' ? 'yek' : m[1] };
 }

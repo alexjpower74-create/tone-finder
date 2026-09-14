@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { press, tapExample } from './helpers.mjs';
+import { quotesIn, readFixture } from './fixtures.mjs';
+import { expectQuotesExact, press, tapExample } from './helpers.mjs';
 
 async function addBritBrown(page, ti) {
   await page.goto('/index.html?mock=1');
@@ -35,12 +36,18 @@ test('print view: white ground, no nav', async ({ page }, ti) => {
   await expect(page.getByTestId('pick')).toHaveCount(1);
 
   const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  const edge = () => page.getByTestId('quote').first().evaluate((el) => getComputedStyle(el).borderLeftColor);
+  const allowed = new Set(quotesIn(readFixture('answers.json')).map((q) => q.quote));
   expect(await bg(), 'screen ground should be dark').not.toBe('rgb(255, 255, 255)');
   await expect(page.getByRole('navigation')).toBeVisible();
+  await expectQuotesExact(page, allowed);
+  expect(await edge()).toBe('rgb(62, 224, 197)');
 
   await page.emulateMedia({ media: 'print' });
   expect(await bg()).toBe('rgb(255, 255, 255)');
   await expect(page.getByRole('navigation')).toBeHidden();
+  await expectQuotesExact(page, allowed);
+  expect(await edge(), 'print quotes get a thin black rule, not teal').toBe('rgb(0, 0, 0)');
   await expect(page.getByTestId('pick')).toBeVisible();
   await expect(page.locator('.print-footer')).toHaveText(
     "From yek's guide to the Fractal Audio amp models (rev. April 2017). Guesses are not from the guide.",

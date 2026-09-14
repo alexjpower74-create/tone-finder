@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { PAGE_PILL, press } from './helpers.mjs';
+import { quotesIn, readFixture } from './fixtures.mjs';
+import { expectQuotesExact, PAGE_PILL, press } from './helpers.mjs';
 
 const showingCount = async (page) => {
   const text = (await page.locator('#showing').textContent()) ?? '';
@@ -69,6 +70,15 @@ test('tapping a row opens the detail with a spec table and page pills', async ({
   const pills = page.locator('main .pill-page');
   expect(await pills.count()).toBeGreaterThanOrEqual(3);
   for (const t of await pills.allTextContents()) expect(t.trim()).toMatch(PAGE_PILL);
+});
+
+test('model detail quotes are blockquotes with exactly the verified text', async ({ page }) => {
+  const allowed = new Set(quotesIn(readFixture('models.json')).map((q) => q.quote));
+  for (const id of ['1959slp', 'brit-jm45', 'usa-iic-plus-and-usa-iic-plus-plus']) {
+    await page.goto(`/model.html?mock=1&id=${id}`);
+    await expect(page.getByTestId('spec-table')).toBeVisible();
+    await expectQuotesExact(page, allowed);
+  }
 });
 
 test('unknown model id', async ({ page }, ti) => {
