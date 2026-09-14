@@ -127,12 +127,23 @@ export function cutAttribution(quote, names) {
 
 // Clean cuts (API.md §4.2): a cut quote never ends on , ; : or a dangling and/or/with. Only trims, so the result is
 // still a substring; callers verify it again.
+// Attribution names (same list as the build's SAID_BY and the engine's why path).
+export const ATTRIBUTION_NAMES = [
+  'yek', 'Yek', 'Cliff', 'Legendary Tones', 'Marshall', 'MESA', 'Manual', 'Alan Phillips', 'Fenderguru.com',
+  'Fenderguru', 'Wikipedia', 'Orange', 'Bogner', 'Soldano', 'Fryette', 'Friedman', 'Diezel', 'Supro', 'Suhr',
+  'Peavey', 'Komet', 'Ken Fischer', 'Dr. Z', 'Bob Bradshaw', 'Vintage Guitar', 'ToneQuest', 'The Gear Page',
+  'Swart', 'Splawn', 'Premier Guitar', 'Trainwreck.com', 'Richard Hallebeek', 'Rob Navarette', 'Ultra Sound',
+]
+let leadingAttribution = null
+
+// Round 7: also strip a leading attribution ("– Manual Fractal Audio’s model…"): it belongs to the previous passage.
 export function cleanCut(quote) {
+  leadingAttribution ??= new RegExp(`^[–-]\\s+(?:${ATTRIBUTION_NAMES.map((n) => escapeRegex(n)).join('|')})(?![A-Za-z])\\s*`)
   let s = String(quote).trim()
   let prev
   do {
     prev = s
-    s = s.replace(/^•\s*/, '').replace(/[\s,;:]+$/, '').replace(/\s+(?:and|or|with)$/i, '').trim()
+    s = s.replace(leadingAttribution, '').replace(/^•\s*/, '').replace(/[\s,;:]+$/, '').replace(/\s+(?:and|or|with)$/i, '').trim()
   } while (s !== prev)
   return s
 }
