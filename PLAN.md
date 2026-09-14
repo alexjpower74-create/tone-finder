@@ -43,6 +43,9 @@ Node 26.
   report under **Contract questions** and carry on with the most sensible reading. The lead reads reports and
   updates the contract. Don't bend the engine to dodge a golden expectation.
 - Never grade the shared tree. No visible Chrome. Playwright only; `pwshot` for screenshots.
+- **The QA worktree (`.worktrees/qa`) and the QA ports (8306–8309) belong to the lead.** Slices never run `rig qa`
+  and never bind QA ports: report numbers from your own clean worktree on your own ports, and say the sha. (Two
+  runs sharing the QA worktree at 16:37 wiped each other's wrangler state and port 8307.)
 - A check that cannot fail measured nothing: for each important check, say what would make it red, make it red
   once, restore, and record it in your report.
 - **The guide stays out of git.** Read it from `TF_GUIDE_DIR` (`/home/alexander/Claude/Reference/Yek Fractal Amp

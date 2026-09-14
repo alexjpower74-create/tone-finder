@@ -113,3 +113,11 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     and cut quotes ending on "," or "and". Contract: filler words may end a phrase, term frequency only for body-text
     hits, a coverage factor, clean cuts. Golden: brown sound must match as a phrase and never suggest the '60 brown
     Fenders; SRV Texas blues → Super Verb first; edge of breakup blues → Ruby Rocket first.
+
+19. **QA belongs to the lead; answers to tf1's round-2 questions (17:25).** tf1 and the lead ran `rig qa` in the
+    same QA worktree on the same ports at the same time (16:37). That explains both unexplained flakes: tf1's 57/69
+    run (the fake AI port was taken) and the lead's Worker "cache:storage" start failure (state wiped under it). Both
+    reran green. From now on only the lead uses `.worktrees/qa` and ports 8306–8309. tf1's questions: R2-1 ("The Edge
+    chime") is solved by the coverage factor in #18 (Car Roamer matches one of two terms); R2-2 a "the" n-gram of
+    generic words is generic; R2-3 drop detail is `"<unit name>, p. <n>"`; R2-4 a why sentence that names the model
+    is preferred.

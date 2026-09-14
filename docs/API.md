@@ -211,7 +211,8 @@ null (Worker before load-guide), in which case the only searchable text is the q
   `crunchy` ↔ `crunch`). The stem must keep at least 5 letters. The evidence quote contains the guide's own word.
 - **Proper names with "the".** A 2+-word n-gram may start with `the` when the capitalised form (`The Edge`) occurs in
   the guide somewhere other than at a sentence start. Otherwise "The Edge chime" falls back to "edge" and matches
-  "edge of breakup".
+  "edge of breakup". A "the" n-gram whose other words are all generic words is itself generic (a capitalised
+  "The Rhythm" in the guide must not make "the rhythm" strong).
 - A model's searchable text, by field weight: unit names, `name`, `based_on` (4) · synopsis, tips (3) · controls,
   cab, settings (2) · every other sentence of its pages' `pageText` (1). Stubs are merged into their target first.
 - `df(term)` = number of models (109 minus stubs) whose searchable text contains the term;
@@ -266,6 +267,9 @@ null (Worker before load-guide), in which case the only searchable text is the q
   "and" / "or" / "with": trim them (the result is still an exact substring and must still verify), or drop the quote
   when that leaves under 12 characters ("Models of various Marshall Plexi heads," → "… heads"; Recto stock cabs
   "… 13, 14, 21 and").
+- **Which sentence first.** Among a model's why candidates for the same term, prefer a sentence that also contains
+  the model's name, one of its unit names, or the last word of a unit name when that word has 3+ characters (for
+  "Metallica", p. 270 "…also referred to as “Metallica’s IIC+”" beats p. 267 "Add Santana, Metallica, Keith Richards etc.").
 - **Why quality.** A why quote must contain a strong term, except that the second or third quote may carry only
   generic terms when it comes from synopsis or tips. `controls` lines and spec-table lines are never why quotes. A
   quote shown under one suggestion is not repeated under another in the same Answer when that model has another
@@ -336,8 +340,9 @@ successful run is `ai.used: true, ai.reason: null`; `"cached"` and `"error"` are
 5. **Verification** of each citation: page inside the model's `pages` (else `bad_page`), quote verified (§0) on that
    page (else `quote_not_on_page`, or `quote_too_long` when over 320 characters or 2 sentences). Model id and unit
    name are checked again (`unknown_model`). A suggestion with no verified citation is dropped
-   (`no_verified_quote`). Every drop is listed in `ai.dropped` as `{ kind, detail }` (detail: the model or unit
-   name, and the page).
+   (`no_verified_quote`). Every drop is listed in `ai.dropped` as `{ kind, detail }`. `detail` is exactly
+   `"<unit name>, p. <n>"` (for example `"1959SLP, p. 60"`), or just the name for `unknown_model` and
+   `no_verified_quote`.
 6. Kept AI suggestions get `source: "ai_checked"`, `why` = their verified citations, and knobs/cab/Ares per
    §4.2–4.5. Final list: kept AI suggestions in the AI's order, then C1 candidates not already present
    (`source: "guide_search"`), at most 4. No AI suggestion kept → C1, or C0 when C1 is empty. General knowledge
