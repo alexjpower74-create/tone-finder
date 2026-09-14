@@ -8,3 +8,4 @@ playwright-report/
 .rig/report-*.md
 data/guide-local/
 *.local.json
+.logs/
