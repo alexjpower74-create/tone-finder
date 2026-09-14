@@ -203,6 +203,12 @@ null (Worker before load-guide), in which case the only searchable text is the q
 - **n-grams**: try word n-grams from 4 down to 1 over the query. An n-gram of 2+ words may not start or end with a
   stop word. An n-gram is *found* when it occurs as whole words (case-insensitive, `’`/`'` and `-` count as word
   breaks on the guide side) in some model's searchable text; a found n-gram consumes its words, longer first.
+- **Word variants.** A query word of 5+ letters ending in `y`, `e`, `ing`, `ed`, `es` or `s` also matches guide words
+  that share its stem plus one of those endings (`sparkly` ↔ `sparkle`, `sparkling`; `chimey` ↔ `chime`, `chiming`;
+  `crunchy` ↔ `crunch`). The stem must keep at least 5 letters. The evidence quote contains the guide's own word.
+- **Proper names with "the".** A 2+-word n-gram may start with `the` when the capitalised form (`The Edge`) occurs in
+  the guide somewhere other than at a sentence start. Otherwise "The Edge chime" falls back to "edge" and matches
+  "edge of breakup".
 - A model's searchable text, by field weight: unit names, `name`, `based_on` (4) · synopsis, tips (3) · controls,
   cab, settings (2) · every other sentence of its pages' `pageText` (1). Stubs are merged into their target first.
 - `df(term)` = number of models (109 minus stubs) whose searchable text contains the term;
@@ -210,7 +216,8 @@ null (Worker before load-guide), in which case the only searchable text is the q
 - A term is **strong** for a model when it is not a generic word and either `df <= 0.35 × N` or it hits that model
   in a weight ≥ 3 field.
 - `score(model) = Σ over found terms of idf × (best field weight where the term hits that model) × (1.5 if the term
-  has 2+ words)`.
+  has 2+ words) × (1 + ln(hits))`, where `hits` is how many times the term occurs across that model's pages (min 1).
+  A section that names Metallica four times outranks four sections that list Metallica once among other users.
 - **Candidates** are models with at least one strong term. Keep those with `score >= 0.4 × top score`, at most 4,
   ordered by score, then guide order.
 - `understood.matched_terms`: found terms. `understood.unmatched_terms`: non-stop, non-generic words and n-grams
@@ -229,8 +236,11 @@ null (Worker before load-guide), in which case the only searchable text is the q
   crank everything, like Eddie Van Halen" runs straight into Cliff's "“My settings for a “typical” Plexi tone are
   Bass 2, Mid 8, Treble 7.5.", which reads as if Van Halen gave those settings; on p. 33 a Marshall quote runs on
   through "– Marshall" into yek's next sentence. Exact-substring verification can't see that, so:
-  - A **box break** is a line break in the raw page text followed (after optional spaces or tabs) by an opening `“`
-    or by an attribution dash (`– ` or `- ` then a capital letter). `core/text.js` exports
+  - A **box break** is a line break in the raw page text followed (after optional spaces or tabs) by an opening `“`,
+    by an attribution dash (`– ` or `- ` then a capital letter), by a bullet (`• `), or by a card label at the start
+    of the line: `Synopsis `, `Tips `, `Clips `, `Sound Clips `, `Cabinet/speaker `, `Stock cabs `, `Web, Manual `,
+    `Amp controls `, `More videos, clips and comments`. (p. 168's Gilmour quote ran from a tip into "Clips 1972 Hiwatt
+    DR103 CRANKED … (Tyler Grund)".) `core/text.js` exports
     `boxBreaks(rawPage) → number[]` (offsets in `pageText`, found by normalising each run between breaks and
     joining the runs with one space, which gives exactly `pageText`) and `spansBoxBreak(quote, rawPage)` (true when
     every occurrence of the quote on the page has a break strictly inside it).
@@ -244,6 +254,10 @@ null (Worker before load-guide), in which case the only searchable text is the q
     and then bring the master to taste” – Manual"; doesn't span → p. 16 "The name “Twin” probably refers to the use
     of two 12” speakers.", p. 28 "Plexis with 4x12 cabinets gave rise to the “Marshall stack”.", p. 146 "Model of the
     Bogner Uberschall, called “Armageddon in a box” by Bogner".
+- **Why quality.** A why quote must contain a strong term, except that the second or third quote may carry only
+  generic terms when it comes from synopsis or tips. `controls` lines and spec-table lines are never why quotes. A
+  quote shown under one suggestion is not repeated under another in the same Answer when that model has another
+  verified sentence with a found term. A why quote starts at a sentence or box start, never mid-word.
 - `unit_name`: the model's unit name that appears in a `why` quote or the query (case-insensitive), else the first.
 
 ### 4.3 Knobs
@@ -255,7 +269,8 @@ Always seven, in this order: Drive, Bass, Mid, Treble, Master, Presence, Depth.
    with the `no-master-volume` convention quote.
 4. Anything still unset → `{ kind: "guess", value, note: "starting guess — not from the guide" }`. Drive by intent:
    clean 2.5, edge 4.5, crunch 6, lead 7, high_gain 7, none 5. Every other knob 5.
-5. A `directions` entry for a guessed knob nudges it (up +2, down −2, clamped 0–10) and adds
+5. A `directions` entry for a guessed knob moves it to at least 7 (up) or at most 3 (down); a guess already on that
+   side stays as it is (a clean Drive guess of 2.5 with "keep Drive low" stays 2.5, not 0.5). It adds
    `direction: { dir, quote, page }`. Guide values are never nudged.
 6. `other_settings`: the picked entry's `other` fragments as `{ text, quote, page }`, else `[]`.
 7. `taper_note`: `{ "quote": "…", "page": 12 }` (the `taper-match` convention quote, exactly these two keys) whenever

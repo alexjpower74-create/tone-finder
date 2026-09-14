@@ -89,3 +89,13 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     33, 45, 125, 134) and none of seven quoted-term cases. Splitting there can only shorten a quote. Also adopted
     from tf1: eleven more stop words ("banjo through a toaster" matched "through") and `taper_note` as
     `{ quote, page }`.
+
+16. **Answer quality rules from the lead's read of real answers (16:55).** The lead ran 23 realistic queries
+    through tf1's engine at 80f4ccb (AI off) and read every card. Most were right (John Mayer → Band-Commander,
+    Joe Bonamassa → Brit Silver with his settings from p. 68, Robben Ford → Bludojai). Fixes put in the contract:
+    term frequency in the score (Metallica listed first four "users include" sections before "Metallica’s IIC+"),
+    proper names starting with "the" ("The Edge chime" matched "edge of breakup"), word variants ("sparkly" missed
+    "sparkle"), card labels and bullets as box breaks (a Gilmour quote ran into a "Clips … (Tyler Grund)" line), why
+    quotes must carry a strong term and never be a controls line, no repeated quote across cards when another
+    exists, and direction nudges that don't compound with intent guesses (clean Drive 2.5 was nudged to 0.5). Six
+    golden queries added for these.
