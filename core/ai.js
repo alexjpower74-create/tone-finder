@@ -3,7 +3,7 @@
 import { normText, spansBoxBreak } from './text.js'
 import { pageText, sha256Hex } from './guide.js'
 import { checkQuote } from './verify.js'
-import { indexModels, unitNameOf } from './models.js'
+import { indexModels, unitNameOf, sectionTitles } from './models.js'
 import { guideAnswer, baseAnswer, buildSuggestion, GK_LABEL } from './answer.js'
 import { termRegex } from './search.js'
 import { foldForSearch } from './text.js'
@@ -142,12 +142,12 @@ export function checkPick(data, p) {
 }
 
 // A citation's page is inside the model and its quote verifies on that page. → { ok, kind? , quote }
-export function checkCitation(model, c, pages) {
+export function checkCitation(model, c, pages, titles = null) {
   const page = c?.page
   if (!Number.isInteger(page) || page < model.pages.start || page > model.pages.end) return { ok: false, kind: 'bad_page' }
   const quote = normText(c?.quote)
   const r = checkQuote({ quote, page }, pages)
-  if (r.ok && spansBoxBreak(quote, pages.get(page))) return { ok: false, kind: 'quote_not_on_page' }
+  if (r.ok && spansBoxBreak(quote, pages.get(page), titles)) return { ok: false, kind: 'quote_not_on_page' }
   if (r.ok) return { ok: true, quote, page }
   return { ok: false, kind: r.reason === 'too_long' || r.reason === 'too_many_sentences' ? 'quote_too_long' : 'quote_not_on_page' }
 }
@@ -281,7 +281,7 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
       if (kept.some((k) => k.model.id === ok.model.id)) continue
       const why = []
       for (const c of Array.isArray(s.citations) ? s.citations : []) {
-        const r = checkCitation(ok.model, c, pages)
+        const r = checkCitation(ok.model, c, pages, sectionTitles(data))
         if (!r.ok) {
           dropped.push({ kind: r.kind, detail: `${ok.unit}, p. ${Number.isInteger(c?.page) ? c.page : '?'}` })
           continue

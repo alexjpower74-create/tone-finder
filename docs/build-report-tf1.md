@@ -1,5 +1,50 @@
 # Build report — tf1 (guide data, answer engine, AI step, Worker + D1)
 
+## Round 4 (after the lead's grading of 01dce76)
+
+**Status:** DONE. Code commit **63a6e85**. Numbers from my own worktree (fake AI on 8313 for core; Worker on
+8302/8303/8352): core **75/75** (all 23 golden queries green with AI off), worker **16/16**. Quote budget 866 quotes,
+68,920 of 540,437 characters (**12.75%**, down from 12.81%: header prefixes and page-number tails are gone).
+
+### Done
+1. **Running header and page-number footer are box breaks.** `boxBreaks(rawPage, titles)` adds a break after the
+   page's first raw line when it is a section title, and a break before the last non-empty raw line when that line
+   is only digits. `titleSet()` in `core/text.js` builds the title Set, and `sectionTitles(data)` in `core/models.js`
+   caches it per `models.json`, adding the appendix headers by name. `spansBoxBreak` and `splitAtBoxBreaks` take the
+   same optional `titles`. The build, the engine's why pool and span check, and the AI citation check all pass it.
+   Callers without titles still get the footer break. Results: p. 108 now gives "The Edge’s famous amp is a ’64
+   Top Boost AC30/6 model."; p. 270 gives "Quantum firmware 3.03 brought us the ”IIC++” model, also referred to as
+   “Metallica’s IIC+” ."; p. 263's "…Crunch.” – MESA 262" splits off the page number and the attribution.
+2. **Leading bullet trimmed** by `cleanCut`. ODS-100 for "clean worship pad with sparkle": "Bright: adds sparkle,
+   less noticeable when the volume is turned up".
+3. **Stock-cab lines are never why quotes.** They left the why pool, and page sentences containing the stock-cabs
+   quote are rejected like controls lines. "Petrucci lead" → USA Clean / USA Lead / USA Rhythm, USA IIC+, USA Pre,
+   with no Recto cab line.
+4. **Tests.**
+   - Box-break table: the p. 108 and p. 270 headers span with titles and not without them (control), the p. 263
+     footer spans, and the p. 108 sentence without its header doesn't span.
+   - `core/tests/quote-shape.mjs` flags a quote that starts with "•", carries the page's running-header prefix, or
+     ends with the page's bare number. It runs on every quote in `models.json` and every golden why quote.
+   - New engine test: "Petrucci lead" has no stock-cabs or "Cab Packs" why quote.
+   - One build note: `build-models.mjs` already had a local `titleSet` (the TOC title set), so the new helper is
+     imported as `makeTitleSet`. Before that rename, the first rebuild failed with a clear error.
+
+### Negative controls (round 4, core on 8313)
+| # | Break | Result |
+|---|---|---|
+| a | `checkQuote` returns ok first | RED: 8 tests (changed character, wrong page, 3 sentences, page range, fake-plant, curated quote stops the build, determinism). Restored. |
+| d | generic words can be strong | RED: golden "lead tone", "the rhythm tone on Master of Puppets", AI fake-puppets. Restored. |
+| i | stubs indexed as their own models | RED: golden never_ids, "Slash", "Steve Vai", AI fake-puppets. Restored. |
+| box | `splitAtBoxBreaks` returns the quote unsplit | RED: 5 (split test, header/footer table, determinism, golden "The Edge chime", the Metallica sentence test: both now need the header split). Restored. |
+| coverage | factor removed | RED: the exact 0.75 coverage test. Restored. |
+| filler | filler words may not end an n-gram | RED: golden "Van Halen brown sound". Restored. |
+| header (new) | the running-header break disabled (`const header = -1`) | RED: 7 (header/footer table, determinism, and golden Brown Sound Deluxe, Metallica, Robben Ford, The Edge chime and Twin Reverb clean, whose why quotes carried a header prefix). Restored. |
+| after restore | — | core 75/75, worker 16/16 |
+
+Nothing else is open on my side. Stopping here for your AI calls and final QA.
+
+---
+
 ## Round 3 (after the lead's grading of 61f197a)
 
 **Status:** DONE. All 23 golden queries pass with AI off. Numbers come from my own worktree (not `rig qa`: QA and

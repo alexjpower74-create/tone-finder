@@ -1,5 +1,15 @@
 // data/models.json helpers: load, resolve stubs, unit-name lookup, facets, filters (docs/API.md §3, §6).
 
+import { titleSet } from './text.js'
+
+// Section titles (running page headers) for box breaks. The appendix pages' own headers are added by name.
+export const APPENDIX_HEADERS = ['VOX-type Amps', 'D-type Amps', 'Preamps', 'Fractal Forum Content', 'Fender Circuits', 'Amplifier Information']
+const titleCache = new WeakMap()
+export function sectionTitles(data) {
+  if (!titleCache.has(data)) titleCache.set(data, titleSet([...data.models.map((m) => m.section), ...APPENDIX_HEADERS]))
+  return titleCache.get(data)
+}
+
 export const POWER_TUBES = ['EL34', 'EL84', '6L6', '6V6', 'KT88', 'KT66', '6550', '6973']
 const TUBE_ALIASES = { '6L6GC': '6L6', 5881: '6L6', '6AQ5': 'EL84' }
 export const MV_VALUES = ['yes', 'no', 'mixed', 'unknown']

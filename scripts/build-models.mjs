@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadPages, loadSections } from '../core/tests/guide-node.mjs'
 import { pageText, pagesSha256, PDF_PAGES } from '../core/guide.js'
-import { normText, splitSentences, splitAtBoxBreaks, spansBoxBreak, cutAttribution, cleanCut } from '../core/text.js'
+import { normText, splitSentences, splitAtBoxBreaks, spansBoxBreak, cutAttribution, cleanCut, titleSet as makeTitleSet } from '../core/text.js'
 import { checkQuote } from '../core/verify.js'
 import { brandsForSection } from '../core/brands.js'
 import { facetMasterVolume, facetPowerTubes } from '../core/models.js'
@@ -64,13 +64,14 @@ export function build({ pages, sections, curation, log = () => {} }) {
   }
   // API.md §4.2: split at box breaks, cut attributions into said_by; pieces only get shorter and must still verify.
   const CARD_LABEL = /^(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls|More videos, clips and comments)(?![A-Za-z])/
+  const titles = makeTitleSet(sections.map((s) => s.title).concat(['Fender Circuits', 'Amplifier Information']))
   const boxClean = (quote, page, min = 12, max = 320) => {
     const out = []
-    for (const piece of splitAtBoxBreaks(quote, pages.get(page))) {
+    for (const piece of splitAtBoxBreaks(quote, pages.get(page), titles)) {
       if (CARD_LABEL.test(piece)) continue
       const cut = cutAttribution(piece, SAID_BY)
       const q = cleanCut(cut.quote)
-      if (q.length < min || q.length > max || !verified(q, page) || spansBoxBreak(q, pages.get(page))) continue
+      if (q.length < min || q.length > max || !verified(q, page) || spansBoxBreak(q, pages.get(page), titles)) continue
       out.push({ quote: q, said_by: cut.said_by === 'Yek' ? 'yek' : cut.said_by })
     }
     return out
@@ -446,7 +447,7 @@ export function build({ pages, sections, curation, log = () => {} }) {
       const r = checkQuote({ quote: st.quote, page: st.page }, pages)
       if (!r.ok) { fails.push(`settings quote ${r.reason} p. ${st.page} (${k.id}): ${st.quote}`); continue }
       if (st.page < k.s.page || st.page > k.s.end) { fails.push(`settings page outside model pages (${k.id})`); continue }
-      if (spansBoxBreak(st.quote, pages.get(st.page))) { fails.push(`settings quote spans a box break p. ${st.page} (${k.id})`); continue }
+      if (spansBoxBreak(st.quote, pages.get(st.page), titles)) { fails.push(`settings quote spans a box break p. ${st.page} (${k.id})`); continue }
       if (st.context && !checkQuote({ quote: st.context, page: st.page }, pages).ok) fails.push(`settings context not on p. ${st.page}: ${st.context}`)
       for (const o of st.other || []) if (!st.quote.includes(o)) fails.push(`settings other fragment not in quote: ${o}`)
       const knobs = parseKnobs(st.quote, hints, st.other || [])

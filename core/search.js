@@ -1,7 +1,7 @@
 // Guide search (docs/API.md §4.1). Pure: models.json data + optional guide pages.
 import { pageText } from './guide.js'
 import { foldForSearch, splitSentences, splitAtBoxBreaks } from './text.js'
-import { indexModels, resolvedModel } from './models.js'
+import { indexModels, resolvedModel, sectionTitles } from './models.js'
 
 // Function words may not start or end an n-gram; filler words may end one ("brown sound") but not start one.
 export const FUNCTION_WORDS = new Set(
@@ -227,15 +227,14 @@ export function search(query, { models: data, pages = null }) {
   }
 }
 
-// Sentences a why quote can come from: [{ text, page, weight, kind, said_by }]. Controls lines are never offered.
+// Sentences a why quote can come from: [{ text, page, weight, kind, said_by }]. Controls and stock-cab lines are never offered.
 // Page sentences are split at box breaks (§4.2), so a piece never runs from one box into the next.
-export function sentencePool(model, pages) {
+export function sentencePool(model, pages, titles = null) {
   const pool = []
   const add = (q, weight, kind) => q && pool.push({ text: q.quote, page: q.page, weight, kind, said_by: q.said_by ?? null })
   add(model.synopsis, 3, 'synopsis')
   model.tips.forEach((t) => add(t, 3, 'tip'))
   add(model.cab.speaker, 2, 'cab')
-  add(model.cab.stock_cabs, 2, 'cab')
   model.cab.notes.forEach((n) => add(n, 2, 'cab'))
   model.settings.forEach((s) => add(s, 2, 'settings'))
   model.notes.forEach((n) => add(n, 1, 'note'))
@@ -243,7 +242,7 @@ export function sentencePool(model, pages) {
     for (let p = model.pages.start; p <= model.pages.end; p++) {
       const raw = pages.get(p) || ''
       for (const s of splitSentences(pageText(pages, p) || '')) {
-        for (const piece of splitAtBoxBreaks(s, raw)) {
+        for (const piece of splitAtBoxBreaks(s, raw, titles)) {
           if (!CARD_LABEL.test(piece)) pool.push({ text: piece, page: p, weight: 1, kind: 'page', said_by: null })
         }
       }

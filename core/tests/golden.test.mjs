@@ -7,6 +7,8 @@ import { loadPages } from './guide-node.mjs'
 import { answer } from '../answer.js'
 import { isUnitName } from '../models.js'
 import { spansBoxBreak } from '../text.js'
+import { sectionTitles } from '../models.js'
+import { quoteShapeProblem } from './quote-shape.mjs'
 import { checkInvariants } from './invariants.mjs'
 
 const read = (p) => JSON.parse(readFileSync(fileURLToPath(new URL(p, import.meta.url)), 'utf8'))
@@ -24,10 +26,14 @@ for (const g of golden.queries) {
     if (g.any_of) assert.ok(ids.some((id) => g.any_of.includes(id)), `any_of ${detail}`)
     if (g.matched_includes) for (const t of g.matched_includes) assert.ok(a.understood.matched_terms.includes(t), `matched_includes ${t}: ${detail}`)
     if (g.none_of) assert.ok(!ids.some((id) => g.none_of.includes(id)), `none_of ${detail}`)
-    for (const s of a.suggestions) for (const w of s.why) assert.ok(!/(?:[,;:]|\s(?:and|or|with))$/i.test(w.quote), `unclean cut in why: ${w.quote}`)
+    for (const s of a.suggestions) for (const w of s.why) {
+      assert.ok(!/(?:[,;:]|\s(?:and|or|with))$/i.test(w.quote), `unclean cut in why: ${w.quote}`)
+      const problem = quoteShapeProblem(w.quote, pages.get(w.page), sectionTitles(models))
+      assert.equal(problem, null, `${s.model_id} p. ${w.page} ${problem}: ${w.quote}`)
+    }
     if (g.min_suggestions) assert.ok(a.suggestions.length >= g.min_suggestions, `min_suggestions ${detail}`)
     if (golden.no_why_spans_box_break) {
-      for (const s of a.suggestions) for (const w of s.why) assert.ok(!spansBoxBreak(w.quote, pages.get(w.page)), `${s.model_id} p. ${w.page} spans a box break: ${w.quote}`)
+      for (const s of a.suggestions) for (const w of s.why) assert.ok(!spansBoxBreak(w.quote, pages.get(w.page), sectionTitles(models)), `${s.model_id} p. ${w.page} spans a box break: ${w.quote}`)
     }
     if (g.top1_any_of) assert.ok(g.top1_any_of.includes(ids[0]), `top1_any_of ${detail}`)
     if (g.why_terms_any) {

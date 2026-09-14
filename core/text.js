@@ -41,11 +41,23 @@ const BOX_START = /^[ \t]*(?:“|[–-] [A-Z]|• |(?:Synopsis|Tips|Clips|Sound 
 
 // → offsets in pageText (= normText(rawPage)) where a new box starts. Runs between breaks are normalised and
 // joined with one space, which reproduces pageText exactly.
-export function boxBreaks(rawPage) {
+// Also (round 4): the break after the page's first raw line when it is a section title (the running header), and
+// the break before the last non-empty raw line when it is only digits (the printed page number).
+// `titles`: a Set from titleSet(); without it only the footer break is added.
+export function titleSet(list) {
+  return new Set([...list].map((t) => normText(t)))
+}
+
+export function boxBreaks(rawPage, titles = null) {
   const lines = String(rawPage ?? '').split('\n')
+  const first = lines.findIndex((l) => l.trim())
+  let last = -1
+  for (let i = lines.length - 1; i >= 0; i--) if (lines[i].trim()) { last = i; break }
+  const header = titles && first >= 0 && titles.has(normText(lines[first])) ? first + 1 : -1
+  const footer = last > first && /^\s*\d+\s*$/.test(lines[last]) ? last : -1
   const runs = [[]]
   lines.forEach((line, i) => {
-    if (i > 0 && BOX_START.test(line)) runs.push([])
+    if (i > 0 && (BOX_START.test(line) || i === header || i === footer)) runs.push([])
     runs[runs.length - 1].push(line)
   })
   const offsets = []
@@ -70,20 +82,20 @@ function occurrences(hay, needle) {
 }
 
 // True when the quote occurs on the page and every occurrence has a box break strictly inside it.
-export function spansBoxBreak(quote, rawPage) {
+export function spansBoxBreak(quote, rawPage, titles = null) {
   const text = normText(rawPage)
   const occ = occurrences(text, quote)
   if (!occ.length) return false
-  const breaks = boxBreaks(rawPage)
+  const breaks = boxBreaks(rawPage, titles)
   return occ.every((s) => breaks.some((b) => b > s && b < s + quote.length))
 }
 
 // A quote's pieces between box breaks (its first clean occurrence → [quote]; else the first occurrence split).
-export function splitAtBoxBreaks(quote, rawPage) {
+export function splitAtBoxBreaks(quote, rawPage, titles = null) {
   const text = normText(rawPage)
   const occ = occurrences(text, quote)
   if (!occ.length) return [quote]
-  const breaks = boxBreaks(rawPage)
+  const breaks = boxBreaks(rawPage, titles)
   const inside = (s) => breaks.filter((b) => b > s && b < s + quote.length)
   const clean = occ.find((s) => !inside(s).length)
   if (clean !== undefined) return [quote]
@@ -120,7 +132,7 @@ export function cleanCut(quote) {
   let prev
   do {
     prev = s
-    s = s.replace(/[\s,;:]+$/, '').replace(/\s+(?:and|or|with)$/i, '').trim()
+    s = s.replace(/^•\s*/, '').replace(/[\s,;:]+$/, '').replace(/\s+(?:and|or|with)$/i, '').trim()
   } while (s !== prev)
   return s
 }
