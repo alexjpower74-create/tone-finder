@@ -1,6 +1,6 @@
 {
  "_about": "Canned answers for ?mock=1, built by app/tools/build-mock.mjs. Quotes are verified on their pages and never span a box break; scores are placeholders. The SAMPLE (test only) Ares flag is planted on purpose.",
- "source": "derived from the local guide (pre data-ready)",
+ "source": "data/models.json",
  "health": {
   "ok": true,
   "models": 109,
@@ -275,7 +275,16 @@
       "cab": {
        "speaker": null,
        "stock_cabs": null,
-       "notes": []
+       "notes": [
+        {
+         "quote": "For authenticity select Marshall stocks cabs with greenbacks or JBLs.",
+         "page": 61
+        },
+        {
+         "quote": "Eddie didn’t use V30s or his custom speakers until later.",
+         "page": 61
+        }
+       ]
       },
       "ares_flags": []
      },
@@ -323,7 +332,7 @@
         "knob": "Bass",
         "value": 2,
         "kind": "guide",
-        "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "quote": "My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
         "page": 28,
         "said_by": null
        },
@@ -331,7 +340,7 @@
         "knob": "Mid",
         "value": 8,
         "kind": "guide",
-        "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "quote": "My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
         "page": 28,
         "said_by": null
        },
@@ -339,7 +348,7 @@
         "knob": "Treble",
         "value": 7.5,
         "kind": "guide",
-        "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "quote": "My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
         "page": 28,
         "said_by": null
        },
@@ -377,7 +386,16 @@
         "quote": "Marshall stock cabs – Cab Packs",
         "page": 28
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "Plexis with 4x12 cabinets gave rise to the “Marshall stack”.",
+         "page": 28
+        },
+        {
+         "quote": "Like the original Plexi, the SLP has four EL34 tubes and blasts 100 watt through (preferably) a 4x12 cabinet.",
+         "page": 29
+        }
+       ]
       },
       "ares_flags": []
      }
@@ -478,7 +496,12 @@
         "knob": "Drive",
         "value": 2.5,
         "kind": "guess",
-        "note": "starting guess — not from the guide"
+        "note": "starting guess — not from the guide",
+        "direction": {
+         "dir": "down",
+         "quote": "Keep Drive low for clean tones.",
+         "page": 38
+        }
        },
        {
         "knob": "Bass",
@@ -526,10 +549,15 @@
         "page": 38
        },
        "stock_cabs": {
-        "quote": "AC-20 – Cab Pack",
+        "quote": "AC-20 – Cab Pack 4",
         "page": 38
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "The Morgan pairs well with G12H or Alnico Gold speakers.",
+         "page": 39
+        }
+       ]
       },
       "ares_flags": []
      },
@@ -621,10 +649,19 @@
         "page": 122
        },
        "stock_cabs": {
-        "quote": "1x12 Black, 1x12 Deluxe Verb – Cab Packs 1, 4 and",
+        "quote": "1x12 Black, 1x12 Deluxe Verb – Cab Packs 1, 4 and 10",
         "page": 122
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "The first thing you should do to make this amp really worthy is to install a much larger ceramic magnet speaker.",
+         "page": 123
+        },
+        {
+         "quote": "If you are hesitant to change your original speaker, consider acquiring a second speaker cabinet for your new and improved speaker.",
+         "page": 123
+        }
+       ]
       },
       "ares_flags": []
      }
@@ -725,7 +762,7 @@
         "knob": "Drive",
         "value": 8.1,
         "kind": "guide",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270,
         "said_by": null
        },
@@ -733,7 +770,7 @@
         "knob": "Bass",
         "value": 1,
         "kind": "guide",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270,
         "said_by": null
        },
@@ -741,7 +778,7 @@
         "knob": "Mid",
         "value": 1.8,
         "kind": "guide",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270,
         "said_by": null
        },
@@ -749,7 +786,7 @@
         "knob": "Treble",
         "value": 8.9,
         "kind": "guide",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270,
         "said_by": null
        },
@@ -757,7 +794,7 @@
         "knob": "Master",
         "value": 4,
         "kind": "guide",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270,
         "said_by": null
        },
@@ -765,7 +802,7 @@
         "knob": "Presence",
         "value": 4.5,
         "kind": "guide",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270,
         "said_by": null
        },
@@ -783,42 +820,17 @@
       "other_settings": [
        {
         "text": "Overdrive: 9-10",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270
        },
        {
         "text": "Level: -20 dB",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270
        },
        {
         "text": "Bright Switch ON",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
-        "page": 270
-       },
-       {
-        "text": "80 Hz: 4.8",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
-        "page": 270
-       },
-       {
-        "text": "240 Hz: 2.6",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
-        "page": 270
-       },
-       {
-        "text": "750 Hz: -4.5",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
-        "page": 270
-       },
-       {
-        "text": "2200: -0.2",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
-        "page": 270
-       },
-       {
-        "text": "6600: 0",
-        "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
+        "quote": "Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON",
         "page": 270
        }
       ],
@@ -831,7 +843,16 @@
         "quote": "None – Cab Pack OBOT The Robot",
         "page": 266
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "USA IIC+ and USA IIC++ (MESA/Boogie Mark IIC+) MESA put EV-12L speakers in the IIC+.",
+         "page": 271
+        },
+        {
+         "quote": "Note that the Red Wirez stock cabs have been captured using an neutral microphone, so consider adding a mic model in the Cab block.",
+         "page": 271
+        }
+       ]
       },
       "ares_flags": []
      },
@@ -892,9 +913,14 @@
        },
        {
         "knob": "Master",
-        "value": 5,
+        "value": 3,
         "kind": "guess",
-        "note": "starting guess — not from the guide"
+        "note": "starting guess — not from the guide",
+        "direction": {
+         "dir": "down",
+         "quote": "Turn down Bass, keep Master Volume low",
+         "page": 219
+        }
        },
        {
         "knob": "Presence",
@@ -920,7 +946,16 @@
         "quote": "4x12 Recto, 4x12 USA, 4x12 Cali, 4x12 Petrucci – Cab Packs 5, 7, 13, 14, 21 and",
         "page": 219
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "“The Modern mode in Rectos has no negative feedback so there's a huge bass boost from the speaker impedance.",
+         "page": 221
+        },
+        {
+         "quote": "Fortunately you can reduce this by reducing the LF Resonance on the Spkr tab which is something you can't do with the real amp without trying different speakers or cabinet.",
+         "page": 221
+        }
+       ]
       },
       "ares_flags": []
      }
@@ -1098,10 +1133,19 @@
         "page": 49
        },
        "stock_cabs": {
-        "quote": "1x12 Bludo – Cab Pack",
+        "quote": "1x12 Bludo – Cab Pack 17",
         "page": 49
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "The BludoMix Cab in factory firmware is a 1x12 Alnico dual port cab, and will sound good but perhaps a tad darker (great for Jazz) on clean sounds than the G12-65H will.",
+         "page": 50
+        },
+        {
+         "quote": "Be sure to play with the speaker resonance in the amp block (lower it to around 75-85) to compensate for the open-back cab and get your bottom end correct!”",
+         "page": 51
+        }
+       ]
       },
       "ares_flags": []
      },
@@ -1190,10 +1234,19 @@
         "page": 199
        },
        "stock_cabs": {
-        "quote": "4x12 Rumble – Cab Pack",
+        "quote": "4x12 Rumble – Cab Pack 17",
         "page": 199
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "Cliff’s Dumble cabinet with EV speakers has been captured in IRs.",
+         "page": 202
+        },
+        {
+         "quote": "Alternatively, try stock cab 1x12 Bludo, the IR of a dual-ported 1x12 closed-back cab with a modern replacement for an EVL-SRO: the Blackhawk Alnico WGS.",
+         "page": 202
+        }
+       ]
       },
       "ares_flags": []
      }
@@ -1331,10 +1384,19 @@
         "page": 107
        },
        "stock_cabs": {
-        "quote": "2x12 Class-A, 2x12 Top Boost, 2x12 ACROIX, 4x12 Beatle – Cab Packs 1, 2, 4, 6, 18,",
+        "quote": "2x12 Class-A, 2x12 Top Boost, 2x12 ACROIX, 4x12 Beatle – Cab Packs 1, 2, 4, 6, 18, 21",
         "page": 107
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "A VOX AC30 typically feeds two Alnico Blue speakers or two greenbacks.",
+         "page": 109
+        },
+        {
+         "quote": "Blue refers to the color of the speaker’s metal.",
+         "page": 109
+        }
+       ]
       },
       "ares_flags": [
        {
@@ -1440,10 +1502,19 @@
         "page": 103
        },
        "stock_cabs": {
-        "quote": "1x12 Class-A 15W – Cab Packs 1 and",
+        "quote": "1x12 Class-A 15W – Cab Packs 1 and 21",
         "page": 103
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "A VOX typically feeds Alnico Blue speakers or greenbacks.",
+         "page": 105
+        },
+        {
+         "quote": "Blue refers to the color of the speaker’s metal.",
+         "page": 105
+        }
+       ]
       },
       "ares_flags": []
      }
@@ -1715,7 +1786,18 @@
        "quote": "The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.",
        "page": 12
       },
-      "other_settings": [],
+      "other_settings": [
+       {
+        "text": "stock cab 103",
+        "quote": "Forum member Simeon’s suggested settings for a “Gary Moore” tone: Input Drive 3, Presence 3, stock cab 103, T808 with Drive 0, Tone 6 and Level 7.",
+        "page": 64
+       },
+       {
+        "text": "T808 with Drive 0, Tone 6 and Level 7",
+        "quote": "Forum member Simeon’s suggested settings for a “Gary Moore” tone: Input Drive 3, Presence 3, stock cab 103, T808 with Drive 0, Tone 6 and Level 7.",
+        "page": 64
+       }
+      ],
       "cab": {
        "speaker": {
         "quote": "4x12 or 2x12 Marshall cabinet with greenbacks, G12M or G12H speakers",
@@ -1725,7 +1807,16 @@
         "quote": "Marshall stock cabs – Cab Packs",
         "page": 62
        },
-       "notes": []
+       "notes": [
+        {
+         "quote": "Forum member Simeon’s suggested settings for a “Gary Moore” tone: Input Drive 3, Presence 3, stock cab 103, T808 with Drive 0, Tone 6 and Level 7.",
+         "page": 64
+        },
+        {
+         "quote": "Unlike the Fender Bassman, the JTM 45 was designed to be used with a 2x12 or 4x12 cabinet with Celestion G12M (greenbacks) or G12H speakers.",
+         "page": 64
+        }
+       ]
       },
       "ares_flags": []
      }
