@@ -1,5 +1,62 @@
 # Build report — tf1 (guide data, answer engine, AI step, Worker + D1)
 
+## Round 3 (after the lead's grading of 61f197a)
+
+**Status:** DONE. All 23 golden queries pass with AI off. Numbers come from my own worktree (not `rig qa`: QA and
+ports 8306–8309 now belong to the lead), with the fake AI on 8313 for core and the Worker on 8302/8303/8352:
+core **73/73**, worker **16/16**, code commit **4a8b5b4**. The worker run printed HEAD 3741ec3 but ran against the uncommitted round-3 working tree, which is 4a8b5b4 minus the new coverage test in engine.test.mjs. The quote budget
+is 866 quotes, 69,256 of 540,437 characters (12.81%). The 16:37 flake is explained by DECISIONS 19; I've stopped
+using the QA worktree.
+
+### Done
+1. **Function vs filler words.** A filler word may end an n-gram but not start one. "Van Halen brown sound" now
+   matches "van halen" + "brown sound" and shows only Brit Brown and FAS Brown (score 24.94). 6G4 Super and 6G12
+   Concert are gone (golden `matched_includes` and `none_of` pass).
+2. **Term frequency only for body-text hits.** "SRV Texas blues" → Super Verb first ("popular for the SRV sound",
+   p. 241), then Capt Hook, Vibrato Verb and TX Star. Jr Blues and USA Sub Blues are gone.
+3. **Coverage.** Final score × (0.5 + 0.5 × covered / found), counting non-generic terms. "The Edge chime" →
+   Class-A 30W first (11.68), and Car Roamer drops to 4th (5.92 = 0.75 × its "chime"-only score).
+   "edge of breakup blues" → Ruby Rocket only.
+4. **Clean cuts.** `cleanCut` in `core/text.js` is applied to every box-break piece and attribution cut in the build
+   and to every why candidate and clause cut in the engine. It only trims, then the result is verified again.
+   PLEXI synopsis is now "Models of various Marshall Plexi heads"; Recto stock cabs end "… 13, 14, 21". The tests
+   check that no quote in models.json and no golden why quote ends on , ; : or and/or/with.
+5. **Which sentence first.** A why candidate that names the model (name, unit name, or a unit name's last word of
+   3+ characters) ranks above one that doesn't, after the strong-term and synopsis/tips keys. "Metallica" → USA IIC+
+   with the p. 270 "Metallica’s IIC+" sentence first (engine test).
+6. **golden.test** supports `matched_includes` and `none_of`; all 23 queries are green.
+
+### Reading I chose (please confirm or reject)
+- **R3-1. Filler words and generic phrases.** Once filler words can end a phrase, "rhythm tone" becomes a found term.
+  CA Tucana's tip says "a very modern heavy rhythm tone", which would make it strong (weight 3) and break golden
+  "the rhythm tone on Master of Puppets". The engine therefore treats any n-gram as generic when its words, minus a
+  leading "the" and minus filler words, are all generic words ("the rhythm", "rhythm tone", "lead tone"). That
+  extends the R2-2 rule from "the" n-grams to filler words. It isn't written in §4.1 yet.
+
+### Observed, not in the contract
+- **R3-2. Running page headers glue onto the first sentence.** Every page starts with the section title line, and
+  it has no full stop, so the first sentence of a page can read "Class-A 30W (VOX AC30) The Edge’s famous amp is a
+  ’64 Top Boost AC30/6 model." (p. 108) or "USA IIC+ and USA IIC++ (MESA/Boogie Mark IIC+) Quantum firmware 3.03
+  brought us…" (p. 270). It's an exact substring and not misleading, just noisy. A fix in the same spirit as box
+  breaks: treat the break after the page's first raw line as a box break when that line equals the section title.
+  Your call.
+
+### Negative controls (round 3, core suite on 8313)
+| # | Break | Result |
+|---|---|---|
+| a | `checkQuote` returns ok first | RED: 8 tests (changed character, wrong page, 3 sentences, page range, fake-plant, curated quote stopping the build, determinism). Restored. |
+| d | generic words can be strong | RED: golden "lead tone", "the rhythm tone on Master of Puppets", AI fake-puppets. Restored. |
+| i | search indexes stubs as their own models | RED: golden never_ids, "Slash", "Steve Vai", AI fake-puppets. Restored. |
+| box | `splitAtBoxBreaks` returns the quote unsplit | RED: the split test and build determinism (the engine's own spansBoxBreak rejection still keeps splices out of answers). Restored. |
+| coverage (first try) | coverage factor removed | **VOID**: 72/72 still passed. Body-only term frequency alone already puts Class-A 30W over Car Roamer (7.89 vs 11.68) and Super Verb first, so no golden query depended on coverage. Test gap, fixed: new engine test asserts Car Roamer's "The Edge chime" score is exactly 0.75 × its "chime" score. |
+| coverage (retry) | same break | RED: the new coverage test ("7.89 vs 0.75 × 7.89"). Restored, 73/73. |
+| filler | filler words treated as function words at the end of an n-gram | RED: golden "Van Halen brown sound" (matched_includes "brown sound"). Restored. |
+| after restore | — | core 73/73, worker 16/16 |
+
+---
+
+# Round 2
+
 ## Round 2 (after the lead's review of 80f4ccb)
 
 **Status:** DONE except one golden expectation I couldn't meet under the contract's scoring (question R2-1). Code
