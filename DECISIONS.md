@@ -99,3 +99,9 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     quotes must carry a strong term and never be a controls line, no repeated quote across cards when another
     exists, and direction nudges that don't compound with intent guesses (clean Drive 2.5 was nudged to 0.5). Six
     golden queries added for these.
+
+17. **Card header and quote display (17:05).** tf2's header ("Based on … · pp. N–M", "Fractal Audio custom model (no
+    real amp)", "Guide section: …" only when needed) is now the contract. Quotes are shown as blockquotes with a teal
+    left edge and no added marks, because many verified quotes carry the guide's own “ ” and the added marks doubled
+    them (“…adjustments.””). tf2's "inline quote ≤ 3 words" join heuristic is replaced by the box-break rule (#15),
+    which uses the raw line breaks and keeps longer quoted titles such as “The King of Fender Amps” whole.

@@ -440,8 +440,12 @@ against yek's guide (rev. April 2017, written for Quantum 7.02). Page numbers ar
     disclosure listing each `{kind, detail}` in plain words ("Brown Sound Deluxe: not an Axe-Fx II model in the
     guide", "USA IIC+: quote not on page 12").
   - Ares: one quiet line under the results with the note and a "Sources" disclosure (both URLs + quotes).
-- **Suggestion card**: unit name (≥ 28 px); "Section: … · based on …"; source pill ("Guide search" or "AI pick ·
-  quotes checked"); **Why**: each quote in quote marks with a page pill "p. 60" and attribution ("yek" / "Cliff,
+- **Suggestion card**: unit name (≥ 28 px); header line "Based on <based_on> · pp. 28–31", or "Fractal Audio custom
+  model (no real amp)" when based_on (or the section title, when based_on is null) starts with "FAS custom model";
+  "Guide section: <section>" only when the unit name isn't one of the section title's name parts; source pill
+  ("Guide search" or "AI pick · quotes checked"); **Why**: each quote as a blockquote with a teal left edge and **no
+  added quote marks** (the verified text exactly, so the guide's own “ ” are never doubled), with a page pill "p. 60"
+  and attribution ("yek" / "Cliff,
   quoted in the guide" / nothing when null); **Knobs**: seven SVG dials (0–10 sweep) with the value in ≥ 22 px
   type. Guide: solid teal ring + page pill. Guide rule: solid teal ring + "p. 12". Guess: dashed amber ring,
   the word "guess", and the visible sentence "starting guess — not from the guide" once under the dials whenever
