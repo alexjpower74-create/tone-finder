@@ -22,7 +22,12 @@ test('every fixture answer (AI on and off, and the no-support template) has the 
   const errors = [];
   for (const [q, e] of entries) {
     for (const [mode, a] of [['on', e.on], ['off', e.off]]) {
-      if (a) errors.push(...checkAnswer(a).map((x) => `"${q}" (${mode}): ${x}`));
+      // A null variant is a fixture defect, reported rather than skipped (tf1 cross-review item 6).
+      if (!a) {
+        errors.push(`"${q}" (${mode}): missing Answer (${JSON.stringify(a)})`);
+        continue;
+      }
+      errors.push(...checkAnswer(a).map((x) => `"${q}" (${mode}): ${x}`));
     }
   }
   errors.push(...checkAnswer({ ...fx.no_support_template, query: 'x' }).map((x) => `no_support_template: ${x}`));

@@ -66,14 +66,24 @@ export function cabHtml(cab) {
   return `<h3>Cab</h3><ul class="detail-list cab" data-testid="cab">${rows.join('')}</ul>`;
 }
 
+// The demo data plants one flag whose text starts "SAMPLE (test only):"; it is never shown as if the guide said it.
+const isSample = (f) => String(f.quote).startsWith('SAMPLE (test only):');
+
 export function aresFlagsHtml(flags) {
   return (flags ?? [])
     .map(
       (f) => `<div class="ares-flag" role="note" data-testid="ares-flag">
         <strong>${esc(f.param)}:</strong> ${esc(f.advice)}
+        ${
+          isSample(f)
+            ? '<p class="test-only" data-testid="test-only">Test sample from the demo data — not a guide quote.</p>'
+            : ''
+        }
         <div class="small muted">Mentioned here:</div>
-        <blockquote class="quote quote-small" data-testid="flag-quote">
-          <p class="quote-text">${esc(f.quote)}</p>${f.page ? `<p class="quote-meta">${pagePill(f.page)}</p>` : ''}
+        <blockquote class="quote quote-small${isSample(f) ? ' quote-sample' : ''}" data-testid="flag-quote">
+          <p class="quote-text">${esc(f.quote)}</p>${
+            f.page ? `<p class="quote-meta">${isSample(f) ? '<span class="small">flagged on the quote from</span> ' : ''}${pagePill(f.page)}</p>` : ''
+          }
         </blockquote>
       </div>`,
     )

@@ -326,7 +326,11 @@ export function checkAnswer(a) {
           c.oneOf(f.param, ['Motor Drive', 'Transformer Grind'], `${fp}.param`);
           c.oneOf(f.where, ['why', 'settings', 'direction', 'ai'], `${fp}.where`);
           c.key(f, 'quote', 'string', fp);
-          c.key(f, 'page', 'integer|null', fp);
+          // §4.5: the flagged quote's page for why / settings / direction; null only for AI text.
+          if (c.key(f, 'page', 'integer|null', fp)) {
+            if (f.where === 'ai' && f.page !== null) c.fail(`${fp}.page: must be null for where "ai"`);
+            if (f.where !== 'ai' && !Number.isInteger(f.page)) c.fail(`${fp}.page: must be the flagged quote's page for where "${f.where}"`);
+          }
           c.key(f, 'advice', 'string', fp);
         });
       }
