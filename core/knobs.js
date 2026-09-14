@@ -4,11 +4,10 @@ import { hasWholeWord } from './text.js'
 
 export const GUESS_NOTE = 'starting guess — not from the guide'
 export const DRIVE_BY_INTENT = { clean: 2.5, edge: 4.5, crunch: 6, lead: 7, high_gain: 7 }
-export const NUDGE = 2
+export const NUDGE_UP = 7
+export const NUDGE_DOWN = 3
 
 const INTENT_WORD = { high_gain: 'high gain', lead: 'lead', crunch: 'crunch', edge: 'edge', clean: 'clean' }
-
-const clamp = (v) => Math.min(10, Math.max(0, v))
 
 // 1. same unit name → 2. quote holds a found term or the intent word → 3. the first → none.
 export function pickSettings(model, { unitName = null, terms = [], intent = null } = {}) {
@@ -45,7 +44,7 @@ export function knobsFor(model, { unitName = null, terms = [], intent = null, co
     const g = { knob: k, value: base, kind: 'guess', note: GUESS_NOTE }
     const d = (model.directions || []).find((x) => x.knob === k)
     if (d) {
-      g.value = clamp(base + (d.dir === 'up' ? NUDGE : -NUDGE))
+      g.value = d.dir === 'up' ? Math.max(base, NUDGE_UP) : Math.min(base, NUDGE_DOWN)
       g.direction = { dir: d.dir, quote: d.quote, page: d.page }
     }
     out.set(k, g)

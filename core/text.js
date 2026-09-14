@@ -35,6 +35,84 @@ export function splitSentences(text) {
   return out
 }
 
+// Box breaks (docs/API.md §4.2): the extraction glues separate boxes together. A new box starts on a raw line that
+// begins (after spaces/tabs) with an opening “, an attribution dash, a bullet, or a card label.
+const BOX_START = /^[ \t]*(?:“|[–-] [A-Z]|• |(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls) |More videos, clips and comments)/
+
+// → offsets in pageText (= normText(rawPage)) where a new box starts. Runs between breaks are normalised and
+// joined with one space, which reproduces pageText exactly.
+export function boxBreaks(rawPage) {
+  const lines = String(rawPage ?? '').split('\n')
+  const runs = [[]]
+  lines.forEach((line, i) => {
+    if (i > 0 && BOX_START.test(line)) runs.push([])
+    runs[runs.length - 1].push(line)
+  })
+  const offsets = []
+  let text = ''
+  for (const run of runs) {
+    const t = normText(run.join('\n'))
+    if (!t) continue
+    if (text) {
+      text += ' '
+      offsets.push(text.length)
+    }
+    text += t
+  }
+  return offsets
+}
+
+function occurrences(hay, needle) {
+  const out = []
+  if (!needle) return out
+  for (let i = hay.indexOf(needle); i >= 0; i = hay.indexOf(needle, i + 1)) out.push(i)
+  return out
+}
+
+// True when the quote occurs on the page and every occurrence has a box break strictly inside it.
+export function spansBoxBreak(quote, rawPage) {
+  const text = normText(rawPage)
+  const occ = occurrences(text, quote)
+  if (!occ.length) return false
+  const breaks = boxBreaks(rawPage)
+  return occ.every((s) => breaks.some((b) => b > s && b < s + quote.length))
+}
+
+// A quote's pieces between box breaks (its first clean occurrence → [quote]; else the first occurrence split).
+export function splitAtBoxBreaks(quote, rawPage) {
+  const text = normText(rawPage)
+  const occ = occurrences(text, quote)
+  if (!occ.length) return [quote]
+  const breaks = boxBreaks(rawPage)
+  const inside = (s) => breaks.filter((b) => b > s && b < s + quote.length)
+  const clean = occ.find((s) => !inside(s).length)
+  if (clean !== undefined) return [quote]
+  const s = occ[0]
+  const cuts = [s, ...inside(s), s + quote.length]
+  const pieces = []
+  for (let i = 0; i < cuts.length - 1; i++) {
+    const p = text.slice(cuts[i], cuts[i + 1]).trim()
+    if (p) pieces.push(p)
+  }
+  return pieces
+}
+
+// Attribution at the end (" – Name", "” – Name") is cut off; at the start ("– Name …") too. Names from `names`.
+export function cutAttribution(quote, names) {
+  const alt = names.map((n) => escapeRegex(n)).join('|')
+  let q = quote
+  let said_by = null
+  const end = new RegExp(`\\s*[–-]\\s+(${alt})\\.?$`).exec(q)
+  if (end) {
+    said_by = end[1]
+    q = q.slice(0, end.index).trim()
+  }
+  const start = new RegExp(`^[–-]\\s+(${alt})(?![A-Za-z])\\s*`).exec(q)
+  if (start) q = q.slice(start[0].length).trim()
+  else if (/^[–-] [A-Z]/.test(q)) q = ''
+  return { quote: q, said_by }
+}
+
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }

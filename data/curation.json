@@ -21,7 +21,7 @@
   "settings": [
     { "model": "6g4-super", "page": 19, "quote": "All amp controls at default, Input Drive at 4, and you have a great vintage Fender tone." },
     { "model": "1959slp", "page": 28, "quote": "My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5." },
-    { "model": "1959slp", "page": 31, "context": "JD Simo’s Settings:", "quote": "Bass:0, Mid:10, Treble:10, Volume:10 • Presence: to taste (around 5 or 6)", "other": ["Presence: to taste (around 5 or 6)"] },
+    { "model": "1959slp", "page": 31, "context": "JD Simo’s Settings:", "quote": "Bass:0, Mid:10, Treble:10, Volume:10" },
     { "model": "atomica", "page": 42, "quote": "increase Treble and Presence, set gain around 6" },
     { "model": "brit-jm45", "page": 64, "quote": "Forum member Simeon’s suggested settings for a “Gary Moore” tone: Input Drive 3, Presence 3, stock cab 103, T808 with Drive 0, Tone 6 and Level 7.", "other": ["stock cab 103", "T808 with Drive 0, Tone 6 and Level 7"] },
     { "model": "brit-silver", "page": 69, "quote": "Joe Bonamassa sets the controls on his Jubilee like this: Presence 5, Bass 10, Mid 7.5, Treble 4.5, Master 10, Gain 5." },

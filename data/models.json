@@ -365,12 +365,7 @@
           "said_by": null
         },
         {
-          "quote": "Reduce bass and crank Input Drive to get a mild",
-          "page": 20,
-          "said_by": null
-        },
-        {
-          "quote": "“brown” overdrive",
+          "quote": "Reduce bass and crank Input Drive to get a mild “brown” overdrive",
           "page": 20,
           "said_by": null
         }
@@ -397,13 +392,13 @@
         {
           "knob": "Bass",
           "dir": "down",
-          "quote": "Reduce bass and crank Input Drive to get a mild",
+          "quote": "Reduce bass and crank Input Drive to get a mild “brown” overdrive",
           "page": 20
         },
         {
           "knob": "Drive",
           "dir": "up",
-          "quote": "Reduce bass and crank Input Drive to get a mild",
+          "quote": "Reduce bass and crank Input Drive to get a mild “brown” overdrive",
           "page": 20
         }
       ],
@@ -704,7 +699,7 @@
           "other": []
         },
         {
-          "quote": "Bass:0, Mid:10, Treble:10, Volume:10 • Presence: to taste (around 5 or 6)",
+          "quote": "Bass:0, Mid:10, Treble:10, Volume:10",
           "page": 31,
           "said_by": null,
           "context": "JD Simo’s Settings:",
@@ -715,9 +710,7 @@
             "Mid": 10,
             "Treble": 10
           },
-          "other": [
-            "Presence: to taste (around 5 or 6)"
-          ]
+          "other": []
         }
       ],
       "directions": [
@@ -811,7 +804,7 @@
             "page": 32
           },
           {
-            "quote": "These tonal characteristics are what define this much respected all-valve head.” – Marshall The re-issue has two EL34 tubes and blasts 50 watt through (preferably) a 4x12 cabinet.",
+            "quote": "The re-issue has two EL34 tubes and blasts 50 watt through (preferably) a 4x12 cabinet.",
             "page": 33
           }
         ]
@@ -1029,7 +1022,7 @@
       ],
       "notes": [
         {
-          "quote": "It’s a delicate tone. The AC-20 sounds intimate and “small” in a good way.",
+          "quote": "It’s a delicate tone. The AC-20 sounds intimate and",
           "page": 39,
           "said_by": "yek"
         },
@@ -1152,7 +1145,7 @@
         ]
       },
       "synopsis": {
-        "quote": "High and low gain models of the Cameron Atomica, which reproduces the “brown sound” of a Jose Arrendendo-modified Super Lead Plexi",
+        "quote": "High and low gain models of the Cameron Atomica, which reproduces the",
         "page": 42
       },
       "controls": {
@@ -1281,7 +1274,7 @@
             "page": 44
           },
           {
-            "quote": "This makes it possible to adapt to small and big stages and gigs just by configuring the speakers.” – Fenderguru.com This amp is rated at around 40 watt through two 6L6 tubes.",
+            "quote": "This makes it possible to adapt to small and big stages and gigs just by configuring the speakers.”",
             "page": 45
           }
         ]
@@ -1331,12 +1324,7 @@
       "controls": null,
       "tips": [
         {
-          "quote": "For more ‘80’s revival, add a",
-          "page": 46,
-          "said_by": null
-        },
-        {
-          "quote": "“detune” Pitch block after the CAB block and a circular delay",
+          "quote": "For more ‘80’s revival, add a “detune” Pitch block after the CAB block and a circular delay",
           "page": 46,
           "said_by": null
         }
@@ -2686,9 +2674,9 @@
       },
       "tips": [
         {
-          "quote": "“Input gain on 10 o clock, gain on 2 o clock is a ‘70’s /’80’s lead tone, put the input level up to 2 o click and it's a very sustained lead tone or a very modern heavy rhythm tone” – Alan Phillips",
+          "quote": "“Input gain on 10 o clock, gain on 2 o clock is a ‘70’s /’80’s lead tone, put the input level up to 2 o click and it's a very sustained lead tone or a very modern heavy rhythm tone”",
           "page": 79,
-          "said_by": null
+          "said_by": "Alan Phillips"
         }
       ],
       "cab": {
@@ -3069,12 +3057,7 @@
       },
       "tips": [
         {
-          "quote": "To mimic the Pull Gain feature on the clean channel, select tonestack",
-          "page": 89,
-          "said_by": null
-        },
-        {
-          "quote": "“Hook Clean 2”",
+          "quote": "To mimic the Pull Gain feature on the clean channel, select tonestack “Hook Clean 2”",
           "page": 89,
           "said_by": null
         }
@@ -3654,12 +3637,7 @@
       },
       "tips": [
         {
-          "quote": "Try a Drive block before the Amp block, set to FET or SDD or Treb Boost Leave all tone controls in the",
-          "page": 107,
-          "said_by": null
-        },
-        {
-          "quote": "“Hot” model at default for authenticity",
+          "quote": "Try a Drive block before the Amp block, set to FET or SDD or Treb Boost Leave all tone controls in the “Hot” model at default for authenticity",
           "page": 107,
           "said_by": null
         }
@@ -3745,22 +3723,12 @@
           "said_by": null
         },
         {
-          "quote": "The model is based on the switch in the",
+          "quote": "The model is based on the switch in the “Fast” position.",
           "page": 110,
           "said_by": null
         },
         {
-          "quote": "“Fast” position.",
-          "page": 110,
-          "said_by": null
-        },
-        {
-          "quote": "You can replicate the",
-          "page": 110,
-          "said_by": null
-        },
-        {
-          "quote": "“Gradual” position by decreasing Input Trim to .250.",
+          "quote": "You can replicate the “Gradual” position by decreasing Input Trim to .250.",
           "page": 110,
           "said_by": null
         },
@@ -3845,22 +3813,12 @@
           "said_by": null
         },
         {
-          "quote": "The model is based on the switch in the",
+          "quote": "The model is based on the switch in the “Fast” position.",
           "page": 113,
           "said_by": null
         },
         {
-          "quote": "“Fast” position.",
-          "page": 113,
-          "said_by": null
-        },
-        {
-          "quote": "You can replicate the",
-          "page": 113,
-          "said_by": null
-        },
-        {
-          "quote": "“Gradual” position by decreasing Input Trim to .250",
+          "quote": "You can replicate the “Gradual” position by decreasing Input Trim to .250",
           "page": 113,
           "said_by": null
         },
@@ -4256,7 +4214,7 @@
         ]
       },
       "synopsis": {
-        "quote": "Models of two versions of Friedman’s Dirty Shirley, his take on the JTM 45. The “2” model is based on an earlier version, which is a little more aggressive than the regular model",
+        "quote": "Models of two versions of Friedman’s Dirty Shirley, his take on the JTM 45. The",
         "page": 125
       },
       "controls": {
@@ -4270,9 +4228,9 @@
           "said_by": "Manual"
         },
         {
-          "quote": "Set the gain around 6 and then bring the master to taste” – Manual",
+          "quote": "Set the gain around 6 and then bring the master to taste”",
           "page": 125,
-          "said_by": null
+          "said_by": "Manual"
         }
       ],
       "cab": {
@@ -4603,7 +4561,7 @@
             "page": 134
           },
           {
-            "quote": "Diezel Co. is not responsible for cabinet handles popping out etc.” – Diezel Use the amp model with V30 or G12-K100 speakers.",
+            "quote": "Diezel Co. is not responsible for cabinet handles popping out etc.”",
             "page": 134
           }
         ]
@@ -6401,7 +6359,7 @@
       },
       "tips": [
         {
-          "quote": "To put the amp into overdrive, turn up all three controls (Volume, Treble, Bass) Sound",
+          "quote": "To put the amp into overdrive, turn up all three controls (Volume, Treble, Bass)",
           "page": 190,
           "said_by": null
         }
@@ -6677,7 +6635,7 @@
       },
       "tips": [
         {
-          "quote": "“ODS” factory preset",
+          "quote": "Try the “ODS” factory preset",
           "page": 199,
           "said_by": null
         }
@@ -6794,7 +6752,7 @@
         ]
       },
       "synopsis": {
-        "quote": "Models of various Marshall Plexi heads, “the world’s greatest rock amp”",
+        "quote": "Models of various Marshall Plexi heads,",
         "page": 203
       },
       "controls": {
@@ -6928,11 +6886,6 @@
           "said_by": null
         },
         {
-          "quote": "“With a Strat you only need to dial back Bass and adjust Input Drive to your liking, between 3 and 4 for a fairly clean tone, around 5 for a clean tone with balls and up to 7 - 8 for trademark Fender overdrive.",
-          "page": 210,
-          "said_by": "yek"
-        },
-        {
           "quote": "With humbuckers, change Input Trim to 0.500.”",
           "page": 210,
           "said_by": "yek"
@@ -7033,7 +6986,7 @@
         "stock_cabs": null,
         "notes": [
           {
-            "quote": "PVH 6160 Block (block letter EVH 5150 = Peavey 6505) “These amplifiers (collectively the 5150 series) and speaker cabinets were the result of a collaboration with Eddie Van Halen.",
+            "quote": "“These amplifiers (collectively the 5150 series) and speaker cabinets were the result of a collaboration with Eddie Van Halen.",
             "page": 215
           },
           {
@@ -7203,7 +7156,7 @@
         },
         "notes": [
           {
-            "quote": "Compensate with the Level control. ” “The Modern mode in Rectos has no negative feedback so there's a huge bass boost from the speaker impedance.",
+            "quote": "“The Modern mode in Rectos has no negative feedback so there's a huge bass boost from the speaker impedance.",
             "page": 221
           },
           {
@@ -7374,7 +7327,7 @@
         {
           "quote": "Turn up Treble a lot to make it less dark",
           "page": 225,
-          "said_by": null
+          "said_by": "yek"
         }
       ],
       "cab": {
@@ -7585,11 +7538,11 @@
         },
         "notes": [
           {
-            "quote": "We have two, one as a spare, but I like to alternate them so that valves are properly burnt in on both.“ – Bonham Soldano uses 12” Eminence V12 speakers in its cabinets.",
+            "quote": "We have these as stock cabs: 4x12 Solo V12 (RW).",
             "page": 233
           },
           {
-            "quote": "We have these as stock cabs: 4x12 Solo V12 (RW).",
+            "quote": "Note that the Red Wirez stock cabs have been captured using an neutral microphone, so consider adding a mic model in the Cab block.",
             "page": 233
           }
         ]
@@ -8003,7 +7956,7 @@
       },
       "tips": [
         {
-          "quote": "“magic six” settings",
+          "quote": "Try the “magic six” settings",
           "page": 241,
           "said_by": null
         }
@@ -8484,7 +8437,7 @@
           "said_by": null
         },
         {
-          "quote": "“Vintage” tone stack is flat.",
+          "quote": "The “Vintage” tone stack is flat.",
           "page": 255,
           "said_by": null
         },
@@ -8499,7 +8452,7 @@
           "said_by": null
         },
         {
-          "quote": "“active” EQ you need to set the type to Active.”",
+          "quote": "If you want “active” EQ you need to set the type to Active.”",
           "page": 255,
           "said_by": null
         },
@@ -8569,12 +8522,7 @@
       },
       "tips": [
         {
-          "quote": "Keep all tone controls at default when using the",
-          "page": 256,
-          "said_by": null
-        },
-        {
-          "quote": "“1” model, for authenticity",
+          "quote": "Keep all tone controls at default when using the “1” model, for authenticity",
           "page": 256,
           "said_by": null
         }
@@ -8945,12 +8893,12 @@
       },
       "tips": [
         {
-          "quote": "“My settings for a killer high-gain tone: Input Drive 8.1 / Overdrive 9-10 / Bass 1 / Midrang 1.8 / Treble 8.9 / Presence 4.5 / MV 4 / Bright Switch:ON / 80 4.8 / 240 2.6 / 750 -4.5 / 2200 -0.2 / 6600 0.”",
+          "quote": "(IIC+) “My settings for a killer high-gain tone: Input Drive 8.1 / Overdrive 9-10 / Bass 1 / Midrang 1.8 / Treble 8.9 / Presence 4.5 / MV 4 / Bright Switch:ON / 80 4.8 / 240 2.6 / 750 -4.5 / 2200 -0.2 / 6600 0.”",
           "page": 266,
           "said_by": null
         },
         {
-          "quote": "(IIC++) Turn down bass and mids, compensate bass with 5-band GEQ (pre power amp) if necessary Sound",
+          "quote": "(IIC++) Turn down bass and mids, compensate bass with 5-band GEQ (pre power amp) if necessary",
           "page": 266,
           "said_by": null
         }
@@ -9001,7 +8949,7 @@
         {
           "knob": "Bass",
           "dir": "down",
-          "quote": "(IIC++) Turn down bass and mids, compensate bass with 5-band GEQ (pre power amp) if necessary Sound",
+          "quote": "(IIC++) Turn down bass and mids, compensate bass with 5-band GEQ (pre power amp) if necessary",
           "page": 266
         }
       ],

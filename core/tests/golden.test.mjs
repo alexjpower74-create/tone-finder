@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { loadPages } from './guide-node.mjs'
 import { answer } from '../answer.js'
 import { isUnitName } from '../models.js'
+import { spansBoxBreak } from '../text.js'
 import { checkInvariants } from './invariants.mjs'
 
 const read = (p) => JSON.parse(readFileSync(fileURLToPath(new URL(p, import.meta.url)), 'utf8'))
@@ -21,6 +22,10 @@ for (const g of golden.queries) {
     const detail = `status=${a.status} ids=${ids.join(',')} terms=${a.understood.matched_terms.join('|')}`
     if (g.status) assert.equal(a.status, g.status, detail)
     if (g.any_of) assert.ok(ids.some((id) => g.any_of.includes(id)), `any_of ${detail}`)
+    if (g.min_suggestions) assert.ok(a.suggestions.length >= g.min_suggestions, `min_suggestions ${detail}`)
+    if (golden.no_why_spans_box_break) {
+      for (const s of a.suggestions) for (const w of s.why) assert.ok(!spansBoxBreak(w.quote, pages.get(w.page)), `${s.model_id} p. ${w.page} spans a box break: ${w.quote}`)
+    }
     if (g.top1_any_of) assert.ok(g.top1_any_of.includes(ids[0]), `top1_any_of ${detail}`)
     if (g.why_terms_any) {
       const pool = g.any_of || g.top1_any_of

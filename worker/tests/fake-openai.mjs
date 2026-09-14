@@ -31,6 +31,15 @@ export const SCENARIOS = {
       ],
     },
   },
+  'fake-span': {
+    pick: { general_knowledge: [], search_terms: [], picks: [{ model_id: '1959slp', unit_name: '1959SLP' }] },
+    cite: {
+      suggestions: [
+        // An exact substring of p. 28 that runs from one box into the next (API.md §4.2): must be dropped.
+        { model_id: '1959slp', unit_name: '1959SLP', citations: [{ page: 28, quote: 'Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.' }] },
+      ],
+    },
+  },
   'fake-puppets': {
     pick: {
       general_knowledge: [{ text: 'FAKE: the rhythm guitars on Master of Puppets were recorded with a MESA/Boogie Mark IIC+.' }],
