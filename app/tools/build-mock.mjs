@@ -1,17 +1,22 @@
 #!/usr/bin/env node
 // Builds the ?mock=1 fixtures (docs/API.md §9): app/mock/models.json and app/mock/answers.json.
 //
-// Models come from the local guide in TF_GUIDE_DIR (derived fields and short verified quotes only; the guide is
-// never copied), or from tf1's real data once it lands: --models <path to data/models.json>.
-// Canned answers are built from the same models with a small copy of the §4.3 knob rules. Every quote written by
-// this script is verified on its page (§0) and is never a joined passage; any miss stops the build.
+// Models come from tf1's real data (--models <path to data/models.json>), or, without it, are derived from the
+// local guide in TF_GUIDE_DIR (derived fields and short verified quotes only; the guide is never copied).
+// Canned answers are built from those models with a small copy of the §4.3 knob rules. Every quote written by
+// this script is verified on its page (§0), never spans a box break and never ends with an attribution (§4.2);
+// any miss stops the build and lists every failing quote.
 //
-// Usage: node app/tools/build-mock.mjs [--models path/to/models.json]
+// Usage: node app/tools/build-mock.mjs [--models path/to/models.json [--drop-spanning]]
+//   --drop-spanning  remove stored quotes from the --models input that span a box break or end with an
+//                    attribution (listed on stdout), instead of stopping. For use until tf1's data applies §4.2.
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { hasJoin, makeVerifier, normText, parsePages, splitPassages } from './guide-text.mjs';
+import {
+  boxRuns, cutAttribution, makeVerifier, normText, parsePages, spansBoxBreak, splitAtBoxBreaks, splitSentences,
+} from './guide-text.mjs';
 
 const APP = join(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = join(APP, '..');
@@ -22,7 +27,7 @@ function die(msg) {
   process.exit(1);
 }
 
-// ---------- guide pages and quote verification (§0, §2) ----------
+// ---------- guide pages and quote checks (§0, §2, §4.2) ----------
 let fulltext;
 try {
   fulltext = readFileSync(join(GUIDE_DIR, 'yek-guide-fulltext.txt'), 'utf8');
@@ -35,13 +40,21 @@ const V = makeVerifier(RAW);
 const pageText = (n) => V.pageText(n) ?? die(`no page ${n}`);
 const isVerified = (quote, page) => V.isVerified(quote, page);
 
+// null when the quote may be stored and shown, else the reason.
+function quoteProblem(quote, page) {
+  if (!isVerified(quote, page)) return 'not verified on its page';
+  if (spansBoxBreak(quote, V.raw(page))) return 'spans a box break';
+  if (cutAttribution(quote).quote !== quote) return 'ends with an attribution';
+  return null;
+}
+
 function Q(quote, page, extra = {}) {
-  if (!isVerified(quote, page)) die(`quote not verified on p. ${page}: ${JSON.stringify(String(quote).slice(0, 90))}`);
-  if (hasJoin(quote)) die(`joined passage on p. ${page}: ${JSON.stringify(String(quote).slice(0, 90))}`);
+  const problem = quoteProblem(quote, page);
+  if (problem) die(`quote ${problem} (p. ${page}): ${JSON.stringify(String(quote).slice(0, 100))}`);
   return { quote, page, ...extra };
 }
 
-const SAID_BY = /^\s*[–-]\s*(yek|Yek|Cliff|Legendary Tones|Marshall|MESA)\b/;
+const SAID_BY = /^\s*[–-]\s*(yek|Yek|Cliff|Legendary Tones|Marshall|MESA|Manual)\b/;
 function saidByAfter(quote, page) {
   const t = pageText(page);
   const at = t.indexOf(quote);
@@ -49,7 +62,20 @@ function saidByAfter(quote, page) {
   return m ? (m[1] === 'Yek' ? 'yek' : m[1]) : null;
 }
 
-// ---------- models ----------
+// A picked passage → the pieces it may be quoted as: cut at box breaks (only ever shorter), attribution tail cut
+// into said_by, trailing printed page number dropped, and only pieces that start a sentence or box and verify.
+function quotablePieces(passage, page) {
+  const out = [];
+  for (const piece of splitAtBoxBreaks(passage, V.raw(page))) {
+    const cut = cutAttribution(piece.replace(/\s+\d{1,3}$/, '').trim());
+    if (/^[A-Z0-9“"‘(]/.test(cut.quote) && !quoteProblem(cut.quote, page)) {
+      out.push({ quote: cut.quote, page, said_by: cut.said_by ?? saidByAfter(cut.quote, page) });
+    }
+  }
+  return out;
+}
+
+// ---------- models (only used without --models) ----------
 const APPENDIX = new Set(['VOX-type Amps', 'D-type Amps', 'Preamps', 'Fractal Forum Content']);
 const DUP_NAMES = { 238: 'Suhr Badger 18', 239: 'Suhr Badger 30' }; // TOC sub-entries that tell the two apart
 
@@ -140,17 +166,20 @@ function directionsFrom(tips) {
 
 function stripHeader(text, section) {
   let t = text;
-  while (t.startsWith(section + ' ')) t = t.slice(section.length + 1);
+  while (t === section || t.startsWith(section + ' ')) t = t.slice(section.length + 1);
   return t;
 }
 
+// Every quotable sentence of a model's pages: each box run on its own, then sentences, then the §4.2 cuts.
 function sentencesOf(m) {
   const out = [];
   for (let p = m.pages.start; p <= m.pages.end; p++) {
-    for (const s of splitPassages(stripHeader(pageText(p), m.section))) {
-      // Drop a trailing printed page number; skip fragments that start mid-sentence.
-      const q = s.trim().replace(/\s+\d{1,3}$/, '');
-      if (/^[A-Z0-9“"‘(]/.test(q) && isVerified(q, p) && !hasJoin(q)) out.push({ quote: q, page: p });
+    for (const run of boxRuns(V.raw(p))) {
+      for (const s of splitSentences(stripHeader(run, m.section))) {
+        for (const piece of quotablePieces(s.trim(), p)) {
+          if (piece.quote !== m.section && !out.some((o) => o.quote === piece.quote)) out.push(piece);
+        }
+      }
     }
   }
   return out;
@@ -208,45 +237,43 @@ function deriveModels() {
       [...(specs.power_tubes ?? '').matchAll(/[A-Z0-9]+/g)].map((t) => TUBE_ALIAS[t[0]] ?? t[0]).filter((t) => TUBES.includes(t)),
     );
 
-    // Card fields can glue two boxes together: keep the first passage and let verification prove it.
-    const firstPassage = (raw) => splitPassages(raw)[0] ?? '';
-    const synPiece = synText ? firstPassage(synText) : '';
-    const synopsis = synPiece && isVerified(synPiece, start) ? Q(synPiece, start) : null;
-
-    const tips = [];
-    for (const q of splitPassages(normText(card.Tips ?? ''))) {
-      if (tips.length < 3 && isVerified(q, start)) tips.push(Q(q, start, { said_by: saidByAfter(q, start) }));
-    }
-
-    const cabQuote = (raw) => {
+    // A card field (junk-laden, e.g. "… Web, Manual …") → its first quotable piece on the start page.
+    const firstPiece = (raw) => {
       if (!raw) return null;
       const full = normText(raw);
-      // The card field runs into the next heading ("… Web, Manual …"): cut it and let verification prove the cut.
       for (const c of [full.split(' Web,')[0].trim(), full]) {
-        const piece = firstPassage(c);
-        if (piece && isVerified(piece, start)) return Q(piece, start);
+        if (!pageText(start).includes(c)) continue;
+        const [piece] = quotablePieces(c, start);
+        if (piece) return piece;
       }
       return null;
     };
+    const syn = firstPiece(card.Synopsis);
+    const speaker = firstPiece(card['Cabinet/speaker']);
+    const stock = firstPiece(card['Stock cabs']);
+
+    const tips = [];
+    for (const s of splitSentences(normText(card.Tips ?? ''))) {
+      if (!pageText(start).includes(s)) continue;
+      for (const piece of quotablePieces(s, start)) if (tips.length < 3) tips.push(Q(piece.quote, start, { said_by: piece.said_by }));
+    }
 
     const model = {
       id, section, name, based_on, pages, refers_to: stub ? stub[1] : null, unit_names, brands, specs,
       facets: { master_volume, power_tubes: TUBES.filter((t) => found.has(t)) },
-      synopsis, controls: null, tips,
-      cab: { speaker: cabQuote(card['Cabinet/speaker']), stock_cabs: cabQuote(card['Stock cabs']), notes: [] },
+      synopsis: syn ? Q(syn.quote, start) : null, controls: null, tips,
+      cab: { speaker: speaker ? Q(speaker.quote, start) : null, stock_cabs: stock ? Q(stock.quote, start) : null, notes: [] },
       settings: [], directions: [], notes: [],
     };
     if (stub) return model;
 
-    const seen = new Set();
     for (const s of sentencesOf(model)) {
-      if (!/\bsettings\b/i.test(s.quote) || seen.has(s.quote)) continue;
+      if (!/\bsettings\b/i.test(s.quote)) continue;
       const knobs = parseKnobs(s.quote);
       if (!Object.keys(knobs).length) continue;
-      seen.add(s.quote);
       const unit = unit_names.find((u) => s.quote.includes(`Model: ${u.name}`) || s.quote.includes(`(${u.name} model)`));
       model.settings.push({
-        ...Q(s.quote, s.page, { said_by: saidByAfter(s.quote, s.page) }),
+        ...Q(s.quote, s.page, { said_by: s.said_by }),
         context: null, unit_name: unit ? unit.name : null, knobs, other: otherFragments(s.quote, knobs),
       });
     }
@@ -276,20 +303,40 @@ function conventions() {
   ].map(([id, quote]) => ({ id, ...Q(quote, 12) }));
 }
 
+// Stored quotes in a --models input that may not be shown: listed, then dropped (--drop-spanning) or fatal.
+function checkStored(data, drop) {
+  const failures = [];
+  const bad = (o, where) => {
+    if (!o || typeof o.quote !== 'string' || !Number.isInteger(o.page)) return false;
+    const problem = quoteProblem(o.quote, o.page);
+    if (problem) failures.push(`${where} p. ${o.page}: ${problem}: ${o.quote.slice(0, 110)}`);
+    return Boolean(problem);
+  };
+  data.conventions.forEach((c) => bad(c, `conventions.${c.id}`));
+  for (const m of data.models) {
+    for (const key of ['synopsis', 'controls']) if (bad(m[key], `${m.id}.${key}`) && drop) m[key] = null;
+    for (const key of ['speaker', 'stock_cabs']) if (bad(m.cab[key], `${m.id}.cab.${key}`) && drop) m.cab[key] = null;
+    for (const [key, list] of [['tips', m.tips], ['notes', m.notes], ['settings', m.settings], ['directions', m.directions], ['cab.notes', m.cab.notes]]) {
+      const kept = list.filter((o, i) => !bad(o, `${m.id}.${key}[${i}]`));
+      if (drop) {
+        if (key === 'cab.notes') m.cab.notes = kept;
+        else m[key] = kept;
+      }
+    }
+  }
+  if (failures.length && (!drop || failures.some((f) => f.startsWith('conventions')))) {
+    die(`${failures.length} stored quote(s) in the --models input can't be shown:\n  ${failures.join('\n  ')}`);
+  }
+  return failures;
+}
+
 // ---------- load or derive ----------
 const argModels = process.argv.indexOf('--models');
 let data;
+let droppedStored = [];
 if (argModels >= 0) {
   data = JSON.parse(readFileSync(process.argv[argModels + 1], 'utf8'));
-  const walk = (x) => {
-    if (Array.isArray(x)) return x.forEach(walk);
-    if (x && typeof x === 'object') {
-      if (typeof x.quote === 'string' && Number.isInteger(x.page)) Q(x.quote, x.page);
-      Object.values(x).forEach(walk);
-    }
-  };
-  walk(data.models);
-  walk(data.conventions);
+  droppedStored = checkStored(data, process.argv.includes('--drop-spanning'));
 } else {
   const shaInput = JSON.stringify([...RAW].sort((a, b) => a[0] - b[0]));
   data = {
@@ -315,7 +362,7 @@ const GUESS = 'starting guess — not from the guide';
 const DRIVE_BY_INTENT = { clean: 2.5, edge: 4.5, crunch: 6, lead: 7, high_gain: 7 };
 const ARES_RE = /motor\s*drive|(transformer|xformer|xfrmr)\s*grind/i;
 const ARES_ADVICE = "Your firmware doesn't have this control. Skip this step: Fractal replaced it with Speaker Compression (Spkr Comp), which resets to 3.0.";
-const STOP_WORDS = 'a an and the of on in at to for with from by like my me i want need get some sort kind type tone tones sound sounds sounding song guitar guitars amp amps model models setting settings preset patch please how what that this those these is are be it its his her their do does make give play playing'.split(' ');
+const STOP_WORDS = 'a an and the of on in at to for with from by like my me i want need get some sort kind type tone tones sound sounds sounding song guitar guitars amp amps model models setting settings preset patch please how what that this those these is are be it its his her their do does make give play playing through into onto over under about via as or but than'.split(' ');
 const GENERIC_WORDS = 'clean crunch crunchy rhythm lead solo dirty distorted distortion overdrive overdriven drive gain master volume bass mid middle treble presence depth loud quiet warm bright dark fat big heavy'.split(' ');
 
 const release = JSON.parse(readFileSync(join(REPO, 'data/sources/fractal-release-notes.json'), 'utf8'));
@@ -346,7 +393,7 @@ function whyQuotes(m, terms, max = 3) {
   const whole = (q) => (/[.!?][”"’)]*$/.test(q) ? 1 : 0);
   scored.sort((a, b) => b.matched.length - a.matched.length || whole(b.quote) - whole(a.quote) || b.rank - a.rank || a.page - b.page);
   const saidBy = (q) =>
-    [...target.tips, ...target.notes, ...target.settings].find((x) => x.quote === q.quote)?.said_by ?? null;
+    [...target.tips, ...target.notes, ...target.settings].find((x) => x.quote === q.quote)?.said_by ?? q.said_by ?? null;
   const picked = [];
   for (const s of scored) {
     if (picked.length === max) break;
@@ -384,7 +431,8 @@ function suggestion(id, { rank, score, terms, intent = null, source = 'guide_sea
     const k = { knob, value: base, kind: 'guess', note: GUESS };
     const d = target.directions.find((x) => x.knob === knob);
     if (d) {
-      k.value = Math.min(10, Math.max(0, base + (d.dir === 'up' ? 2 : -2)));
+      // §4.3 rule 5: up → at least 7, down → at most 3; a guess already on that side stays.
+      k.value = d.dir === 'up' ? Math.max(base, 7) : Math.min(base, 3);
       k.direction = { dir: d.dir, quote: d.quote, page: d.page };
     }
     return k;
@@ -406,10 +454,11 @@ function suggestion(id, { rank, score, terms, intent = null, source = 'guide_sea
     scan(plantedFlag, 'why', null);
   }
 
+  const taper = convention('taper-match');
   return {
     rank, model_id: target.id, unit_name, section: target.section, based_on: target.based_on, brands: target.brands,
     pages: target.pages, source, score, why, knobs,
-    taper_note: knobs.some((k) => k.kind === 'guide') ? convention('taper-match') : null,
+    taper_note: knobs.some((k) => k.kind === 'guide') ? { quote: taper.quote, page: taper.page } : null,
     other_settings: entry ? entry.other.map((text) => ({ text, quote: entry.quote, page: entry.page })) : [],
     cab: target.cab, ares_flags,
   };
@@ -435,7 +484,7 @@ put('Van Halen brown sound', answer('Van Halen brown sound', {
   suggestions: [
     // All seven knobs are guesses; the tip nudges the guessed Presence up.
     suggestion('brit-brown-and-fas-brown', { rank: 1, score: 14.2, terms: ['brown sound', 'van halen'] }),
-    // Guide values for Bass/Mid/Treble, the p. 12 rule for Master, guesses for the rest.
+    // Guide values from a settings entry, the p. 12 rule for Master, guesses for the rest.
     suggestion('1959slp', { rank: 2, score: 7.9, terms: ['van halen'] }),
   ],
 }));
@@ -492,7 +541,7 @@ put('djent', answer('djent', {
   suggestions: [suggestion('thordendal', { rank: 1, score: 4.9, terms: ['djent'], intent: 'high_gain' })],
 }));
 
-// Guide knobs (Drive, Presence) plus a tip that nudges the guessed Bass down.
+// Guide knobs plus a tip that nudges a guessed knob.
 put('JTM 45', answer('JTM 45', {
   matched: ['jtm 45'],
   suggestions: [suggestion('brit-jm45', { rank: 1, score: 10.2, terms: ['jtm 45', 'jtm45'] })],
@@ -531,7 +580,7 @@ writeFileSync(
   join(OUT, 'answers.json'),
   JSON.stringify(
     {
-      _about: 'Canned answers for ?mock=1, built by app/tools/build-mock.mjs. Quotes are verified on their pages; scores are placeholders. The SAMPLE (test only) Ares flag is planted on purpose.',
+      _about: 'Canned answers for ?mock=1, built by app/tools/build-mock.mjs. Quotes are verified on their pages and never span a box break; scores are placeholders. The SAMPLE (test only) Ares flag is planted on purpose.',
       source: argModels >= 0 ? 'data/models.json' : 'derived from the local guide (pre data-ready)',
       health: { ok: true, models: data.models.length, guide: { loaded: true, pages: 301, sha_ok: true }, ai: { configured: true, model: 'gpt-5.4-mini', cap_cad: 2, spent_cad: 0.0412, calls: 6 } },
       stop_words: STOP_WORDS,
@@ -543,6 +592,7 @@ writeFileSync(
     1,
   ) + '\n',
 );
-console.log(`models: ${data.models.length} (${data.models.filter((m) => m.refers_to).length} stubs)`);
+if (droppedStored.length) console.log(`dropped ${droppedStored.length} stored quote(s) from the --models input:\n  ${droppedStored.join('\n  ')}`);
+console.log(`models: ${data.models.length} (${data.models.filter((m) => m.refers_to).length} stubs), unit names: ${data.models.reduce((n, m) => n + m.unit_names.length, 0)}`);
 console.log(`answers: ${Object.keys(answers).length} canned queries, ${cards.length} cards`);
 console.log(`quote budget: ${quoteChars} of ${guideChars} characters (${((100 * quoteChars) / guideChars).toFixed(1)}%)`);

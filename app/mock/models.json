@@ -95,7 +95,7 @@
      "page": 13
     },
     "stock_cabs": {
-     "quote": "1x8 – Cab Packs 2 and 4",
+     "quote": "1x8 – Cab Packs 2 and",
      "page": 13
     },
     "notes": []
@@ -154,11 +154,11 @@
    ],
    "cab": {
     "speaker": {
-     "quote": "Keith Urban’s cabinet has two Two-Rock CR12 speakers, captured in the IR below.",
+     "quote": "Keith Urban’s cabinet has two Two-Rock CR12 speakers, captured in the IR below. The original Tweed Twin has two Jensen P10Ns",
      "page": 15
     },
     "stock_cabs": {
-     "quote": "2x12 Double Amp – Cab Pack 15",
+     "quote": "2x12 Double Amp – Cab Pack",
      "page": 15
     },
     "notes": []
@@ -230,11 +230,11 @@
    ],
    "cab": {
     "speaker": {
-     "quote": "Originally equipped with two Jensen 10” speakers.",
+     "quote": "Originally equipped with two Jensen 10” speakers. The modeled amp has two 12” speakers, captured in the IR below",
      "page": 18
     },
     "stock_cabs": {
-     "quote": "2x12 Brown Super – Cab Pack 15",
+     "quote": "2x12 Brown Super – Cab Pack",
      "page": 18
     },
     "notes": []
@@ -352,7 +352,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Model of a “holy grail” 1959 Fender Tweed Bassman, the",
+    "quote": "Model of a “holy grail” 1959 Fender Tweed Bassman, the “grandfather of rock and roll”",
     "page": 22
    },
    "controls": null,
@@ -363,7 +363,7 @@
      "said_by": null
     },
     {
-     "quote": "Or try Bass and Treble at 0, and Mid and Presence at 10",
+     "quote": "Or try Bass and Treble at 0, and Mid and Presence at",
      "page": 22,
      "said_by": null
     }
@@ -374,7 +374,7 @@
      "page": 22
     },
     "stock_cabs": {
-     "quote": "4x10 Bassguy – Cab Packs 1 and 10",
+     "quote": "4x10 Bassguy – Cab Packs 1 and",
      "page": 22
     },
     "notes": []
@@ -427,7 +427,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of both channels of a ‘65 Fender Bassman with AB165 circuit, owned by Dweezil Zappa.",
+    "quote": "Models of both channels of a ‘65 Fender Bassman with AB165 circuit, owned by Dweezil Zappa. Much nastier than a regular Bassman, sort of “Marshall- ish”",
     "page": 25
    },
    "controls": null,
@@ -594,7 +594,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of a Marshall JMP 50 re-issue: a 50w Plexi.",
+    "quote": "Models of a Marshall JMP 50 re-issue: a 50w Plexi. More aggressive than the ’60s Plexis, the 1987X is much more of the ’72 period, with a heavy, sweet/aggressive tone",
     "page": 32
    },
    "controls": null,
@@ -676,7 +676,7 @@
      "page": 35
     },
     "stock_cabs": {
-     "quote": "4x12 5153 – Cab Packs 5, 12 and 14",
+     "quote": "4x12 5153 – Cab Packs 5, 12 and",
      "page": 35
     },
     "notes": []
@@ -749,7 +749,7 @@
      "page": 38
     },
     "stock_cabs": {
-     "quote": "AC-20 – Cab Pack 4",
+     "quote": "AC-20 – Cab Pack",
      "page": 38
     },
     "notes": []
@@ -812,7 +812,7 @@
      "page": 40
     },
     "stock_cabs": {
-     "quote": "4x12 German V30 (RW) – Cab Pack 19",
+     "quote": "4x12 German V30 (RW) – Cab Pack",
      "page": 40
     },
     "notes": []
@@ -858,13 +858,13 @@
     ]
    },
    "synopsis": {
-    "quote": "High and low gain models of the Cameron Atomica, which reproduces the “brown sound” of a Jose Arrendendo-modified Super Lead Plexi",
+    "quote": "High and low gain models of the Cameron Atomica, which reproduces the",
     "page": 42
    },
    "controls": null,
    "tips": [
     {
-     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around 6",
+     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around",
      "page": 42,
      "said_by": null
     }
@@ -882,19 +882,19 @@
     {
      "knob": "Bass",
      "dir": "up",
-     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around 6",
+     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around",
      "page": 42
     },
     {
      "knob": "Treble",
      "dir": "up",
-     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around 6",
+     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around",
      "page": 42
     },
     {
      "knob": "Presence",
      "dir": "up",
-     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around 6",
+     "quote": "For grinding high gain, crank Bass, Mids and Depth, increase Treble and Presence, set gain around",
      "page": 42
     }
    ],
@@ -995,7 +995,7 @@
     "power_tubes": []
    },
    "synopsis": {
-    "quote": "Custom amp model by Fractal Audio, similar to a ‘80’s JCM 800",
+    "quote": "Custom amp model by Fractal Audio, similar to a ‘80’s JCM",
     "page": 46
    },
    "controls": null,
@@ -1129,7 +1129,7 @@
      "page": 49
     },
     "stock_cabs": {
-     "quote": "1x12 Bludo – Cab Pack 17",
+     "quote": "1x12 Bludo – Cab Pack",
      "page": 49
     },
     "notes": []
@@ -1246,7 +1246,7 @@
      "page": 53
     },
     "stock_cabs": {
-     "quote": "2x12 Boutique – Cab Pack 10",
+     "quote": "2x12 Boutique – Cab Pack",
      "page": 53
     },
     "notes": []
@@ -1396,7 +1396,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of Slash’s signature amp, providing the sounds of the Appetite for Destruction album.",
+    "quote": "Models of Slash’s signature amp, providing the sounds of the Appetite for Destruction album. The amp has two modes: #34 which is a modified JCM 800 and AFD which is based on a modified Superlead Plexi",
     "page": 58
    },
    "controls": null,
@@ -1407,7 +1407,12 @@
      "said_by": null
     },
     {
-     "quote": "And use a Les Paul, of course More videos, clips and comments",
+     "quote": "And use a Les Paul, of course",
+     "page": 58,
+     "said_by": null
+    },
+    {
+     "quote": "More videos, clips and comments",
      "page": 58,
      "said_by": null
     }
@@ -1741,7 +1746,7 @@
    "controls": null,
    "tips": [
     {
-     "quote": "Allows higher Bass settings than a JCM 800 or Plexi Joe Bonamassa: Presence 5, Bass 10, Mid 7.5, Treble 4.5, Master 10, Gain 5",
+     "quote": "Allows higher Bass settings than a JCM 800 or Plexi Joe Bonamassa: Presence 5, Bass 10, Mid 7.5, Treble 4.5, Master 10, Gain",
      "page": 68,
      "said_by": null
     }
@@ -1754,7 +1759,23 @@
     },
     "notes": []
    },
-   "settings": [],
+   "settings": [
+    {
+     "quote": "Tips Allows higher Bass settings than a JCM 800 or Plexi Joe Bonamassa: Presence 5, Bass 10, Mid 7.5, Treble 4.5, Master 10, Gain",
+     "page": 68,
+     "said_by": null,
+     "context": null,
+     "unit_name": null,
+     "knobs": {
+      "Bass": 10,
+      "Mid": 7.5,
+      "Treble": 4.5,
+      "Master": 10,
+      "Presence": 5
+     },
+     "other": []
+    }
+   ],
    "directions": [],
    "notes": []
   },
@@ -1858,7 +1879,7 @@
      "page": 71
     },
     "stock_cabs": {
-     "quote": "None – Cab Pack 6",
+     "quote": "None – Cab Pack",
      "page": 71
     },
     "notes": []
@@ -2062,11 +2083,6 @@
      "quote": "“Input gain on 10 o clock, gain on 2 o clock is a ‘70’s /’80’s lead tone, put the input level up to 2 o click and it's a very sustained lead tone or a very modern heavy rhythm tone”",
      "page": 79,
      "said_by": null
-    },
-    {
-     "quote": "– Alan Phillips",
-     "page": 79,
-     "said_by": null
     }
    ],
    "cab": {
@@ -2192,12 +2208,7 @@
      "said_by": null
     },
     {
-     "quote": "For higher gain, engage the Boost switch and turn down Drive”",
-     "page": 84,
-     "said_by": "yek"
-    },
-    {
-     "quote": "– yek Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)",
+     "quote": "For higher gain, engage the Boost switch and turn down Drive” – yek Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)",
      "page": 84,
      "said_by": null
     }
@@ -2208,12 +2219,26 @@
      "page": 84
     },
     "stock_cabs": {
-     "quote": "2x12 SV Legend – Cab Pack 10",
+     "quote": "2x12 SV Legend – Cab Pack",
      "page": 84
     },
     "notes": []
    },
    "settings": [
+    {
+     "quote": "For higher gain, engage the Boost switch and turn down Drive” – yek Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)",
+     "page": 84,
+     "said_by": null,
+     "context": null,
+     "unit_name": "Legato 100",
+     "knobs": {
+      "Drive": 7.5,
+      "Bass": 6,
+      "Treble": 8,
+      "Presence": 8
+     },
+     "other": []
+    },
     {
      "quote": "\"SV's personal settings are: Drive: 7.5, Bass: 6, Mid: 4, Treble: 8, Presence: 8.",
      "page": 85,
@@ -2234,7 +2259,7 @@
     {
      "knob": "Drive",
      "dir": "down",
-     "quote": "For higher gain, engage the Boost switch and turn down Drive”",
+     "quote": "For higher gain, engage the Boost switch and turn down Drive” – yek Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)",
      "page": 84
     }
    ],
@@ -2277,7 +2302,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of a Cameron CCV that sounds like",
+    "quote": "Models of a Cameron CCV that sounds like “one pissed off amp”",
     "page": 86
    },
    "controls": null,
@@ -2337,7 +2362,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of all channels of the “Made in Holland” HOOK Captain 34",
+    "quote": "Models of all channels of the “Made in Holland” HOOK Captain",
     "page": 89
    },
    "controls": null,
@@ -2414,7 +2439,7 @@
      "page": 92
     },
     "stock_cabs": {
-     "quote": "1x12 Roamer – Cab Pack 4",
+     "quote": "1x12 Roamer – Cab Pack",
      "page": 92
     },
     "notes": []
@@ -2471,7 +2496,7 @@
      "page": 95
     },
     "stock_cabs": {
-     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and 23",
+     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and",
      "page": 95
     },
     "notes": []
@@ -2582,7 +2607,7 @@
      "page": 99
     },
     "stock_cabs": {
-     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and 23",
+     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and",
      "page": 99
     },
     "notes": []
@@ -2655,7 +2680,7 @@
      "page": 101
     },
     "stock_cabs": {
-     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and 23",
+     "quote": "4x12 Citrus – Cab Packs 5, 14, 19 and",
      "page": 101
     },
     "notes": []
@@ -2718,7 +2743,7 @@
      "page": 103
     },
     "stock_cabs": {
-     "quote": "1x12 Class-A 15W – Cab Packs 1 and 21",
+     "quote": "1x12 Class-A 15W – Cab Packs 1 and",
      "page": 103
     },
     "notes": []
@@ -2779,7 +2804,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Four models of a VOX AC30: • Class-A 30W: Normal channel of a non-Top Boost AC30 • Class-A 30W BRT: Bright channel of a non-Top Boost AC30 • Class-A 30W TB: Top Boost channel of the AC30 Hand-Wired • Class-A 30W HOT: Hot mode of the AC30 Hand-Wired",
+    "quote": "Four models of a VOX AC30:",
     "page": 107
    },
    "controls": null,
@@ -2796,7 +2821,7 @@
      "page": 107
     },
     "stock_cabs": {
-     "quote": "2x12 Class-A, 2x12 Top Boost, 2x12 ACROIX, 4x12 Beatle – Cab Packs 1, 2, 4, 6, 18, 21",
+     "quote": "2x12 Class-A, 2x12 Top Boost, 2x12 ACROIX, 4x12 Beatle – Cab Packs 1, 2, 4, 6, 18,",
      "page": 107
     },
     "notes": []
@@ -3174,7 +3199,7 @@
      "page": 122
     },
     "stock_cabs": {
-     "quote": "1x12 Black, 1x12 Deluxe Verb – Cab Packs 1, 4 and 10",
+     "quote": "1x12 Black, 1x12 Deluxe Verb – Cab Packs 1, 4 and",
      "page": 122
     },
     "notes": []
@@ -3220,7 +3245,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of two versions of Friedman’s Dirty Shirley, his take on the JTM 45.",
+    "quote": "Models of two versions of Friedman’s Dirty Shirley, his take on the JTM 45. The",
     "page": 125
    },
    "controls": null,
@@ -3233,7 +3258,7 @@
     {
      "quote": "Set the gain around 6 and then bring the master to taste”",
      "page": 125,
-     "said_by": null
+     "said_by": "Manual"
     }
    ],
    "cab": {
@@ -3242,7 +3267,7 @@
      "page": 125
     },
     "stock_cabs": {
-     "quote": "4x12 Fractal stock cabs – Cab Pack 10",
+     "quote": "4x12 Fractal stock cabs – Cab Pack",
      "page": 125
     },
     "notes": []
@@ -3310,7 +3335,7 @@
      "page": 128
     },
     "stock_cabs": {
-     "quote": "1x12 Division 13 – Cab Pack 1",
+     "quote": "1x12 Division 13 – Cab Pack",
      "page": 128
     },
     "notes": []
@@ -3373,7 +3398,7 @@
      "page": 130
     },
     "stock_cabs": {
-     "quote": "None – Cab Pack 6",
+     "quote": "None – Cab Pack",
      "page": 130
     },
     "notes": []
@@ -3460,7 +3485,10 @@
      "6L6"
     ]
    },
-   "synopsis": null,
+   "synopsis": {
+    "quote": "Models of a Diezel VH4, a multi-channel amp capable of many different styles",
+    "page": 132
+   },
    "controls": null,
    "tips": [
     {
@@ -3475,7 +3503,7 @@
      "page": 132
     },
     "stock_cabs": {
-     "quote": "None – Cab Pack 24",
+     "quote": "None – Cab Pack",
      "page": 132
     },
     "notes": []
@@ -3538,7 +3566,7 @@
      "page": 136
     },
     "stock_cabs": {
-     "quote": "2x12 Double Verb – Cab Packs 1, 4, 15, 21",
+     "quote": "2x12 Double Verb – Cab Packs 1, 4, 15,",
      "page": 136
     },
     "notes": []
@@ -3647,7 +3675,7 @@
      "page": 140
     },
     "stock_cabs": {
-     "quote": "4x12 German V30 (RW) – Cab Pack 19",
+     "quote": "4x12 German V30 (RW) – Cab Pack",
      "page": 140
     },
     "notes": []
@@ -3718,7 +3746,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of a 20th Anniversary Bogner Ecstasy • Blue in Vintage mode • Blue in Modern mode • Red in Vintage mode • Red in Modern mode",
+    "quote": "Models of a 20th Anniversary Bogner Ecstasy",
     "page": 142
    },
    "controls": null,
@@ -3735,7 +3763,7 @@
      "page": 142
     },
     "stock_cabs": {
-     "quote": "4x12 Uber V30 (RW), 1x12 Shiver, 4x12 German Boutique (RW) – Cab Pack 9",
+     "quote": "4x12 Uber V30 (RW), 1x12 Shiver, 4x12 German Boutique (RW) – Cab Pack",
      "page": 142
     },
     "notes": []
@@ -3782,7 +3810,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Model of the Bogner Uberschall, called",
+    "quote": "Model of the Bogner Uberschall, called “Armageddon in a box” by Bogner",
     "page": 146
    },
    "controls": null,
@@ -3804,7 +3832,7 @@
      "page": 146
     },
     "stock_cabs": {
-     "quote": "4x12 Uber (RW) – Cab Packs 5 and 9",
+     "quote": "4x12 Uber (RW) – Cab Packs 5 and",
      "page": 146
     },
     "notes": []
@@ -3978,7 +4006,7 @@
      "page": 153
     },
     "stock_cabs": {
-     "quote": "4x12 Fractal stock cabs – Cab Pack 10",
+     "quote": "4x12 Fractal stock cabs – Cab Pack",
      "page": 153
     },
     "notes": []
@@ -4035,7 +4063,7 @@
      "page": 157
     },
     "stock_cabs": {
-     "quote": "4x12 Fractal stock cabs – Cab Pack 10",
+     "quote": "4x12 Fractal stock cabs – Cab Pack",
      "page": 157
     },
     "notes": []
@@ -4223,7 +4251,7 @@
      "page": 165
     },
     "stock_cabs": {
-     "quote": "None – Cab Pack 24",
+     "quote": "None – Cab Pack",
      "page": 165
     },
     "notes": []
@@ -4286,7 +4314,7 @@
      "page": 168
     },
     "stock_cabs": {
-     "quote": "4x12 Hipower (RW), 4x12 WAT, 4x12 Starfound – Cab Pack 3",
+     "quote": "4x12 Hipower (RW), 4x12 WAT, 4x12 Starfound – Cab Pack",
      "page": 168
     },
     "notes": []
@@ -4356,7 +4384,7 @@
      "page": 171
     },
     "stock_cabs": {
-     "quote": "1x12 Hot Kitty – Cab Pack 1",
+     "quote": "1x12 Hot Kitty – Cab Pack",
      "page": 171
     },
     "notes": []
@@ -4424,7 +4452,7 @@
      "page": 173
     },
     "stock_cabs": {
-     "quote": "None – Cab Pack 21",
+     "quote": "None – Cab Pack",
      "page": 173
     },
     "notes": []
@@ -4554,7 +4582,7 @@
      "page": 178
     },
     "stock_cabs": {
-     "quote": "1x8 Tweed, 1x12 Junior Blues – Cab Packs 2 and 10",
+     "quote": "1x8 Tweed, 1x12 Junior Blues – Cab Packs 2 and",
      "page": 178
     },
     "notes": []
@@ -4733,7 +4761,7 @@
      "page": 186
     },
     "stock_cabs": {
-     "quote": "2x12 Boutique – Cab Pack 10",
+     "quote": "2x12 Boutique – Cab Pack",
      "page": 186
     },
     "notes": []
@@ -4779,20 +4807,30 @@
     ]
    },
    "synopsis": {
-    "quote": "Model of a Dr.",
+    "quote": "Model of a Dr. Z Route 66: thick blues and medium rock tones",
     "page": 190
    },
    "controls": null,
    "tips": [
     {
-     "quote": "To put the amp into overdrive, turn up all three controls (Volume, Treble, Bass) Sound Clips DR Z Route 66 amplifier demo with Kingbee Tele and Z Best 212 Cabinet Dr Z Route 66 amplifier demo with Fender Stratocaster and Z Best 212 Cabinet More videos, clips and comments",
+     "quote": "To put the amp into overdrive, turn up all three controls (Volume, Treble, Bass)",
+     "page": 190,
+     "said_by": null
+    },
+    {
+     "quote": "Sound Clips DR Z Route 66 amplifier demo with Kingbee Tele and Z Best 212 Cabinet Dr Z Route 66 amplifier demo with Fender Stratocaster and Z Best 212 Cabinet",
+     "page": 190,
+     "said_by": null
+    },
+    {
+     "quote": "More videos, clips and comments",
      "page": 190,
      "said_by": null
     }
    ],
    "cab": {
     "speaker": {
-     "quote": "Single 12” V30, G12H, Alnico Blue or Dr.",
+     "quote": "Single 12” V30, G12H, Alnico Blue or Dr. Z Z",
      "page": 190
     },
     "stock_cabs": null,
@@ -4839,7 +4877,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Model of a Dr.",
+    "quote": "Model of a Dr. Z Maz 8, an 8 watt Class A amp, the “quintessential country amp”",
     "page": 192
    },
    "controls": null,
@@ -4852,7 +4890,7 @@
    ],
    "cab": {
     "speaker": {
-     "quote": "Single 12” V30, G12H, Alnico Blue or Dr.",
+     "quote": "Single 12” V30, G12H, Alnico Blue or Dr. Z Z",
      "page": 192
     },
     "stock_cabs": null,
@@ -4921,7 +4959,7 @@
      "page": 196
     },
     "stock_cabs": {
-     "quote": "1x12 Nuclear Tone – Cab Pack 10",
+     "quote": "1x12 Nuclear Tone – Cab Pack",
      "page": 196
     },
     "notes": []
@@ -4984,7 +5022,7 @@
      "page": 199
     },
     "stock_cabs": {
-     "quote": "4x12 Rumble – Cab Pack 17",
+     "quote": "4x12 Rumble – Cab Pack",
      "page": 199
     },
     "notes": []
@@ -5080,8 +5118,21 @@
    },
    "settings": [
     {
-     "quote": "“My settings for a “typical” Plexi tone are Bass: 2, Mid: 8, Treble 7.5.",
+     "quote": "Tips “My settings for a “typical” Plexi tone are Bass: 2, Mid: 8, Treble 7.5.",
      "page": 203,
+     "said_by": null,
+     "context": null,
+     "unit_name": null,
+     "knobs": {
+      "Bass": 2,
+      "Mid": 8,
+      "Treble": 7.5
+     },
+     "other": []
+    },
+    {
+     "quote": "“My settings for a “typical” Plexi tone are Bass: 2, Mid: 8, Treble 7.5.",
+     "page": 206,
      "said_by": null,
      "context": null,
      "unit_name": null,
@@ -5205,7 +5256,7 @@
      "page": 214
     },
     "stock_cabs": {
-     "quote": "4x12 PVH Web, Manual Peavey 6505 Series 6505 Tube Guitar Amplifier Owner’s Manual",
+     "quote": "Web, Manual Peavey 6505 Series 6505 Tube Guitar Amplifier Owner’s Manual",
      "page": 214
     },
     "notes": []
@@ -5269,7 +5320,7 @@
      "page": 217
     },
     "stock_cabs": {
-     "quote": "4x12 PVH Web, Manual Peavey 6505 Series 6505 Tube Guitar Amplifier Owner’s Manual",
+     "quote": "Web, Manual Peavey 6505 Series 6505 Tube Guitar Amplifier Owner’s Manual",
      "page": 217
     },
     "notes": []
@@ -5466,9 +5517,9 @@
      "said_by": null
     },
     {
-     "quote": "Turn up Treble a lot to make it less dark – yek",
+     "quote": "Turn up Treble a lot to make it less dark",
      "page": 225,
-     "said_by": null
+     "said_by": "yek"
     }
    ],
    "cab": {
@@ -5477,7 +5528,7 @@
      "page": 225
     },
     "stock_cabs": {
-     "quote": "1x12 Shiver – Cab Packs 9 and 17",
+     "quote": "1x12 Shiver – Cab Packs 9 and",
      "page": 225
     },
     "notes": []
@@ -5493,7 +5544,7 @@
     {
      "knob": "Treble",
      "dir": "up",
-     "quote": "Turn up Treble a lot to make it less dark – yek",
+     "quote": "Turn up Treble a lot to make it less dark",
      "page": 225
     }
    ],
@@ -5817,7 +5868,7 @@
      "page": 238
     },
     "stock_cabs": {
-     "quote": "None – Cab Pack 17",
+     "quote": "None – Cab Pack",
      "page": 238
     },
     "notes": []
@@ -5891,7 +5942,7 @@
      "page": 239
     },
     "stock_cabs": {
-     "quote": "None – Cab Pack 17",
+     "quote": "None – Cab Pack",
      "page": 239
     },
     "notes": []
@@ -5961,7 +6012,7 @@
      "page": 241
     },
     "stock_cabs": {
-     "quote": "4x10 Super, 2x10 Super – Cab Packs 1 and 22",
+     "quote": "4x10 Super, 2x10 Super – Cab Packs 1 and",
      "page": 241
     },
     "notes": []
@@ -6093,7 +6144,7 @@
      "page": 245
     },
     "stock_cabs": {
-     "quote": "1x6 Oval, 1x15 Thunderbolt (RW), 2x12 Supremo – Cab Pack 2",
+     "quote": "1x6 Oval, 1x15 Thunderbolt (RW), 2x12 Supremo – Cab Pack",
      "page": 245
     },
     "notes": []
@@ -6150,7 +6201,7 @@
      "page": 248
     },
     "stock_cabs": {
-     "quote": "8x10 SV Bass, 1x15 SV Bass, 4x10 SV Bass – Cab Packs 11 and 22",
+     "quote": "8x10 SV Bass, 1x15 SV Bass, 4x10 SV Bass – Cab Packs 11 and",
      "page": 248
     },
     "notes": []
@@ -6395,7 +6446,7 @@
      "page": 256
     },
     "stock_cabs": {
-     "quote": "2x12 Double Amp – Cab Pack 17",
+     "quote": "2x12 Double Amp – Cab Pack",
      "page": 256
     },
     "notes": []
@@ -6463,7 +6514,7 @@
      "page": 258
     },
     "stock_cabs": {
-     "quote": "2x12 TX Star, 1x12 Shadow – Cab Pack 10",
+     "quote": "2x12 TX Star, 1x12 Shadow – Cab Pack",
      "page": 258
     },
     "notes": []
@@ -6659,7 +6710,12 @@
      "said_by": null
     },
     {
-     "quote": "(IIC++) Turn down bass and mids, compensate bass with 5-band GEQ (pre power amp) if necessary Sound Clips Mesa Boogie Mark IIc+ vs Mark III vs Mark IV John Petrucci Mark Five vs Mark IIC+ Comparison More videos, clips and comments",
+     "quote": "(IIC++) Turn down bass and mids, compensate bass with 5-band GEQ (pre power amp) if necessary",
+     "page": 266,
+     "said_by": null
+    },
+    {
+     "quote": "Sound Clips Mesa Boogie Mark IIc+ vs Mark III vs Mark IV John Petrucci Mark Five vs Mark IIC+ Comparison",
      "page": 266,
      "said_by": null
     }
@@ -6676,6 +6732,30 @@
     "notes": []
    },
    "settings": [
+    {
+     "quote": "Tips (IIC+) “My settings for a killer high-gain tone: Input Drive 8.1 / Overdrive 9-10 / Bass 1 / Midrang 1.8 / Treble 8.9 / Presence 4.5 / MV 4 / Bright Switch:ON / 80 4.8 / 240 2.6 / 750 -4.5 / 2200 -0.2 / 6600 0.”",
+     "page": 266,
+     "said_by": null,
+     "context": null,
+     "unit_name": null,
+     "knobs": {
+      "Drive": 8.1,
+      "Bass": 1,
+      "Mid": 1.8,
+      "Treble": 8.9,
+      "Master": 4,
+      "Presence": 4.5
+     },
+     "other": [
+      "Overdrive 9-10",
+      "Bright Switch:ON",
+      "80 4.8",
+      "240 2.6",
+      "750 -4.5",
+      "2200 -0.2",
+      "6600 0"
+     ]
+    },
     {
      "quote": "These were my settings for a killer high-gain tone: Model: USA IIC+ / Input Drive: 8.1 / Overdrive: 9-10 / Bass: 1.0 / Midrange: 1.8 / Treble: 8.9 / Presence: 4.5 / MV: 4.0 / Level: -20 dB / Bright Switch ON / 80 Hz: 4.8 / 240 Hz: 2.6 / 750 Hz: -4.5 / 2200: -0.2 / 6600: 0.”",
      "page": 270,
@@ -6904,13 +6984,13 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of a Fender Vibro-King, called by some",
+    "quote": "Models of a Fender Vibro-King, called by some “The King of Fender Amps” , and the favorite amp of Gary Clark Jr. and Robert Cray",
     "page": 282
    },
    "controls": null,
    "tips": [
     {
-     "quote": "Use the FAT model and set the desired gain with Input Drive between 3 and 6",
+     "quote": "Use the FAT model and set the desired gain with Input Drive between 3 and",
      "page": 282,
      "said_by": null
     }
@@ -6921,7 +7001,7 @@
      "page": 282
     },
     "stock_cabs": {
-     "quote": "3x10 Vibrato King – Cab Pack 2",
+     "quote": "3x10 Vibrato King – Cab Pack",
      "page": 282
     },
     "notes": []
@@ -6984,7 +7064,7 @@
      "page": 284
     },
     "stock_cabs": {
-     "quote": "1x12 Brown, 1x12 Vibrato Lux, 2x10 Vibrato Lux – Cab Packs 1 and 10",
+     "quote": "1x12 Brown, 1x12 Vibrato Lux, 2x10 Vibrato Lux – Cab Packs 1 and",
      "page": 284
     },
     "notes": []
@@ -7065,7 +7145,7 @@
      "page": 286
     },
     "stock_cabs": {
-     "quote": "1x15 Thunderbolt, 1x15 Tweed Pro, 1x15 Empire, 2x12 Doubleshow – Cab Pack 21",
+     "quote": "1x15 Thunderbolt, 1x15 Tweed Pro, 1x15 Empire, 2x12 Doubleshow – Cab Pack",
      "page": 286
     },
     "notes": []

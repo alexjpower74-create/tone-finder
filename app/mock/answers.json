@@ -1,5 +1,5 @@
 {
- "_about": "Canned answers for ?mock=1, built by app/tools/build-mock.mjs. Quotes are verified on their pages; scores are placeholders. The SAMPLE (test only) Ares flag is planted on purpose.",
+ "_about": "Canned answers for ?mock=1, built by app/tools/build-mock.mjs. Quotes are verified on their pages and never span a box break; scores are placeholders. The SAMPLE (test only) Ares flag is planted on purpose.",
  "source": "derived from the local guide (pre data-ready)",
  "health": {
   "ok": true,
@@ -78,7 +78,18 @@
   "make",
   "give",
   "play",
-  "playing"
+  "playing",
+  "through",
+  "into",
+  "onto",
+  "over",
+  "under",
+  "about",
+  "via",
+  "as",
+  "or",
+  "but",
+  "than"
  ],
  "generic_words": [
   "clean",
@@ -353,7 +364,6 @@
        }
       ],
       "taper_note": {
-       "id": "taper-match",
        "quote": "The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.",
        "page": 12
       },
@@ -516,7 +526,7 @@
         "page": 38
        },
        "stock_cabs": {
-        "quote": "AC-20 – Cab Pack 4",
+        "quote": "AC-20 – Cab Pack",
         "page": 38
        },
        "notes": []
@@ -611,7 +621,7 @@
         "page": 122
        },
        "stock_cabs": {
-        "quote": "1x12 Black, 1x12 Deluxe Verb – Cab Packs 1, 4 and 10",
+        "quote": "1x12 Black, 1x12 Deluxe Verb – Cab Packs 1, 4 and",
         "page": 122
        },
        "notes": []
@@ -767,7 +777,6 @@
        }
       ],
       "taper_note": {
-       "id": "taper-match",
        "quote": "The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.",
        "page": 12
       },
@@ -1021,7 +1030,7 @@
       "score": 15.8,
       "why": [
        {
-        "quote": "When you Dumble, you say Robben Ford, and vice versa.",
+        "quote": "Amp controls Volume (=Input Drive), Bright switch, Mid switch, Rock/Jazz switch, Treble, Middle, Bass, Overdrive Drive (=Overdrive), Overdrive Volume, Master and Presence The Ojai is an exact copy of Robben Ford’s personal “Tan” Dumble Overdrive Special.",
         "page": 49,
         "said_by": null,
         "matched": [
@@ -1029,7 +1038,7 @@
         ]
        },
        {
-        "quote": "It’s sort of an authorized clone: Robben Ford owns a Bludotone Ojai.",
+        "quote": "When you Dumble, you say Robben Ford, and vice versa.",
         "page": 49,
         "said_by": null,
         "matched": [
@@ -1089,7 +1098,7 @@
         "page": 49
        },
        "stock_cabs": {
-        "quote": "1x12 Bludo – Cab Pack 17",
+        "quote": "1x12 Bludo – Cab Pack",
         "page": 49
        },
        "notes": []
@@ -1181,7 +1190,7 @@
         "page": 199
        },
        "stock_cabs": {
-        "quote": "4x12 Rumble – Cab Pack 17",
+        "quote": "4x12 Rumble – Cab Pack",
         "page": 199
        },
        "notes": []
@@ -1267,14 +1276,6 @@
         "matched": [
          "ac30"
         ]
-       },
-       {
-        "quote": "The Top Boost circuit, aka “Brilliance”, was added later, adding Bass and Treble controls and creating the well-known VOX “chime” .",
-        "page": 108,
-        "said_by": null,
-        "matched": [
-         "chime"
-        ]
        }
       ],
       "knobs": [
@@ -1330,7 +1331,7 @@
         "page": 107
        },
        "stock_cabs": {
-        "quote": "2x12 Class-A, 2x12 Top Boost, 2x12 ACROIX, 4x12 Beatle – Cab Packs 1, 2, 4, 6, 18, 21",
+        "quote": "2x12 Class-A, 2x12 Top Boost, 2x12 ACROIX, 4x12 Beatle – Cab Packs 1, 2, 4, 6, 18,",
         "page": 107
        },
        "notes": []
@@ -1439,7 +1440,7 @@
         "page": 103
        },
        "stock_cabs": {
-        "quote": "1x12 Class-A 15W – Cab Packs 1 and 21",
+        "quote": "1x12 Class-A 15W – Cab Packs 1 and",
         "page": 103
        },
        "notes": []
@@ -1639,19 +1640,20 @@
       "score": 10.2,
       "why": [
        {
-        "quote": "It was a hit and a vintage JTM 45 is worth a lot, listing #6 on Vintage Guitar’s list of most valuable amps. 2245 is Marshall’s model number.",
+        "quote": "Clips Marshall JTM-45 Marshall JTM45 2245 Plexi Amp",
+        "page": 62,
+        "said_by": null,
+        "matched": [
+         "jtm 45",
+         "jtm45"
+        ]
+       },
+       {
+        "quote": "Amp controls Presence, Bass, Middle, Treble and Volume (=Drive) The JTM 45 was Marshall’s first amplifier in the early ‘60s.",
         "page": 62,
         "said_by": null,
         "matched": [
          "jtm 45"
-        ]
-       },
-       {
-        "quote": "“Despite being derived virtually point-by-point from Fender’s 5F6-A Bassman schematic, British components give the JTM45 a tone all its own.”",
-        "page": 62,
-        "said_by": null,
-        "matched": [
-         "jtm45"
         ]
        }
       ],
@@ -1710,7 +1712,6 @@
        }
       ],
       "taper_note": {
-       "id": "taper-match",
        "quote": "The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.",
        "page": 12
       },
