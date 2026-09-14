@@ -214,6 +214,8 @@ export function search(query, { models: data, pages = null }) {
   scored.sort((a, b) => b.score - a.score || order.get(a.model.id) - order.get(b.model.id))
   const top = scored[0]?.score ?? 0
   const candidates = scored.filter((c) => c.score >= KEEP_SHARE * top).slice(0, MAX_SUGGESTIONS)
+  // §4.1: a supported query shows 2 suggestions whenever 2 candidates exist.
+  if (candidates.length === 1 && scored.length > 1) candidates.push(scored[1])
 
   const unmatched = []
   tokens.forEach((t, i) => {

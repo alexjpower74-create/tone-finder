@@ -68,6 +68,8 @@ export function pickWhy(model, terms, pages, { avoid = new Set(), titles = null 
     }
     text = cleanCut(text)
     if (text.length < 12) return
+    // §4.2 never the running header (a section title on its own).
+    if (titles && titles.has(text)) return
     if (SPEC_LINE.test(text) || (controls && (text.includes(controls) || controls.includes(text)))) return
     if (stock && (text.includes(stock) || stock.includes(text))) return
     let matched = compiled.filter((t) => t.re.test(foldForSearch(text)))

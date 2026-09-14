@@ -7,6 +7,9 @@ import { loadPages } from './guide-node.mjs'
 import { aiAnswer, memoryStore, estimateCad, costUsd, prices, MAX_TOKENS } from '../ai.js'
 import { answer, GK_LABEL } from '../answer.js'
 import { checkQuote } from '../verify.js'
+import { pageText } from '../guide.js'
+import { spansBoxBreak, locateQuote, foldWithMap } from '../text.js'
+import { sectionTitles } from '../models.js'
 import { isUnitName } from '../models.js'
 import { checkInvariants } from './invariants.mjs'
 import { startFake } from '../../worker/tests/fake-openai.mjs'
@@ -71,6 +74,41 @@ test('fake-plant: unknown unit name, bad page and a changed character are droppe
   checkInvariants(a, { pages })
 })
 
+test('fake-fold: a citation differing only in quote marks and case is located and shown as the page text', async () => {
+  const exact = 'Custom amp models by Fractal Audio, recreating EVH’s “Brown Sound”'
+  assert.ok(pageText(pages, 60).includes(exact), 'control: the exact text is on p. 60')
+  assert.ok(!pageText(pages, 60).includes('custom amp models by fractal audio, recreating EVH\'s "Brown Sound"'), 'control: the folded citation is not a raw substring')
+  const a = await ask('Van Halen brown sound fake-fold')
+  const brown = a.suggestions.find((s) => s.model_id === 'brit-brown-and-fas-brown')
+  assert.equal(brown.source, 'ai_checked')
+  assert.deepEqual(brown.why.map((w) => [w.page, w.quote]), [[60, exact]])
+  const ods = a.suggestions.find((s) => s.model_id === 'ods-100')
+  assert.ok(ods && ods.source === 'ai_checked', JSON.stringify(a.suggestions.map((s) => [s.model_id, s.source])))
+  const w = ods.why[0]
+  assert.equal(w.page, 201)
+  assert.ok(w.quote.includes('which produces an up front sparkling tone'), w.quote)
+  assert.ok(w.quote.length > 'which produces an up front sparkling tone,'.length, `expanded: ${w.quote}`)
+  assert.match(w.quote, /^[A-Z“"(‘]/, 'starts at a sentence start')
+  for (const s of a.suggestions) for (const q of s.why) {
+    assert.ok(checkQuote(q, pages).ok)
+    assert.ok(!spansBoxBreak(q.quote, pages.get(q.page), sectionTitles(models)))
+  }
+  assert.deepEqual(a.ai.dropped, [
+    { kind: 'quote_not_on_page', detail: 'Brit Brown, p. 60' },
+    { kind: 'quote_not_on_page', detail: 'Brit Brown, p. 61' },
+  ])
+})
+
+test('locateQuote: folds marks, dashes, case and spaces; needs a unique match; maps back to page text', () => {
+  const t = 'He said “Hi – there’s  ONE” here. And ‘one’ there.'
+  const text = t.replace(/\s+/g, ' ')
+  const r = locateQuote('he said "hi - there\'s one"', text)
+  assert.deepEqual(text.slice(r.start, r.end), 'He said “Hi – there’s ONE”')
+  assert.equal(locateQuote("'one'", 'x ‘one’ y ’one’ z'), null, 'two folded matches → not located')
+  assert.equal(locateQuote('He said “Hx', text), null)
+  assert.equal(foldWithMap('A — B').text, 'a - b')
+})
+
 test('fake-gk: general knowledge about the guide, candidates or model list is dropped; terms are de-duplicated', async () => {
   const a = await ask('Van Halen brown sound master fake-gk')
   assert.equal(a.ai.used, true)
@@ -87,7 +125,7 @@ test('fake-gk: general knowledge about the guide, candidates or model list is dr
 
 test('the pick prompt forbids guide talk in general knowledge, and the cache version moved on', async () => {
   const { PROMPT_VERSION } = await import('../ai.js')
-  assert.equal(PROMPT_VERSION, 'tf-ai-2')
+  assert.equal(PROMPT_VERSION, 'tf-ai-3')
   const src = readFileSync(fileURLToPath(new URL('../ai.js', import.meta.url)), 'utf8')
   assert.match(src, /Never write general_knowledge about the guide, the guide candidates or the model list/)
 })

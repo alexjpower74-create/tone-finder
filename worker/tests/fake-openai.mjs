@@ -31,6 +31,30 @@ export const SCENARIOS = {
       ],
     },
   },
+  'fake-fold': {
+    pick: {
+      general_knowledge: [],
+      search_terms: [],
+      picks: [
+        { model_id: 'brit-brown-and-fas-brown', unit_name: 'Brit Brown' },
+        { model_id: 'ods-100', unit_name: 'ODS-100' },
+      ],
+    },
+    cite: {
+      suggestions: [
+        {
+          model_id: 'brit-brown-and-fas-brown',
+          unit_name: 'Brit Brown',
+          citations: [
+            { page: 60, quote: 'custom amp models by fractal audio, recreating EVH\'s "Brown Sound"' }, // straight quotes, lower case: kept
+            { page: 60, quote: 'Custom amp models by Fractal Audio, recreating EVH’s “Brawn Sound”' }, // one letter changed: dropped
+            { page: 61, quote: 'Custom amp models by Fractal Audio, recreating EVH’s “Brown Sound”' }, // right text, wrong page: dropped
+          ],
+        },
+        { model_id: 'ods-100', unit_name: 'ODS-100', citations: [{ page: 201, quote: 'which produces an up front sparkling tone,' }] }, // fragment: full sentence
+      ],
+    },
+  },
   'fake-gk': {
     pick: {
       general_knowledge: [

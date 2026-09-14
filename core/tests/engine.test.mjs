@@ -8,6 +8,7 @@ import { answer } from '../answer.js'
 import { knobsFor, GUESS_NOTE } from '../knobs.js'
 import { ARES, ARES_ADVICE } from '../ares.js'
 import { search } from '../search.js'
+import { pageText } from '../guide.js'
 import { checkInvariants } from './invariants.mjs'
 
 const read = (p) => JSON.parse(readFileSync(fileURLToPath(new URL(p, import.meta.url)), 'utf8'))
@@ -186,4 +187,25 @@ test('"Petrucci lead": no why quote is a stock-cabs line', () => {
     assert.ok(!stock.some((q) => w.quote.includes(q) || q.includes(w.quote)), `${s.model_id}: ${w.quote}`)
     assert.ok(!/Cab Packs?\b/.test(w.quote), `${s.model_id}: ${w.quote}`)
   }
+})
+
+test('never the running header as a why quote (Tremolo Lux, "blackface")', async () => {
+  const { pickWhy } = await import('../answer.js')
+  const { sectionTitles } = await import('../models.js')
+  const m = byId.get('tremolo-lux')
+  const header = 'Tremolo Lux (blackface Fender Tremolux, AA763)'
+  assert.ok(pageText(pages, 253).startsWith(header + ' '), 'control: p. 253 starts with its running header')
+  const why = pickWhy(m, [{ term: 'blackface', weight: 4, strong: true }], pages, { titles: sectionTitles(models) })
+  assert.ok(why.length >= 1)
+  for (const w of why) assert.notEqual(w.quote, header)
+  const titles = sectionTitles(models)
+  for (const q of ['clean worship pad with sparkle', 'blackface Fender', 'Tremolux']) {
+    for (const s of answer(q, { models, pages }).suggestions) for (const w of s.why) assert.ok(!titles.has(w.quote), `${q}: ${w.quote}`)
+  }
+})
+
+test('two-suggestion floor: a supported query with 2+ candidates shows at least 2', () => {
+  const a = answer('Van Halen brown sound', { models, pages })
+  assert.equal(a.suggestions[0].model_id, 'brit-brown-and-fas-brown')
+  assert.ok(a.suggestions.length >= 2, a.suggestions.map((s) => s.model_id).join(','))
 })

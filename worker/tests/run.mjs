@@ -88,8 +88,22 @@ function wranglerDev(name, port, state, extraVars = []) {
   ])
 }
 
+// Refuse to start if any port is already taken: otherwise the health wait can succeed against someone else's Worker
+// (a running demo with a real key) and the tests would send requests to it.
+async function portFree(port) {
+  const { createServer } = await import('node:net')
+  return new Promise((resolve) => {
+    const s = createServer()
+    s.once('error', () => resolve(false))
+    s.listen(port, '127.0.0.1', () => s.close(() => resolve(true)))
+  })
+}
+
 let code = 1
 try {
+  const busy = []
+  for (const p of [WORKER_PORT, FAKE_PORT, CAP_PORT, WORKER_PORT + 1000, CAP_PORT + 1000]) if (!(await portFree(p))) busy.push(p)
+  if (busy.length) throw new Error(`port(s) already in use: ${busy.join(', ')}. Set TF_WORKER_PORT / TF_FAKE_AI_PORT / TF_WORKER_CAP_PORT to free ports. Nothing was started or sent.`)
   migrate(STATE)
   migrate(CAP_STATE)
   const fake = start('fake-openai', process.execPath, ['tests/fake-openai.mjs'], { ...quietEnv, TF_FAKE_AI_PORT: String(FAKE_PORT) })
