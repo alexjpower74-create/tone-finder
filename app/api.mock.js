@@ -96,9 +96,15 @@ export async function handle(method, rawPath, body) {
     if (query.length < 1 || query.length > 200) return fail(400, 'bad_query', 'Type between 1 and 200 characters.');
     const useAi = body.ai !== false;
     const entry = answers.answers[normText(query).toLowerCase()];
-    if (!entry) return ok(noSupport(answers, query));
-    const a = clone(useAi ? entry.on : entry.off ?? entry.on);
-    if (!useAi && !entry.off) a.ai = { used: false, reason: 'off', dropped: [], cost_cad: 0 };
+    // Either variant may be missing or null in a fixture: use the other one, and with AI off never report AI as used
+    // or show general knowledge.
+    const picked = (useAi ? entry?.on ?? entry?.off : entry?.off ?? entry?.on) ?? null;
+    if (!picked) return ok(noSupport(answers, query));
+    const a = clone(picked);
+    if (!useAi && !entry.off) {
+      a.ai = { used: false, reason: 'off', dropped: [], cost_cad: 0 };
+      a.general_knowledge = [];
+    }
     a.query = query;
     return ok(a);
   }

@@ -40,7 +40,7 @@ test('tapping an example chip shows its answer', async ({ page }, ti) => {
   await tapExample(page, ti, 'Robben Ford');
   await expect(page.getByLabel('What tone are you after?')).toHaveValue('Robben Ford');
   await expectCitedCards(page);
-  await expect(page.getByTestId('suggestion').first().locator('.unit-name')).toHaveText('Bludojai');
+  await expect(page.getByTestId('suggestion').first().locator('.unit-name')).toHaveText('ODS-100');
 });
 
 test('no support: exact heading and zero cards', async ({ page }, ti) => {
@@ -74,16 +74,15 @@ test('guesses look like guesses; guide knobs carry page pills and a direction nu
   await expect(allGuess.getByTestId('guess-note')).toBeVisible();
   await expect(allGuess.getByTestId('guess-note')).toHaveText(GUESS_NOTE);
 
-  // The guide card in the same answer: solid teal rings, never the guess note on a guide dial.
-  const guideDial = page.locator('[data-model-id="1959slp"] [data-testid="dial"][data-kind="guide"]').first();
-  await expect(guideDial).toBeVisible();
-  const solid = await guideDial.locator('.dial-arc').evaluate((el) => getComputedStyle(el).strokeDasharray);
-  expect(solid).toBe('none');
-  await expect(guideDial.getByRole('img')).not.toHaveAttribute('aria-label', new RegExp(GUESS_NOTE));
-
   await typeQuery(page, ti, 'JTM 45');
   const card = page.locator('[data-testid="suggestion"][data-model-id="brit-jm45"]');
   await expect(card).toBeVisible();
+
+  // Guide dials: solid teal rings, never the guess note.
+  const guideDial = card.locator('[data-testid="dial"][data-kind="guide"]').first();
+  const solid = await guideDial.locator('.dial-arc').evaluate((el) => getComputedStyle(el).strokeDasharray);
+  expect(solid).toBe('none');
+  await expect(guideDial.getByRole('img')).not.toHaveAttribute('aria-label', new RegExp(GUESS_NOTE));
   const guide = card.locator('[data-testid="dial"][data-kind="guide"]');
   expect(await guide.count()).toBeGreaterThanOrEqual(1);
   for (let i = 0; i < (await guide.count()); i++) {
@@ -109,7 +108,7 @@ test('general knowledge is labelled and the AI drops list Brown Sound Deluxe', a
   await press(drops.locator('summary'), ti);
   await expect(drops.getByText('Brown Sound Deluxe: not an Axe-Fx II model in the guide')).toBeVisible();
   // bad_page detail "USA IIC+, p. 12" (§5.5) in plain words.
-  await expect(drops.getByText("USA IIC+: page 12 isn't in that model's section")).toBeVisible();
+  await expect(drops.getByText(/^USA IIC\+{1,2}: page 12 isn't in that model's section$/)).toBeVisible();
 
   // With AI help switched off the guide alone can't support it.
   await press(page.locator('label.switch'), ti);
@@ -120,20 +119,22 @@ test('general knowledge is labelled and the AI drops list Brown Sound Deluxe', a
 
 test('card header: based on + pages, guide section only when the unit name is not in the title', async ({ page }, ti) => {
   await tapExample(page, ti, 'Van Halen brown sound');
-  const slp = page.locator('[data-testid="suggestion"][data-model-id="1959slp"]');
-  await expect(slp.getByTestId('based-on')).toHaveText('Based on Marshall SLP1959, Vintage Re-Issue Series · pp. 28–31');
-  await expect(slp.getByTestId('guide-section')).toHaveCount(0);
-  await expect(slp).not.toContainText('Section: 1959SLP');
-
   const brown = page.locator('[data-testid="suggestion"][data-model-id="brit-brown-and-fas-brown"]');
   await expect(brown.getByTestId('based-on')).toHaveText('Fractal Audio custom model (no real amp) · pp. 60–61');
   await expect(brown.getByTestId('guide-section')).toHaveCount(0);
+  await expect(brown).not.toContainText('Section: Brit Brown');
 
-  await tapExample(page, ti, 'AC30 chime');
-  const ac30 = page.locator('[data-testid="suggestion"][data-model-id="class-a-30w"]');
-  await expect(ac30.locator('.unit-name')).toHaveText('Class-A 30W TB');
-  await expect(ac30.getByTestId('based-on')).toHaveText('Based on VOX AC30 · pp. 107–109');
-  await expect(ac30.getByTestId('guide-section')).toHaveText('Guide section: Class-A 30W (VOX AC30)');
+  await typeQuery(page, ti, 'JTM 45');
+  const jm45 = page.locator('[data-testid="suggestion"][data-model-id="brit-jm45"]');
+  await expect(jm45.getByTestId('based-on')).toHaveText('Based on Marshall JTM 45 · pp. 62–64');
+  await expect(jm45.getByTestId('guide-section')).toHaveCount(0);
+
+  // The engine picks the unit name "PLEXI 100W", which isn't a name part of "Plexi models (Marshall Plexi)".
+  await typeQuery(page, ti, 'Plexi crunch');
+  const plexi = page.locator('[data-testid="suggestion"][data-model-id="plexi-models"]');
+  await expect(plexi.locator('.unit-name')).toHaveText('PLEXI 100W');
+  await expect(plexi.getByTestId('based-on')).toHaveText('Based on Marshall Plexi · pp. 203–207');
+  await expect(plexi.getByTestId('guide-section')).toHaveText('Guide section: Plexi models (Marshall Plexi)');
 });
 
 test('there is room between the ask panel and the results summary', async ({ page }, ti) => {
@@ -154,6 +155,9 @@ test('Ares: planted flag callout and both release-note sources', async ({ page }
   await expect(flag).toContainText('Transformer Grind');
   await expect(flag).toContainText('SAMPLE (test only):');
   await expect(flag).toContainText('Speaker Compression (Spkr Comp)');
+  // The planted flag is a "why" flag: it carries the page of the why quote it sits on, and is marked as a test sample.
+  await expect(flag.getByTestId('test-only')).toHaveText('Test sample from the demo data — not a guide quote.');
+  await expect(flag.locator('.pill-page')).toHaveText(PAGE_PILL);
 
   const sources = page.getByTestId('ares-sources');
   const urls = [

@@ -1,24 +1,19 @@
-// Box breaks (API.md §4.2): no quote in the mock fixtures spans one, and the contract's table holds.
-// Reads the local guide from TF_GUIDE_DIR; a missing guide fails the run (it never silently skips).
+// Box breaks and clean quotes (API.md §0, §4.2), checked with core's own functions so the mock can't drift from
+// the Worker. Reads the local guide from TF_GUIDE_DIR; a missing guide fails the run (it never silently skips).
 import { expect, test } from '@playwright/test';
-import { readFileSync } from 'node:fs';
-import { boxBreaks, cleanCut, cutAttribution, normText, parsePages, spansBoxBreak } from '../tools/guide-text.mjs';
+import { sectionTitles } from '../../core/models.js';
+import { boxBreaks, cleanCut, cutAttribution, normText, spansBoxBreak } from '../../core/text.js';
+import { checkQuote } from '../../core/verify.js';
+import { loadPages } from '../../core/tests/guide-node.mjs';
 import { ONCE, quotesIn, readFixture } from './fixtures.mjs';
 
-const GUIDE_DIR = process.env.TF_GUIDE_DIR || '/home/alexander/Claude/Reference/Yek Fractal Amp Guide';
+const SAMPLE = 'SAMPLE (test only):';
+const ATTRIBUTION_NAMES = ['yek', 'Yek', 'Cliff', 'Legendary Tones', 'Marshall', 'MESA', 'Manual'];
+
 let pages = null;
-function raw(n) {
-  if (!pages) {
-    let full;
-    try {
-      full = readFileSync(`${GUIDE_DIR}/yek-guide-fulltext.txt`, 'utf8');
-    } catch {
-      throw new Error(`guide not found at ${GUIDE_DIR}`);
-    }
-    pages = parsePages(full);
-  }
-  return pages.get(n);
-}
+let titles = null;
+const raw = (n) => (pages ??= loadPages()).get(n);
+const titleSet = () => (titles ??= sectionTitles(readFixture('models.json')));
 
 test.beforeEach(({}, ti) => test.skip(ti.project.name !== ONCE, 'data checks run once'));
 
@@ -26,7 +21,7 @@ test('box-break offsets land on run starts in pageText, on every page', () => {
   let total = 0;
   for (let n = 1; n <= 301; n++) {
     const text = normText(raw(n));
-    for (const o of boxBreaks(raw(n))) {
+    for (const o of boxBreaks(raw(n), titleSet())) {
       total++;
       expect(o, `p. ${n}`).toBeGreaterThan(0);
       expect(o, `p. ${n}`).toBeLessThan(text.length);
@@ -34,6 +29,16 @@ test('box-break offsets land on run starts in pageText, on every page', () => {
     }
   }
   expect(total).toBeGreaterThan(300);
+});
+
+test('the running header and printed page number count as box breaks when titles are given', () => {
+  let withTitles = 0;
+  let without = 0;
+  for (let n = 1; n <= 301; n++) {
+    withTitles += boxBreaks(raw(n), titleSet()).length;
+    without += boxBreaks(raw(n)).length;
+  }
+  expect(withTitles).toBeGreaterThan(without);
 });
 
 // The lead's table, checked on the raw pages (API.md §4.2).
@@ -49,22 +54,18 @@ for (const [page, quote, spans] of TABLE) {
   test(`§4.2 table: p. ${page} ${spans ? 'spans' : "doesn't span"} “${quote.slice(0, 40)}…”`, () => {
     // The quote must really be on the page, or "doesn't span" would pass for the wrong reason.
     expect(normText(raw(page)).includes(quote)).toBe(true);
-    expect(spansBoxBreak(quote, raw(page))).toBe(spans);
+    expect(spansBoxBreak(quote, raw(page), titleSet())).toBe(spans);
   });
 }
 
 for (const file of ['models.json', 'answers.json']) {
-  test(`no quote in app/mock/${file} spans a box break`, () => {
-    const quotes = quotesIn(readFixture(file)).filter((q) => Number.isInteger(q.page));
+  test(`every quote in app/mock/${file} verifies, spans no box break, ends cleanly`, () => {
+    const quotes = quotesIn(readFixture(file)).filter((q) => Number.isInteger(q.page) && !q.quote.startsWith(SAMPLE));
     expect(quotes.length).toBeGreaterThan(10);
-    const spanning = quotes.filter((q) => spansBoxBreak(q.quote, raw(q.page))).map((q) => `${q.path} p. ${q.page}: ${q.quote}`);
-    // Same attribution definition as the builder (" – yek", " – Cliff", …). A list separator such as
-    // "3x10 Vibrato King – Cab Pack" is not an attribution.
-    const endsWithAttribution = quotes.filter((q) => cutAttribution(q.quote).quote !== q.quote).map((q) => `${q.path}: ${q.quote}`);
-    // Clean cuts: no leading bullet, no trailing , ; : or dangling and / or / with.
-    const unclean = quotes.filter((q) => cleanCut(q.quote) !== q.quote).map((q) => `${q.path}: ${q.quote}`);
-    expect(spanning).toEqual([]);
-    expect(endsWithAttribution).toEqual([]);
-    expect(unclean).toEqual([]);
+    const list = (bad) => quotes.filter(bad).map((q) => `${q.path} p. ${q.page}: ${q.quote}`);
+    expect(list((q) => !checkQuote({ quote: q.quote, page: q.page }, pages ?? (pages = loadPages())).ok)).toEqual([]);
+    expect(list((q) => spansBoxBreak(q.quote, raw(q.page), titleSet()))).toEqual([]);
+    expect(list((q) => cutAttribution(q.quote, ATTRIBUTION_NAMES).quote !== q.quote)).toEqual([]);
+    expect(list((q) => cleanCut(q.quote) !== q.quote)).toEqual([]);
   });
 }
