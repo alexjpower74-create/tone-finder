@@ -1,5 +1,6 @@
 // Binder (docs/API.md §8): picks saved on the device, and a one-page-per-3-picks print.
 import { carry } from './api.js';
+import { headerLines } from './card.js';
 import { GUESS_NOTE, hasGuess, knobSource } from './knobs.js';
 import { esc, renderShell } from './shell.js';
 import { listPicks, removePick, storageAvailable } from './store.js';
@@ -26,7 +27,7 @@ function pickHtml({ query, suggestion: s }) {
   return `<article class="pick glass panel" data-testid="pick" data-model-id="${esc(s.model_id)}">
     <p class="pick-query">For “${esc(query)}”</p>
     <h2 class="unit-name">${esc(s.unit_name)}</h2>
-    <p class="section-line">Section: ${esc(s.section)}</p>
+    ${headerLines(s)}
     <table class="knob-table">
       <thead><tr><th scope="col">Knob</th><th scope="col">Value</th><th scope="col">Source</th></tr></thead>
       <tbody>${s.knobs

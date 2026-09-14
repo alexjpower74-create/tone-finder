@@ -481,7 +481,8 @@ put('Robben Ford', answer('Robben Ford', {
 put('AC30 chime', answer('AC30 chime', {
   matched: ['ac30', 'chime'], intent: 'clean',
   suggestions: [
-    suggestion('class-a-30w', { rank: 1, score: 12.7, terms: ['ac30', 'chime'], intent: 'clean', plantedFlag: PLANTED }),
+    // Top Boost is the chime channel; its unit name isn't in the section title, so the card shows "Guide section".
+    suggestion('class-a-30w', { rank: 1, score: 12.7, terms: ['ac30', 'chime'], intent: 'clean', unit: 'Class-A 30W TB', plantedFlag: PLANTED }),
     suggestion('class-a-15w-tb', { rank: 2, score: 8.4, terms: ['ac30', 'chime'], intent: 'clean' }),
   ],
 }));

@@ -1,7 +1,35 @@
 // Suggestion card (docs/API.md §8).
 import { carry } from './api.js';
 import { dialHtml, GUESS_NOTE, hasGuess } from './knobs.js';
-import { esc, pagePill } from './shell.js';
+import { esc, pagePill, pageRange } from './shell.js';
+
+// The name parts of a section title: "Brit Brown and FAS Brown (FAS custom models)" → ["brit brown", "fas brown"].
+export function namePartsOf(section) {
+  const cut = section.indexOf(' (');
+  const name = cut >= 0 ? section.slice(0, cut) : section;
+  return name
+    .split(/, | and | \/ /)
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+const FAS_CUSTOM = /^FAS custom model/i;
+
+// "Based on Marshall SLP1959, Vintage Re-Issue Series · pp. 28–31", plus "Guide section: …" only when the unit
+// name isn't one of the section title's name parts (the title would otherwise just repeat based_on).
+export function headerLines(s) {
+  let basedOn = null;
+  if ((s.based_on && FAS_CUSTOM.test(s.based_on)) || (!s.based_on && FAS_CUSTOM.test(s.section))) {
+    basedOn = 'Fractal Audio custom model (no real amp)';
+  } else if (s.based_on) {
+    basedOn = `Based on ${s.based_on}`;
+  }
+  const first = [basedOn, pageRange(s.pages)].filter(Boolean).join(' · ');
+  const showSection = !namePartsOf(s.section).includes(String(s.unit_name).toLowerCase());
+  return `<p class="section-line" data-testid="based-on">${esc(first)}</p>${
+    showSection ? `<p class="section-line" data-testid="guide-section">Guide section: ${esc(s.section)}</p>` : ''
+  }`;
+}
 
 export function attribution(saidBy) {
   if (!saidBy) return '';
@@ -58,7 +86,7 @@ export function renderCard(s, { saved = false, query = '' } = {}) {
           : '<span class="pill pill-search" data-testid="source-pill">Guide search</span>'
       }
     </div>
-    <p class="section-line">Section: ${esc(s.section)}${s.based_on ? ` · based on ${esc(s.based_on)}` : ''}</p>
+    ${headerLines(s)}
 
     <h3>Why</h3>
     ${s.why.map((w) => quoteHtml(w)).join('')}
