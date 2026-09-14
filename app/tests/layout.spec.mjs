@@ -1,6 +1,6 @@
-// Tap targets (hit-tested) and horizontal scroll on every page.
+// Tap targets (hit-tested), static tag height and horizontal scroll on every page.
 import { expect, test } from '@playwright/test';
-import { expectNoHorizontalScroll, expectTapTargets, press, tapExample, waitForAnswer } from './helpers.mjs';
+import { expectNoHorizontalScroll, expectStaticTags, expectTapTargets, press, tapExample, waitForAnswer } from './helpers.mjs';
 
 async function openAllDetails(page, ti) {
   const summaries = page.locator('details:not([open]) > summary');
@@ -60,9 +60,14 @@ const PAGES = [
 ];
 
 for (const p of PAGES) {
-  test(`${p.name}: every button, chip and pill is ≥ 44 px and hit-tests to itself`, async ({ page }, ti) => {
+  test(`${p.name}: everything you can tap is ≥ 44 px and hit-tests to itself`, async ({ page }, ti) => {
     await p.open(page, ti);
     await expectTapTargets(page);
+  });
+
+  test(`${p.name}: static tags are at least 24 px tall`, async ({ page }, ti) => {
+    await p.open(page, ti);
+    await expectStaticTags(page);
   });
 
   test(`${p.name}: no horizontal scroll`, async ({ page }, ti) => {

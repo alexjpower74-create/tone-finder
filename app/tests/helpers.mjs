@@ -30,11 +30,14 @@ export async function tapExample(page, testInfo, text) {
   await press(page.getByRole('button', { name: text, exact: true }), testInfo);
 }
 
-// Every button, chip and pill (and link styled as one): at least 44 × 44, and elementFromPoint at its centre,
-// after scrolling it into view, is the element or inside it. Returns the failures.
+// Everything you can tap (buttons, links, chips, filter pills, switches, summary, form fields): at least 44 × 44,
+// and elementFromPoint at its centre, after scrolling it into view, is the element or inside it (API.md §8).
+// A switch's tap target is its label; the checkbox inside it is not measured on its own.
+const TAPPABLE = 'button, a[href], .chip, summary, label.switch, select, input:not([type="checkbox"]):not([type="hidden"])';
+const STATIC_TAGS = '.pill, .unit-pill, .demo-pill';
+
 export async function tapTargetFailures(page) {
-  return page.evaluate(() => {
-    const sel = 'button, .btn, .chip, .pill, .nav-link, summary, .src-link';
+  return page.evaluate((sel) => {
     const failures = [];
     const els = [...document.querySelectorAll(sel)].filter((el) => {
       const cs = getComputedStyle(el);
@@ -52,12 +55,26 @@ export async function tapTargetFailures(page) {
     }
     window.scrollTo(0, 0);
     return { checked: els.length, failures };
-  });
+  }, TAPPABLE);
 }
 
 export async function expectTapTargets(page) {
   const { checked, failures } = await tapTargetFailures(page);
   expect(checked, 'tap-target check found nothing to measure').toBeGreaterThan(0);
+  expect(failures).toEqual([]);
+}
+
+// Static tags aren't tappable but must stay readable: at least 24 px tall.
+export async function expectStaticTags(page) {
+  const { checked, failures } = await page.evaluate((sel) => {
+    const els = [...document.querySelectorAll(sel)].filter((el) => el.getClientRects().length);
+    const failures = els
+      .map((el) => [el, el.getBoundingClientRect().height])
+      .filter(([, h]) => h < 24)
+      .map(([el, h]) => `${[...el.classList].join('.')} "${el.textContent.trim().slice(0, 30)}": ${h.toFixed(1)} px tall`);
+    return { checked: els.length, failures };
+  }, STATIC_TAGS);
+  expect(checked, 'static-tag check found nothing to measure').toBeGreaterThan(0);
   expect(failures).toEqual([]);
 }
 
