@@ -1,0 +1,21 @@
+# Tone Finder Worker — LOCAL ONLY. Run with `wrangler dev --local`; never deploy, never --remote.
+name = "tone-finder"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tone-finder"
+database_id = "LOCAL-ONLY-set-at-deploy"
+migrations_dir = "migrations"
+
+# Non-secret defaults (docs/API.md §1). worker/.dev.vars and --var override them. OPENAI_API_KEY and
+# ADMIN_TOKEN are never set here.
+[vars]
+OPENAI_BASE_URL = "https://api.openai.com/v1"
+AI_MODEL = "gpt-5.4-mini"
+AI_CAP_CAD = "2.00"
+USD_CAD = "1.3866"
+AI_PRICE_IN_PER_M = "0.75"
+AI_PRICE_CACHED_IN_PER_M = "0.075"
+AI_PRICE_OUT_PER_M = "4.50"

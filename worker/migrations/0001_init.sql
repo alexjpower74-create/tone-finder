@@ -1,0 +1,7 @@
+-- docs/API.md §7. Local D1 only.
+CREATE TABLE guide_pages (page INTEGER PRIMARY KEY, text TEXT NOT NULL);
+CREATE TABLE guide_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+CREATE TABLE ai_calls (id INTEGER PRIMARY KEY AUTOINCREMENT, at TEXT NOT NULL, model TEXT NOT NULL,
+  step TEXT NOT NULL, input_tokens INTEGER NOT NULL, cached_input_tokens INTEGER NOT NULL,
+  output_tokens INTEGER NOT NULL, usd REAL NOT NULL, cad REAL NOT NULL, query_hash TEXT NOT NULL, ok INTEGER NOT NULL);
+CREATE TABLE answer_cache (key TEXT PRIMARY KEY, at TEXT NOT NULL, answer_json TEXT NOT NULL);
