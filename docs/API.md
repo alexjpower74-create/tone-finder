@@ -349,7 +349,12 @@ successful run is `ai.used: true, ai.reason: null`; `"cached"` and `"error"` are
 6. Kept AI suggestions get `source: "ai_checked"`, `why` = their verified citations, and knobs/cab/Ares per
    §4.2–4.5. Final list: kept AI suggestions in the AI's order, then C1 candidates not already present
    (`source: "guide_search"`), at most 4. No AI suggestion kept → C1, or C0 when C1 is empty. General knowledge
-   is shown only when at least one suggestion survives.
+   is shown only when at least one suggestion survives. General knowledge is about songs, artists and gear only: an
+   item that mentions the guide, the candidates or the model list (case-insensitive `guide`, `candidate`,
+   `provided`, `model list`, `the list`) is dropped before it is shown, and the pick prompt says so. (A real call
+   returned "The provided guide candidate points to Fractal Audio’s own Brown Sound-style models", which is not
+   general knowledge and was labelled "not from the guide".)
+   `understood.matched_terms` and `understood.ai_terms` are de-duplicated, keeping first occurrence order.
 7. **Requests**: `POST {OPENAI_BASE_URL}/chat/completions`, header `authorization: Bearer <key>`, body
    `{ model, messages, max_completion_tokens, reasoning_effort: "low", response_format: { type: "json_object" } }`,
    max_completion_tokens 1200 (A) and 2500 (B), 30 s timeout. Usage from `usage.prompt_tokens`,

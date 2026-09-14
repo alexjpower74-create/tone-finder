@@ -128,3 +128,9 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     phrases stay generic) and R3-2 (the running page header is a box break), plus: the printed page number at the
     foot of a page is a box break ("…Crunch.” – MESA 262"), a quote never starts with a bullet, and stock-cab list
     lines are never why quotes ("4x12 … Petrucci – Cab Packs…" was shown for "Petrucci lead").
+
+21. **Real AI smoke test (lead, 19:17 UTC).** At main d24e11e with the real key: "the rhythm tone on Master of
+    Puppets" returned USA IIC++ as an AI pick quoting p. 270 "Metallica’s IIC+", with labelled general knowledge
+    ("commonly associated with a Mesa/Boogie Mark IIC+ style amp"): the brief's hardest example works. 4 calls,
+    CA$0.0353 (≈ CA$0.017 per new question); the key appeared in no log or answer. Two fixes: general-knowledge
+    items that talk about the guide or the candidates are dropped, and matched/AI terms are de-duplicated.
