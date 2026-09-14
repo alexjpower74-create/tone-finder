@@ -42,6 +42,15 @@ Slices make no paid calls: their tests use the fake OpenAI server.
 | 2026-09-14T19:31:13Z | tf1 tests (by accident) | gpt-5.4-mini | pick | 5,621 | 0 | 199 | 0.00511125 | 0.00709 | tf1's worker test run reached the lead's demo Worker on 8302 (DECISIONS 23); ledger id 21 |
 | 2026-09-14T19:31:16Z | tf1 tests (by accident) | gpt-5.4-mini | cite | 3,145 | 0 | 342 | 0.00389775 | 0.00540 | tf1's worker test run reached the lead's demo Worker on 8302 (DECISIONS 23); ledger id 22 |
 
+| 2026-09-14T19:35:59Z | lead | gpt-5.4-mini | pick | 5,716 | 5,376 | 217 | 0.00163470 | 0.00227 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "Van Halen brown sound"; ledger id 23 |
+| 2026-09-14T19:36:01Z | lead | gpt-5.4-mini | cite | 5,437 | 0 | 390 | 0.00583275 | 0.00809 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "Van Halen brown sound"; ledger id 24 |
+| 2026-09-14T19:36:04Z | lead | gpt-5.4-mini | pick | 5,878 | 5,376 | 241 | 0.00186420 | 0.00258 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "AC30 chime"; ledger id 25 |
+| 2026-09-14T19:36:06Z | lead | gpt-5.4-mini | cite | 6,277 | 2,816 | 411 | 0.00465645 | 0.00646 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "AC30 chime"; ledger id 26 |
+| 2026-09-14T19:36:08Z | lead | gpt-5.4-mini | pick | 5,723 | 5,376 | 152 | 0.00134745 | 0.00187 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "Robben Ford"; ledger id 27 |
+| 2026-09-14T19:36:10Z | lead | gpt-5.4-mini | cite | 5,040 | 4,864 | 443 | 0.00249030 | 0.00345 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "Robben Ford"; ledger id 28 |
+| 2026-09-14T19:36:13Z | lead | gpt-5.4-mini | pick | 5,745 | 5,376 | 186 | 0.00151695 | 0.00210 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "clean worship pad with sparkle"; ledger id 29 |
+| 2026-09-14T19:36:14Z | lead | gpt-5.4-mini | cite | 6,909 | 6,400 | 271 | 0.00208125 | 0.00289 | Round-6 check on the demo Worker (main 24a54f4, citation locating): "clean worship pad with sparkle"; ledger id 30 |
+
 Check (smoke test): input 25,244 × 0.75 / 1M + output 1,450 × 4.50 / 1M = 0.018933 + 0.006525 = **US$0.025458**;
 × 1.3866 = CA$0.035300. Matches the Worker ledger (`GET /api/admin/spend`: spent_usd 0.025458, spent_cad 0.035300).
 
@@ -49,4 +58,6 @@ Check (final demo run, 16 calls, ledger `GET /api/admin/spend` on the demo Worke
 
 Check (accidental test calls, ids 17–22): 3 questions × pick + cite, input 34,492 and output 1,744 tokens = US$0.033717 × 1.3866 = CA$0.046752. tf1 first estimated 2 calls; the ledger shows 6.
 
-**Running total: US$0.1426 · CA$0.1977 of CA$2.00** (26 calls: 4 in the QA smoke test, 22 in the demo database).
+Check (round-6 check, ids 23–30): US$0.021424 × 1.3866 = CA$0.029707; OpenAI prompt caching now covers most of each pick prompt. Demo ledger after it: 30 calls, US$0.138542, CA$0.192102.
+
+**Running total: US$0.1640 · CA$0.2274 of CA$2.00** (34 calls: 4 in the QA smoke test, 30 in the demo database).
