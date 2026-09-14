@@ -285,6 +285,100 @@
        ]
       },
       "ares_flags": []
+     },
+     {
+      "rank": 2,
+      "model_id": "usa-clean-usa-lead-usa-rhythm",
+      "unit_name": "USA Clean",
+      "section": "USA Clean / USA Lead / USA Rhythm (MESA/Boogie Mark IV)",
+      "based_on": "MESA/Boogie Mark IV",
+      "brands": [
+       "MESA/Boogie"
+      ],
+      "pages": {
+       "start": 262,
+       "end": 265
+      },
+      "source": "guide_search",
+      "score": 8.57,
+      "why": [
+       {
+        "quote": "A large portion of the bandwidth of the internet these days is occupied by guitar players looking for ways to either replicate Van Halen’s Brown Sound or John Petrucci’s saturated high gain tones.",
+        "page": 265,
+        "said_by": null,
+        "matched": [
+         "van halen",
+         "brown sound"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "Cabinet with Celestion C90 speakers",
+        "page": 262
+       },
+       "stock_cabs": {
+        "quote": "4x12 USA, 4x12 Petrucci – Several Cab Packs",
+        "page": 262
+       },
+       "notes": [
+        {
+         "quote": "This lowers the output impedance of the plate significantly which, in turn, lowers the output impedance of the amp itself making the voltage output less dependent on the speaker impedance.",
+         "page": 264
+        },
+        {
+         "quote": "Or you can try the Rectifier with V30s stock cabs.",
+         "page": 265
+        }
+       ]
+      },
+      "ares_flags": []
      }
     ],
     "ares": {
@@ -426,6 +520,100 @@
         {
          "quote": "Eddie didn’t use V30s or his custom speakers until later.",
          "page": 61
+        }
+       ]
+      },
+      "ares_flags": []
+     },
+     {
+      "rank": 2,
+      "model_id": "usa-clean-usa-lead-usa-rhythm",
+      "unit_name": "USA Clean",
+      "section": "USA Clean / USA Lead / USA Rhythm (MESA/Boogie Mark IV)",
+      "based_on": "MESA/Boogie Mark IV",
+      "brands": [
+       "MESA/Boogie"
+      ],
+      "pages": {
+       "start": 262,
+       "end": 265
+      },
+      "source": "guide_search",
+      "score": 8.57,
+      "why": [
+       {
+        "quote": "A large portion of the bandwidth of the internet these days is occupied by guitar players looking for ways to either replicate Van Halen’s Brown Sound or John Petrucci’s saturated high gain tones.",
+        "page": 265,
+        "said_by": null,
+        "matched": [
+         "van halen",
+         "brown sound"
+        ]
+       }
+      ],
+      "knobs": [
+       {
+        "knob": "Drive",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Bass",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Mid",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Treble",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Master",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Presence",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       },
+       {
+        "knob": "Depth",
+        "value": 5,
+        "kind": "guess",
+        "note": "starting guess — not from the guide"
+       }
+      ],
+      "taper_note": null,
+      "other_settings": [],
+      "cab": {
+       "speaker": {
+        "quote": "Cabinet with Celestion C90 speakers",
+        "page": 262
+       },
+       "stock_cabs": {
+        "quote": "4x12 USA, 4x12 Petrucci – Several Cab Packs",
+        "page": 262
+       },
+       "notes": [
+        {
+         "quote": "This lowers the output impedance of the plate significantly which, in turn, lowers the output impedance of the amp itself making the voltage output less dependent on the speaker impedance.",
+         "page": 264
+        },
+        {
+         "quote": "Or you can try the Rectifier with V30s stock cabs.",
+         "page": 265
         }
        ]
       },
@@ -2266,8 +2454,8 @@
       "score": 17.4,
       "why": [
        {
-        "quote": "Brit JM45 (Marshall JTM 45)",
-        "page": 62,
+        "quote": "Unlike the Fender Bassman, the JTM 45 was designed to be used with a 2x12 or 4x12 cabinet with Celestion G12M (greenbacks) or G12H speakers.",
+        "page": 64,
         "said_by": null,
         "matched": [
          "jtm 45"
@@ -2531,8 +2719,8 @@
       "score": 17.4,
       "why": [
        {
-        "quote": "Brit JM45 (Marshall JTM 45)",
-        "page": 62,
+        "quote": "Unlike the Fender Bassman, the JTM 45 was designed to be used with a 2x12 or 4x12 cabinet with Celestion G12M (greenbacks) or G12H speakers.",
+        "page": 64,
         "said_by": null,
         "matched": [
          "jtm 45"
