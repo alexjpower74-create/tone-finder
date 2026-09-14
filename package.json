@@ -1,0 +1,20 @@
+{
+  "name": "tone-finder",
+  "private": true,
+  "type": "module",
+  "description": "Axe-Fx II (Ares) tone starting points, every suggestion cited to a page of yek's amp model guide.",
+  "scripts": {
+    "build:models": "node scripts/build-models.mjs",
+    "load-guide": "node scripts/load-guide.mjs",
+    "demo": "node scripts/demo.mjs",
+    "dev:worker": "npm --prefix worker run dev",
+    "dev:app": "node app/serve.mjs --port 8301",
+    "test:core": "node --test 'core/tests/**/*.test.mjs'",
+    "test:worker": "npm --prefix worker test",
+    "test:app": "playwright test -c app/playwright.config.mjs",
+    "test": "npm run test:core && npm run test:worker && npm run test:app"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

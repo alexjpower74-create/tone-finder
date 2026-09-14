@@ -1,0 +1,25 @@
+{
+  "_about": "Fractal Audio firmware release notes quoted by the Ares note (docs/API.md §4.5). Fetched by tf-lead with the research User-Agent, one request each. Quotes are verbatim from the fetched pages after whitespace normalisation.",
+  "sources": [
+    {
+      "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/",
+      "fetched": "2026-09-14",
+      "posted": "2017-10-20",
+      "quotes": [
+        "Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm.",
+        "The “Spkr Comp” parameter controls the amount of virtual speaker compression. This value defaults to 3.0 when the Amp block is reset.",
+        "If using the Axe-Fx II with a tube power amp and conventional guitar cab you may want to reduce this value to 0.0."
+      ]
+    },
+    {
+      "url": "https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/",
+      "fetched": "2026-09-14",
+      "posted": null,
+      "quotes": [
+        "This firmware is a partial port of the “Ares” modeling used in the Axe-Fx III.",
+        "Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar."
+      ],
+      "note": "The cumulative Axe-Fx II release notes on this page list Ares 1.00 directly above Quantum 10.01, so Ares carries the Quantum 9.00 Amp block change."
+    }
+  ]
+}

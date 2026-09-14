@@ -1,0 +1,10 @@
+.worktrees/
+node_modules/
+.wrangler/
+.dev.vars
+worker/SECRETS.txt
+test-results/
+playwright-report/
+.rig/report-*.md
+data/guide-local/
+*.local.json
