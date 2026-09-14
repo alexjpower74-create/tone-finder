@@ -1,6 +1,6 @@
 // Optional AI step (docs/API.md §5). Pure ESM: fetch and storage are injected, so the same code runs in core
 // tests (memory store, fake server) and in the Worker (D1). Nothing here logs or returns the key or the prompt.
-import { normText, spansBoxBreak } from './text.js'
+import { normText, spansBoxBreak, locateQuote, expandToSentence, cleanCut, sentenceBreakCount } from './text.js'
 import { pageText, sha256Hex } from './guide.js'
 import { checkQuote } from './verify.js'
 import { indexModels, unitNameOf, sectionTitles } from './models.js'
@@ -8,7 +8,7 @@ import { guideAnswer, baseAnswer, buildSuggestion, GK_LABEL } from './answer.js'
 import { termRegex } from './search.js'
 import { foldForSearch } from './text.js'
 
-export const PROMPT_VERSION = 'tf-ai-2'
+export const PROMPT_VERSION = 'tf-ai-3'
 // §5.6: general knowledge that talks about the guide, the candidates or the model list is not general knowledge.
 export const GK_ABOUT_GUIDE = /guide|candidate|provided|model list|the list/i
 export const MAX_TOKENS = { pick: 1200, cite: 2500 }
@@ -144,14 +144,27 @@ export function checkPick(data, p) {
   return unit ? { model: m, unit } : null
 }
 
-// A citation's page is inside the model and its quote verifies on that page. → { ok, kind? , quote }
-export function checkCitation(model, c, pages, titles = null) {
+// §5.5 locate, then verify: page inside the model; find the citation on the page (exact, else folded and unique);
+// expand to its sentence; clean cuts; box breaks; verifyQuote. The shown quote is always the page's own text.
+// → { ok, quote, page } or { ok: false, kind }
+export function checkCitation(model, c, pages, titles = null, { locate = true } = {}) {
   const page = c?.page
   if (!Number.isInteger(page) || page < model.pages.start || page > model.pages.end) return { ok: false, kind: 'bad_page' }
-  const quote = normText(c?.quote)
-  const r = checkQuote({ quote, page }, pages)
-  if (r.ok && spansBoxBreak(quote, pages.get(page), titles)) return { ok: false, kind: 'quote_not_on_page' }
-  if (r.ok) return { ok: true, quote, page }
+  const raw = pages.get(page)
+  const text = pageText(pages, page)
+  const cited = normText(c?.quote)
+  const tooLong = cited.length > 320 || sentenceBreakCount(cited) > 1
+  const span = locate ? locateQuote(cited, text) : text.includes(cited) ? { start: text.indexOf(cited), end: text.indexOf(cited) + cited.length } : null
+  if (!span) return { ok: false, kind: tooLong ? 'quote_too_long' : 'quote_not_on_page' }
+  const located = text.slice(span.start, span.end)
+  const wide = expandToSentence(raw, span, titles)
+  const tries = [wide ? text.slice(wide.start, wide.end) : null, located].filter(Boolean).map(cleanCut)
+  for (const quote of tries) {
+    if (spansBoxBreak(quote, raw, titles)) continue
+    const r = checkQuote({ quote, page }, pages)
+    if (r.ok) return { ok: true, quote, page }
+  }
+  const r = checkQuote({ quote: tries[tries.length - 1], page }, pages)
   return { ok: false, kind: r.reason === 'too_long' || r.reason === 'too_many_sentences' ? 'quote_too_long' : 'quote_not_on_page' }
 }
 

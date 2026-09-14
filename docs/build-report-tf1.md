@@ -1,5 +1,63 @@
 # Build report — tf1 (guide data, answer engine, AI step, Worker + D1)
 
+## Round 6 (fixes from the lead's final real AI pass)
+
+**Read this first: my worker tests hit your running demo Worker once.** Your detached demo (main checkout, real
+key) holds 8301/8302. `worker/tests/run.mjs` used 8302 by default. My `wrangler dev` couldn't bind it, the runner's
+health wait was answered by your Worker, and the HTTP tests ran against it (7 of 16 failed, which is how I noticed).
+Your `/api/health` went from the 20 calls / CA$0.1509 you reported to **22 calls / CA$0.1624**. So the run most
+likely made **2 real calls, about CA$0.0115**, probably "Brown Sound Deluxe fake-plant" (pick + cite). Your cache
+may also now hold answers for my test questions. My admin posts used the test token and were refused with 401, so
+your guide and D1 pages are unchanged. I didn't touch your processes. **Fixed:** `run.mjs` now checks every port
+(worker, fake, cap and their inspector ports) before starting anything and exits with "port(s) already in use: 8302
+… Nothing was started or sent." I checked that on the busy default port: exit 1, and your call count stayed at 22.
+Then the suite ran on 8322/8323/8372: 16/16, with your count still 22. Please add those 2 calls to `docs/spend.md`
+if you track them.
+
+**Status:** DONE. Code commit **b76eb03**. From my own worktree: core **81/81** (fake AI on 8313), worker **16/16**
+(8322/8323/8372). `models.json` is unchanged.
+
+1. **Locate, then verify (§5.5).** `core/text.js`:
+   - `foldWithMap`: “ ” „ " → ", ‘ ’ ' → ', – — - → -, lower case, whitespace runs → one space, with a map back to
+     the original offsets.
+   - `locateQuote`: the exact first occurrence, else the folded citation when it occurs exactly once.
+   - `expandToSentence`: the containing sentence(s) inside one box run, card label stripped, ≤ 320 characters and
+     ≤ 2 sentences, else no expansion.
+
+   `checkCitation` then does page range → locate → expand → clean cut → box-break check (falling back to the located
+   text) → `verifyQuote`. The shown quote is always a slice of the page. `PROMPT_VERSION` is now `tf-ai-3`, so your
+   cached demo answers are rebuilt.
+
+   Fake scenario `fake-fold` (query "Van Halen brown sound fake-fold"):
+   - The straight-quote, lower-case p. 60 synopsis is kept and shown as "Custom amp models by Fractal Audio,
+     recreating EVH’s “Brown Sound”".
+   - "Brawn" (one letter) and the same line cited on p. 61 drop as `quote_not_on_page`.
+   - The p. 201 fragment "which produces an up front sparkling tone," is shown as its full sentence: "As the gain
+     increases the tone is shifted from a treble and upper mid emphasis, which produces an up front sparkling tone,
+     to a lower mid and bass emphasis, which produces a thick meaty tone."
+
+   `fake-plant` and `fake-puppets` still pass: expansion stays inside the synopsis box, so the p. 28 quote is
+   unchanged. Unit test: two folded matches → not located.
+2. **Two-suggestion floor (§4.1).** When the 0.4 × top cut leaves one candidate, the next-best strong candidate is
+   kept. "Van Halen brown sound" with AI off now gives Brit Brown and FAS Brown, then USA Clean / Lead / Rhythm
+   (p. 265 "…replicate Van Halen’s Brown Sound…"). Golden: min_suggestions 2, top1 brit-brown, and none_of the '60
+   brown Fenders all pass.
+3. **Never the running header (§4.2).** A why candidate equal to a section title is rejected. Test: Tremolo Lux with
+   the term "blackface" (p. 253 starts with its header) never returns the header, and no answer for three related
+   queries shows a section title as a why quote.
+
+| Control | Break | Result |
+|---|---|---|
+| locate | `checkCitation` default `locate = false` (exact match only) | RED: fake-fold. Restored. |
+| header-why | the section-title rejection removed from `pickWhy` | RED: the Tremolo Lux header test. Restored. |
+| floor | the two-suggestion floor removed | RED: golden "Van Halen brown sound" and the floor test. Restored. |
+| port guard | default ports while your demo holds 8302 | Refused, exit 1, nothing started or sent (your call count unchanged). |
+| after restore | — | core 81/81, worker 16/16 |
+
+Stopping here.
+
+---
+
 ## Round 5 (fixes from the lead's first real AI calls)
 
 **Status:** DONE. Code commit **d85c4fb** (on top of main 89677e3). From my own worktree (fake AI on 8313 for core,

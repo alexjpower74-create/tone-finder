@@ -137,6 +137,87 @@ export function cleanCut(quote) {
   return s
 }
 
+// Locate (API.md §5.5): fold quote marks, apostrophes, dashes, case and spacing; keep a map back to the original.
+const FOLD = { '“': '"', '”': '"', '„': '"', '‘': "'", '’': "'", '–': '-', '—': '-' }
+export function foldWithMap(s) {
+  const src = String(s)
+  let out = ''
+  const map = []
+  let space = false
+  for (let i = 0; i < src.length; i++) {
+    const ch = src[i]
+    if (/\s/.test(ch)) {
+      if (!space && out) {
+        out += ' '
+        map.push(i)
+      }
+      space = true
+      continue
+    }
+    space = false
+    let f = FOLD[ch] ?? ch
+    const low = f.toLowerCase()
+    if (low.length === f.length) f = low
+    out += f
+    for (let k = 0; k < f.length; k++) map.push(i)
+  }
+  if (out.endsWith(' ')) {
+    out = out.slice(0, -1)
+    map.pop()
+  }
+  return { text: out, map }
+}
+
+// → { start, end } offsets in `text` (a pageText): the exact quote's first occurrence, else the folded quote when it
+// occurs exactly once; null otherwise.
+export function locateQuote(quote, text) {
+  const q = normText(quote)
+  if (!q) return null
+  const exact = text.indexOf(q)
+  if (exact >= 0) return { start: exact, end: exact + q.length }
+  const fq = foldWithMap(q).text
+  const fp = foldWithMap(text)
+  const i = fp.text.indexOf(fq)
+  if (i < 0 || fp.text.indexOf(fq, i + 1) >= 0) return null
+  return { start: fp.map[i], end: fp.map[i + fq.length - 1] + 1 }
+}
+
+const CARD_PREFIX = /^(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls) /
+
+// Expand [start, end) of pageText to its containing sentence(s) inside one box run (card label stripped).
+// → { start, end } or null when the span crosses a run or the result breaks the ≤ 320 / ≤ 2 sentence limits.
+export function expandToSentence(rawPage, span, titles = null, max = 320) {
+  const text = normText(rawPage)
+  const breaks = boxBreaks(rawPage, titles)
+  const starts = [0, ...breaks]
+  let r = starts.length - 1
+  while (r > 0 && starts[r] > span.start) r--
+  let runStart = starts[r]
+  const runEnd = r + 1 < starts.length ? starts[r + 1] - 1 : text.length
+  if (span.end > runEnd) return null
+  const label = CARD_PREFIX.exec(text.slice(runStart, runEnd))
+  if (label && runStart + label[0].length <= span.start) runStart += label[0].length
+  const run = text.slice(runStart, runEnd)
+  const sStarts = [0]
+  const sEnds = []
+  const re = sentenceBreakRegex()
+  let m
+  while ((m = re.exec(run))) {
+    sEnds.push(m.index + m[0].trimEnd().length)
+    sStarts.push(m.index + m[0].length)
+  }
+  sEnds.push(run.length)
+  const rel = { start: span.start - runStart, end: span.end - runStart }
+  let a = 0
+  while (a + 1 < sStarts.length && sStarts[a + 1] <= rel.start) a++
+  let b = a
+  while (b + 1 < sStarts.length && sEnds[b] < rel.end) b++
+  const out = { start: runStart + sStarts[a], end: runStart + sEnds[b] }
+  const q = text.slice(out.start, out.end)
+  if (q.length > max || sentenceBreakCount(q) > 1) return null
+  return out
+}
+
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
