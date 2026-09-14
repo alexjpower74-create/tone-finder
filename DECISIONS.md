@@ -74,3 +74,10 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     ≥ 24 px tall, so the Models rows stay readable. `Answer.query` echoes the trimmed query as typed. Dweezil's
     B-man (p. 139) is a stub pointing at 65 Bassguy: the lead's golden file missed it, and a scan of the whole
     guide for "Please refer to the section on the …" confirms exactly six stubs (pp. 67, 70, 118, 139, 185, 272).
+
+14. **Joined passages are split before quoting (16:25).** The guide's text extraction glues separate boxes without
+    punctuation. tf2's first mock card quoted "Or just crank everything, like Eddie Van Halen “My settings for a
+    “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5." (p. 28): an exact substring that reads as if Van Halen
+    gave Cliff's settings. Exact-substring verification can't catch a true-but-misleading splice, so quote
+    selection also splits before an opening “ that follows a word and before an attribution dash, and a test
+    checks no stored or shown quote contains such a join (API.md §4.2).

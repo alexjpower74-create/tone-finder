@@ -223,7 +223,14 @@ null (Worker before load-guide), in which case the only searchable text is the q
 
 ### 4.2 A suggestion
 - `why`: 1–3 verified quotes from the model's pages, each a sentence containing a found term (prefer strong terms,
-  then tips/synopsis, then distinct terms). A sentence over 320 characters is cut to the clause (split on `; ` or
+  then tips/synopsis, then distinct terms).
+- **Joined passages.** The text extraction glues separate boxes together without punctuation. On p. 28 the tip
+  "Or just crank everything, like Eddie Van Halen" runs straight into Cliff's "“My settings for a “typical” Plexi
+  tone are Bass 2, Mid 8, Treble 7.5.”", which reads as if Van Halen gave those settings. So, when picking any
+  quote (why, tips, notes, settings, cab notes, AI citations are checked as given), also split before an opening
+  `“` that directly follows a letter, digit or comma and a space (`/(?<=[A-Za-z0-9,]) (?=“)/`) and before an
+  attribution dash (` – ` followed by a capitalised name). Verification itself is unchanged. A stored or shown
+  quote must not contain such a join (a test checks `models.json` and every Answer). A sentence over 320 characters is cut to the clause (split on `; ` or
   `, `) that holds the term, and must still verify. `said_by` is filled when the same quote is a stored tip, note
   or settings quote that has one. `matched` lists the terms it contains.
 - `unit_name`: the model's unit name that appears in a `why` quote or the query (case-insensitive), else the first.
