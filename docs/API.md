@@ -229,7 +229,9 @@ null (Worker before load-guide), in which case the only searchable text is the q
   found non-generic terms in the query and `covered` how many of them hit this model (both at least 1). A model
   that matches "The Edge" and "chime" outranks one that matches only "chime".
 - **Candidates** are models with at least one strong term. Keep those with `score >= 0.4 × top score`, at most 4,
-  ordered by score, then guide order.
+  ordered by score, then guide order. If that leaves one, also keep the next-best candidate (it still has a strong
+  term), so a supported query shows 2 suggestions whenever 2 exist (the brief asks for 2–4; "Van Halen brown sound"
+  had dropped to Brit Brown alone).
 - `understood.matched_terms`: found terms. `understood.unmatched_terms`: non-stop, non-generic words and n-grams
   with `df = 0`, in query order.
 - `understood.intent` (first rule that fires, in this order): `high_gain` (high gain, metal, djent, thrash,
@@ -273,6 +275,8 @@ null (Worker before load-guide), in which case the only searchable text is the q
 - **Which sentence first.** Among a model's why candidates for the same term, prefer a sentence that also contains
   the model's name, one of its unit names, or the last word of a unit name when that word has 3+ characters (for
   "Metallica", p. 270 "…also referred to as “Metallica’s IIC+”" beats p. 267 "Add Santana, Metallica, Keith Richards etc.").
+- **Never the running header.** A page's running-header run (the section title line) is never a why quote on its own
+  (Tremolo Lux showed "Tremolo Lux (blackface Fender Tremolux, AA763)").
 - **Why quality.** A why quote must contain a strong term, except that the second or third quote may carry only
   generic terms when it comes from synopsis or tips. `controls` lines, `stock_cabs` lines and spec-table lines are never why quotes. A
   quote shown under one suggestion is not repeated under another in the same Answer when that model has another
@@ -340,7 +344,15 @@ successful run is `ai.used: true, ai.reason: null`; `"cached"` and `"error"` are
 4. **Call B, "cite"**: for each surviving pick (and C1 not already picked, up to 4 models total), the model's
    pages as `PAGE n:` + `pageText(n)` (cap 12,000 characters per model, start pages first). Reply JSON:
    `{ "suggestions": [{ "model_id": "…", "unit_name": "…", "citations": [{ "page": 270, "quote": "…" }] }] }`.
-5. **Verification** of each citation: page inside the model's `pages` (else `bad_page`), quote verified (§0) on that
+5. **Locate, then verify.** The real model often returns a citation that differs from the page only in quote marks,
+   apostrophes, dashes, capitals or spacing (real run: all six Brit Brown / FAS Brown citations and the p. 108 "chime"
+   lines failed). Before verifying, fold both the citation and the cited page's `pageText` (“ ” „ " → ", ‘ ’ ' → ',
+   – — - → -, lower case, whitespace runs → one space) and look for the folded citation in the folded page. If it
+   occurs exactly once, replace the citation with the page's own text at that position (map the folded offsets
+   back); otherwise leave it as returned. Then expand it to its containing sentence (sentence split plus box breaks)
+   when that sentence is ≤ 320 characters and ≤ 2 sentences, apply clean cuts, and verify as below. A changed letter,
+   an invented passage or a wrong page still fails. The shown quote is always the page's exact text.
+5b. **Verification** of each citation: page inside the model's `pages` (else `bad_page`), quote verified (§0) on that
    page (else `quote_not_on_page`, or `quote_too_long` when over 320 characters or 2 sentences). Model id and unit
    name are checked again (`unknown_model`). A suggestion with no verified citation is dropped
    (`no_verified_quote`). Every drop is listed in `ai.dropped` as `{ kind, detail }`. `detail` is exactly

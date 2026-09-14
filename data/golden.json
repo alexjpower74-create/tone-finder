@@ -196,6 +196,10 @@
       "none_of": [
         "6g4-super",
         "6g12-concert"
+      ],
+      "min_suggestions": 2,
+      "top1_any_of": [
+        "brit-brown-and-fas-brown"
       ]
     },
     {

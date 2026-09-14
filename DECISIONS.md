@@ -134,3 +134,12 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     ("commonly associated with a Mesa/Boogie Mark IIC+ style amp"): the brief's hardest example works. 4 calls,
     CA$0.0353 (≈ CA$0.017 per new question); the key appeared in no log or answer. Two fixes: general-knowledge
     items that talk about the guide or the candidates are dropped, and matched/AI terms are de-duplicated.
+
+22. **Final real AI run and the fixes it showed (lead).** 16 calls at main a911158 through the demo Worker, CA$0.1156
+    (running total CA$0.1509 of CA$2); a repeated question was served from the cache at no cost; no key material in
+    any log or answer. Master of Puppets → USA IIC++ with Cliff's settings; SRV → Super Verb; djent → Thordendal;
+    "Brown Sound Deluxe" never shown as a model. Fixes: (1) the real model's citations often differ from the page
+    only in quote marks, dashes, capitals or spacing, so the Worker now locates the citation on the cited page with
+    those folded and shows the page's own exact text (a changed letter, invented text or wrong page still fails);
+    AI citations expand to their containing sentence; (2) at least 2 suggestions when 2 candidates exist ("Van Halen
+    brown sound" had become Brit Brown alone); (3) the running header is never a why quote.
