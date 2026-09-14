@@ -22,8 +22,8 @@ fails stops the build; a **mechanical** cut that fails is dropped and counted (`
 | Mechanical cuts shrunk / dropped | 3 / 3 |
 | Quotes shortened at box breaks or clean cuts (rounds 2–3) | 24 |
 
-**Quote budget:** 866 stored quotes plus unit-name evidence and settings context = 69,256 characters, against
-540,437 characters of `pageText` over all 301 pages: **12.81%** (limit 15%). The test prints both numbers.
+**Quote budget:** 866 stored quotes plus unit-name evidence and settings context = 68,920 characters, against
+540,437 characters of `pageText` over all 301 pages: **12.75%** (limit 15%). The test prints both numbers.
 
 ## How each field was made
 
@@ -66,7 +66,7 @@ fails stops the build; a **mechanical** cut that fails is dropped and counted (`
   name going to `said_by`. The build refuses a curated settings quote that spans a break: the JD Simo settings
   (p. 31) ran from "Volume:10" across a bullet into "Presence: to taste (around 5 or 6)", so the quote is now only
   "Bass:0, Mid:10, Treble:10, Volume:10". 21 quotes got shorter; the tests check that none left in the file spans a
-  break or ends with an attribution. Round 3 adds clean cuts (`cleanCut`): a cut quote never ends on , ; : or a dangling and/or/with, so the Plexi models synopsis is "Models of various Marshall Plexi heads" and the Recto stock cabs end "… 13, 14, 21". The old
+  break or ends with an attribution. Round 3 adds clean cuts (`cleanCut`): a cut quote never ends on , ; : or a dangling and/or/with, so the Plexi models synopsis is "Models of various Marshall Plexi heads" and the Recto stock cabs end "… 13, 14, 21". Round 4 adds two more breaks (the running page header when a page's first raw line is a section title, and the printed page number on the last line) and trims a leading "• ". The old
   opening-quote tip splitter (round 1) is gone; box breaks replace it.
 - **Controls.** The raw `Amp controls …` line on the section's first page, plus continuation lines (a line ending
   in `,`/`-`/`and`/`with`, or a next line starting lower-case), verified.

@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url'
 import { loadPages } from './guide-node.mjs'
 import { pageText } from '../guide.js'
 import { boxBreaks, spansBoxBreak, splitAtBoxBreaks, cutAttribution, cleanCut } from '../text.js'
+import { sectionTitles } from '../models.js'
+import { quoteShapeProblem } from './quote-shape.mjs'
 import { answer } from '../answer.js'
 import { SAID_BY } from '../../scripts/build-models.mjs'
 
@@ -13,6 +15,7 @@ const ATTRIBUTION_END = new RegExp(`\\s[–-]\\s+(?:${SAID_BY.map((n) => n.repla
 
 const pages = loadPages()
 const models = JSON.parse(readFileSync(fileURLToPath(new URL('../../data/models.json', import.meta.url)), 'utf8'))
+const titles = sectionTitles(models)
 
 const SPANS = [
   [28, 'Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.'],
@@ -63,7 +66,9 @@ test('no quote in models.json spans a box break or ends with an attribution', ()
     if (!v || typeof v !== 'object') return
     if (typeof v.quote === 'string' && Number.isInteger(v.page)) {
       n++
-      assert.ok(!spansBoxBreak(v.quote, pages.get(v.page)), `${path} p. ${v.page} spans: ${v.quote}`)
+      assert.ok(!spansBoxBreak(v.quote, pages.get(v.page), titles), `${path} p. ${v.page} spans: ${v.quote}`)
+      const problem = quoteShapeProblem(v.quote, pages.get(v.page), titles)
+      assert.equal(problem, null, `${path} p. ${v.page} ${problem}: ${v.quote}`)
       assert.ok(!ATTRIBUTION_END.test(v.quote), `${path} ends with an attribution: ${v.quote}`)
       assert.ok(!/(?:[,;:]|\s(?:and|or|with))$/i.test(v.quote), `${path} unclean cut: ${v.quote}`)
     }
@@ -76,7 +81,7 @@ test('no quote in models.json spans a box break or ends with an attribution', ()
 test('the p. 28 splice never reaches an answer', () => {
   for (const q of ['Van Halen brown sound', 'Eddie Van Halen', 'typical Plexi settings']) {
     const a = answer(q, { models, pages })
-    for (const s of a.suggestions) for (const w of s.why) assert.ok(!spansBoxBreak(w.quote, pages.get(w.page)), `${q}: ${w.quote}`)
+    for (const s of a.suggestions) for (const w of s.why) assert.ok(!spansBoxBreak(w.quote, pages.get(w.page), titles), `${q}: ${w.quote}`)
   }
 })
 
@@ -86,4 +91,22 @@ test('cleanCut trims trailing punctuation and dangling words only', () => {
   assert.equal(cleanCut('Four models of a VOX AC30:'), 'Four models of a VOX AC30')
   assert.equal(cleanCut('rock and roll'), 'rock and roll')
   assert.equal(cleanCut('Brand new sound with'), 'Brand new sound')
+})
+
+test('round 4: running header and page-number footer are box breaks', () => {
+  const HEADER = [
+    [108, 'Class-A 30W (VOX AC30) The Edge’s famous amp is a ’64 Top Boost AC30/6 model.'],
+    [270, 'USA IIC+ and USA IIC++ (MESA/Boogie Mark IIC+) Quantum firmware 3.03 brought us the'],
+  ]
+  const FOOTER = [[263, 'a grinding Crunch.” – MESA 262']]
+  for (const [p, q] of [...HEADER, ...FOOTER]) assert.ok(pageText(pages, p).includes(q), `control: on p. ${p}: ${q}`)
+  for (const [p, q] of HEADER) {
+    assert.equal(spansBoxBreak(q, pages.get(p), titles), true, `p. ${p} header should span`)
+    assert.equal(spansBoxBreak(q, pages.get(p)), false, `control: without titles p. ${p} has no header break`)
+  }
+  for (const [p, q] of FOOTER) assert.equal(spansBoxBreak(q, pages.get(p)), true, `p. ${p} footer should span`)
+  // The sentence without the header does not span.
+  assert.equal(spansBoxBreak('The Edge’s famous amp is a ’64 Top Boost AC30/6 model.', pages.get(108), titles), false)
+  assert.deepEqual(splitAtBoxBreaks(HEADER[0][1], pages.get(108), titles), ['Class-A 30W (VOX AC30)', 'The Edge’s famous amp is a ’64 Top Boost AC30/6 model.'])
+  assert.equal(cleanCut('• Bright: adds sparkle, and'), 'Bright: adds sparkle')
 })

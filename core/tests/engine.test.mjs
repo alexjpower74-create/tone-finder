@@ -176,3 +176,14 @@ test('coverage: a model matching one of two found terms scores exactly 0.75 × i
   // Both terms covered → factor 1, so its score is the plain sum (chime may fall outside the single-query top 4).
   if (edge && chime) assert.ok(Math.abs(classA.score - (edge.score + chime.score)) < 1e-9)
 })
+
+test('"Petrucci lead": no why quote is a stock-cabs line', () => {
+  const a = answer('Petrucci lead', { models, pages })
+  assert.equal(a.status, 'ok')
+  const stock = models.models.map((m) => m.cab.stock_cabs?.quote).filter(Boolean)
+  assert.ok(stock.some((q) => q.includes('4x12 Petrucci')), 'control: the Recto stock-cabs line names Petrucci')
+  for (const s of a.suggestions) for (const w of s.why) {
+    assert.ok(!stock.some((q) => w.quote.includes(q) || q.includes(w.quote)), `${s.model_id}: ${w.quote}`)
+    assert.ok(!/Cab Packs?\b/.test(w.quote), `${s.model_id}: ${w.quote}`)
+  }
+})

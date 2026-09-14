@@ -2,6 +2,7 @@
 import { normText, foldForSearch, spansBoxBreak, cutAttribution, cleanCut } from './text.js'
 import { checkQuote, QUOTE_MAX } from './verify.js'
 import { search, sentencePool, termRegex } from './search.js'
+import { sectionTitles } from './models.js'
 import { knobsFor } from './knobs.js'
 import { aresObject, aresFlags } from './ares.js'
 
@@ -42,11 +43,12 @@ function cmpKey(a, b) {
 // §4.2: 1–3 verified quotes. The first carries a strong term; the 2nd/3rd a strong term, or generic terms only when
 // from synopsis or tips. Never a controls or spec-table line. Quotes in `avoid` (shown under an earlier card) are
 // used only when the model has no other sentence that works.
-export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
+export function pickWhy(model, terms, pages, { avoid = new Set(), titles = null } = {}) {
   if (!terms.length) return []
   const compiled = terms.map((t) => ({ ...t, re: termRegex(t.term) }))
   const saidBy = storedSaidBy(model)
   const controls = model.controls?.quote
+  const stock = model.cab?.stock_cabs?.quote
   // §4.2 "Which sentence first": the model's name, a unit name, or a unit name's last word of 3+ characters.
   const nameParts = new Set([model.name, ...model.unit_names.map((u) => u.name)])
   for (const u of model.unit_names) {
@@ -56,7 +58,7 @@ export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
   const nameRe = new RegExp([...nameParts].map((n) => termRegex(n).source).join('|'))
   const seen = new Set()
   const cands = []
-  sentencePool(model, pages).forEach((item, order) => {
+  sentencePool(model, pages, titles).forEach((item, order) => {
     let text = item.text
     let said = item.said_by
     const cut = cutAttribution(text, SAID_BY_NAMES)
@@ -67,6 +69,7 @@ export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
     text = cleanCut(text)
     if (text.length < 12) return
     if (SPEC_LINE.test(text) || (controls && (text.includes(controls) || controls.includes(text)))) return
+    if (stock && (text.includes(stock) || stock.includes(text))) return
     let matched = compiled.filter((t) => t.re.test(foldForSearch(text)))
     if (!matched.length) return
     if (text.length > QUOTE_MAX) {
@@ -77,7 +80,7 @@ export function pickWhy(model, terms, pages, { avoid = new Set() } = {}) {
       matched = compiled.filter((t) => t.re.test(foldForSearch(text)))
       if (!matched.length) return
     }
-    if (pages && (!checkQuote({ quote: text, page: item.page }, pages).ok || spansBoxBreak(text, pages.get(item.page)))) return
+    if (pages && (!checkQuote({ quote: text, page: item.page }, pages).ok || spansBoxBreak(text, pages.get(item.page), titles))) return
     const key = `${item.page}|${text}`
     if (seen.has(key)) return
     seen.add(key)
@@ -123,7 +126,7 @@ export function chooseUnitName(model, why, query) {
 }
 
 export function buildSuggestion(model, { data, pages, query, terms, intent, rank, source, score, why = null, unitName = null, aiTexts = [], avoid }) {
-  const whyList = why ?? pickWhy(model, terms, pages, { avoid })
+  const whyList = why ?? pickWhy(model, terms, pages, { avoid, titles: sectionTitles(data) })
   const unit_name = unitName ?? chooseUnitName(model, whyList, query)
   const k = knobsFor(model, { unitName: unit_name, terms: terms.map((t) => t.term), intent, conventions: data.conventions })
   const shown = [

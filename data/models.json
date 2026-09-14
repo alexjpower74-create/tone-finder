@@ -107,7 +107,7 @@
             "page": 13
           },
           {
-            "quote": "5F1 Tweed (Fender Narrow Panel Tweed Champ, 5F1) The low output and small speaker make the amp break up early.",
+            "quote": "The low output and small speaker make the amp break up early.",
             "page": 14
           }
         ]
@@ -481,7 +481,7 @@
             "page": 23
           },
           {
-            "quote": "59 Bassguy ('59 Fender Narrow Panel Tweed Bassman, 5F6-A) Bassman amps use four Jensen 10” Alnico speakers (Jensen P10R / P10Q).",
+            "quote": "Bassman amps use four Jensen 10” Alnico speakers (Jensen P10R / P10Q).",
             "page": 24
           }
         ]
@@ -1338,7 +1338,7 @@
             "page": 46
           },
           {
-            "quote": "A logical cab choice would be the IR of a 4x12 Marshall cab with G12M, V30 or G12-75 speakers. 45",
+            "quote": "A logical cab choice would be the IR of a 4x12 Marshall cab with G12M, V30 or G12-75 speakers.",
             "page": 46
           }
         ]
@@ -5368,7 +5368,7 @@
         },
         "notes": [
           {
-            "quote": "Friedman SM Box (Friedman Small Box) The Smallbox combo has a G12M Creamback speaker.",
+            "quote": "The Smallbox combo has a G12M Creamback speaker.",
             "page": 159
           },
           {
@@ -5542,7 +5542,7 @@
         "stock_cabs": null,
         "notes": [
           {
-            "quote": "Gibtone Scout (’64 Gibson Scout) The original speaker is a Gibson 10” speaker.",
+            "quote": "The original speaker is a Gibson 10” speaker.",
             "page": 164
           },
           {
@@ -5617,7 +5617,7 @@
         },
         "notes": [
           {
-            "quote": "Herbie (Diezel Herbert) Use IRs of V30 or G12-K100 speakers in a 4x12 cabinet.",
+            "quote": "Use IRs of V30 or G12-K100 speakers in a 4x12 cabinet.",
             "page": 167
           }
         ]
@@ -6161,7 +6161,7 @@
         },
         "notes": [
           {
-            "quote": "JS410 (Marshall JVM410HJS, Joe Satriani’s signature amp) Marshall’s accompanying 1960A cabinet has four G12-75 speakers.",
+            "quote": "Marshall’s accompanying 1960A cabinet has four G12-75 speakers.",
             "page": 184
           }
         ]
@@ -8914,11 +8914,11 @@
         },
         "notes": [
           {
-            "quote": "USA IIC+ and USA IIC++ (MESA/Boogie Mark IIC+) MESA put EV-12L speakers in the IIC+.",
+            "quote": "Note that the Red Wirez stock cabs have been captured using an neutral microphone, so consider adding a mic model in the Cab block.",
             "page": 271
           },
           {
-            "quote": "Note that the Red Wirez stock cabs have been captured using an neutral microphone, so consider adding a mic model in the Cab block.",
+            "quote": "Red Wire sells more IRs of original IIC+ cabinets.",
             "page": 271
           }
         ]
@@ -9624,7 +9624,7 @@
         "stock_cabs": null,
         "notes": [
           {
-            "quote": "Wrecker Liverpool (Trainwreck Liverpool) G12M (greenback) speakers are a logical choice for this amp and amp model.",
+            "quote": "G12M (greenback) speakers are a logical choice for this amp and amp model.",
             "page": 292
           }
         ]
