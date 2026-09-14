@@ -4,13 +4,14 @@
 // Models come from the local guide in TF_GUIDE_DIR (derived fields and short verified quotes only; the guide is
 // never copied), or from tf1's real data once it lands: --models <path to data/models.json>.
 // Canned answers are built from the same models with a small copy of the §4.3 knob rules. Every quote written by
-// this script is verified on its page (§0); any miss stops the build.
+// this script is verified on its page (§0) and is never a joined passage; any miss stops the build.
 //
 // Usage: node app/tools/build-mock.mjs [--models path/to/models.json]
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { hasJoin, makeVerifier, normText, parsePages, splitPassages } from './guide-text.mjs';
 
 const APP = join(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = join(APP, '..');
@@ -22,26 +23,6 @@ function die(msg) {
 }
 
 // ---------- guide pages and quote verification (§0, §2) ----------
-const normText = (s) => String(s).replace(/[\s ]+/g, ' ').trim();
-const SENTENCE_BREAK = /[.!?][”"’)]*\s+(?=[A-Z“"‘(])/g;
-const splitSentences = (t) => t.split(/(?<=[.!?][”"’)]*)\s+(?=[A-Z“"‘(])/);
-
-function parsePages(full) {
-  const pages = new Map();
-  const re = /^===== PAGE (\d+) =====$/gm;
-  let m;
-  let last = null;
-  let from = 0;
-  while ((m = re.exec(full))) {
-    if (last !== null) pages.set(last, full.slice(from, m.index));
-    last = Number(m[1]);
-    from = m.index + m[0].length;
-    if (full[from] === '\n') from++;
-  }
-  if (last !== null) pages.set(last, full.slice(from));
-  return pages;
-}
-
 let fulltext;
 try {
   fulltext = readFileSync(join(GUIDE_DIR, 'yek-guide-fulltext.txt'), 'utf8');
@@ -50,17 +31,13 @@ try {
 }
 const RAW = parsePages(fulltext);
 if (RAW.size !== 301) die(`expected 301 pages, got ${RAW.size}`);
-const PT = new Map([...RAW].map(([n, t]) => [n, normText(t)]));
-const pageText = (n) => PT.get(n) ?? die(`no page ${n}`);
-
-function isVerified(quote, page) {
-  if (typeof quote !== 'string' || quote !== normText(quote) || quote.length < 12 || quote.length > 320) return false;
-  if ((quote.match(SENTENCE_BREAK) || []).length > 1) return false;
-  return Number.isInteger(page) && page >= 1 && page <= 301 && pageText(page).includes(quote);
-}
+const V = makeVerifier(RAW);
+const pageText = (n) => V.pageText(n) ?? die(`no page ${n}`);
+const isVerified = (quote, page) => V.isVerified(quote, page);
 
 function Q(quote, page, extra = {}) {
   if (!isVerified(quote, page)) die(`quote not verified on p. ${page}: ${JSON.stringify(String(quote).slice(0, 90))}`);
+  if (hasJoin(quote)) die(`joined passage on p. ${page}: ${JSON.stringify(String(quote).slice(0, 90))}`);
   return { quote, page, ...extra };
 }
 
@@ -170,10 +147,10 @@ function stripHeader(text, section) {
 function sentencesOf(m) {
   const out = [];
   for (let p = m.pages.start; p <= m.pages.end; p++) {
-    for (const s of splitSentences(stripHeader(pageText(p), m.section))) {
+    for (const s of splitPassages(stripHeader(pageText(p), m.section))) {
       // Drop a trailing printed page number; skip fragments that start mid-sentence.
       const q = s.trim().replace(/\s+\d{1,3}$/, '');
-      if (/^[A-Z0-9“"‘(]/.test(q) && isVerified(q, p)) out.push({ quote: q, page: p });
+      if (/^[A-Z0-9“"‘(]/.test(q) && isVerified(q, p) && !hasJoin(q)) out.push({ quote: q, page: p });
     }
   }
   return out;
@@ -231,11 +208,13 @@ function deriveModels() {
       [...(specs.power_tubes ?? '').matchAll(/[A-Z0-9]+/g)].map((t) => TUBE_ALIAS[t[0]] ?? t[0]).filter((t) => TUBES.includes(t)),
     );
 
-    const synopsis = synText && isVerified(synText, start) ? Q(synText, start) : null;
+    // Card fields can glue two boxes together: keep the first passage and let verification prove it.
+    const firstPassage = (raw) => splitPassages(raw)[0] ?? '';
+    const synPiece = synText ? firstPassage(synText) : '';
+    const synopsis = synPiece && isVerified(synPiece, start) ? Q(synPiece, start) : null;
 
     const tips = [];
-    for (const s of splitSentences(normText(card.Tips ?? ''))) {
-      const q = s.trim();
+    for (const q of splitPassages(normText(card.Tips ?? ''))) {
       if (tips.length < 3 && isVerified(q, start)) tips.push(Q(q, start, { said_by: saidByAfter(q, start) }));
     }
 
@@ -243,7 +222,10 @@ function deriveModels() {
       if (!raw) return null;
       const full = normText(raw);
       // The card field runs into the next heading ("… Web, Manual …"): cut it and let verification prove the cut.
-      for (const c of [full.split(' Web,')[0].trim(), full]) if (isVerified(c, start)) return Q(c, start);
+      for (const c of [full.split(' Web,')[0].trim(), full]) {
+        const piece = firstPassage(c);
+        if (piece && isVerified(piece, start)) return Q(piece, start);
+      }
       return null;
     };
 
@@ -360,7 +342,9 @@ function whyQuotes(m, terms, max = 3) {
     const matched = terms.filter((t) => termRe(t).test(s.quote));
     if (matched.length && !scored.some((x) => x.quote === s.quote)) scored.push({ ...s, matched });
   }
-  scored.sort((a, b) => b.matched.length - a.matched.length || b.rank - a.rank || a.page - b.page);
+  // More terms first, then whole sentences over fragments, then stored tips/synopsis, then guide order.
+  const whole = (q) => (/[.!?][”"’)]*$/.test(q) ? 1 : 0);
+  scored.sort((a, b) => b.matched.length - a.matched.length || whole(b.quote) - whole(a.quote) || b.rank - a.rank || a.page - b.page);
   const saidBy = (q) =>
     [...target.tips, ...target.notes, ...target.settings].find((x) => x.quote === q.quote)?.said_by ?? null;
   const picked = [];
@@ -537,7 +521,7 @@ const countQuotes = (x) => {
   }
 };
 countQuotes(data.models);
-const guideChars = [...PT.values()].reduce((n, t) => n + t.length, 0);
+const guideChars = [...V.text.values()].reduce((n, t) => n + t.length, 0);
 
 const OUT = join(APP, 'mock');
 mkdirSync(OUT, { recursive: true });

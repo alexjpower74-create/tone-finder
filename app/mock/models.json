@@ -154,7 +154,7 @@
    ],
    "cab": {
     "speaker": {
-     "quote": "Keith Urban’s cabinet has two Two-Rock CR12 speakers, captured in the IR below. The original Tweed Twin has two Jensen P10Ns",
+     "quote": "Keith Urban’s cabinet has two Two-Rock CR12 speakers, captured in the IR below.",
      "page": 15
     },
     "stock_cabs": {
@@ -230,7 +230,7 @@
    ],
    "cab": {
     "speaker": {
-     "quote": "Originally equipped with two Jensen 10” speakers. The modeled amp has two 12” speakers, captured in the IR below",
+     "quote": "Originally equipped with two Jensen 10” speakers.",
      "page": 18
     },
     "stock_cabs": {
@@ -352,7 +352,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Model of a “holy grail” 1959 Fender Tweed Bassman, the “grandfather of rock and roll”",
+    "quote": "Model of a “holy grail” 1959 Fender Tweed Bassman, the",
     "page": 22
    },
    "controls": null,
@@ -427,7 +427,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of both channels of a ‘65 Fender Bassman with AB165 circuit, owned by Dweezil Zappa. Much nastier than a regular Bassman, sort of “Marshall- ish”",
+    "quote": "Models of both channels of a ‘65 Fender Bassman with AB165 circuit, owned by Dweezil Zappa.",
     "page": 25
    },
    "controls": null,
@@ -505,12 +505,12 @@
      "said_by": null
     },
     {
-     "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+     "quote": "Or just crank everything, like Eddie Van Halen",
      "page": 28,
      "said_by": null
     },
     {
-     "quote": "Adjust Presence to taste.”",
+     "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
      "page": 28,
      "said_by": null
     }
@@ -528,21 +528,8 @@
    },
    "settings": [
     {
-     "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
-     "page": 28,
-     "said_by": null,
-     "context": null,
-     "unit_name": null,
-     "knobs": {
-      "Bass": 2,
-      "Mid": 8,
-      "Treble": 7.5
-     },
-     "other": []
-    },
-    {
      "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
-     "page": 30,
+     "page": 28,
      "said_by": null,
      "context": null,
      "unit_name": null,
@@ -607,7 +594,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of a Marshall JMP 50 re-issue: a 50w Plexi. More aggressive than the ’60s Plexis, the 1987X is much more of the ’72 period, with a heavy, sweet/aggressive tone",
+    "quote": "Models of a Marshall JMP 50 re-issue: a 50w Plexi.",
     "page": 32
    },
    "controls": null,
@@ -751,7 +738,7 @@
      "said_by": null
     },
     {
-     "quote": "Try the EF86 models with single-coils and 12AX7 with humbuckers “As with the real amp I dial in quite a bit of Hi-Cut. ”",
+     "quote": "Try the EF86 models with single-coils and 12AX7 with humbuckers",
      "page": 38,
      "said_by": null
     }
@@ -1409,7 +1396,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of Slash’s signature amp, providing the sounds of the Appetite for Destruction album. The amp has two modes: #34 which is a modified JCM 800 and AFD which is based on a modified Superlead Plexi",
+    "quote": "Models of Slash’s signature amp, providing the sounds of the Appetite for Destruction album.",
     "page": 58
    },
    "controls": null,
@@ -2072,7 +2059,12 @@
    "controls": null,
    "tips": [
     {
-     "quote": "“Input gain on 10 o clock, gain on 2 o clock is a ‘70’s /’80’s lead tone, put the input level up to 2 o click and it's a very sustained lead tone or a very modern heavy rhythm tone” – Alan Phillips",
+     "quote": "“Input gain on 10 o clock, gain on 2 o clock is a ‘70’s /’80’s lead tone, put the input level up to 2 o click and it's a very sustained lead tone or a very modern heavy rhythm tone”",
+     "page": 79,
+     "said_by": null
+    },
+    {
+     "quote": "– Alan Phillips",
      "page": 79,
      "said_by": null
     }
@@ -2200,7 +2192,12 @@
      "said_by": null
     },
     {
-     "quote": "For higher gain, engage the Boost switch and turn down Drive” – yek Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)",
+     "quote": "For higher gain, engage the Boost switch and turn down Drive”",
+     "page": 84,
+     "said_by": "yek"
+    },
+    {
+     "quote": "– yek Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)",
      "page": 84,
      "said_by": null
     }
@@ -2237,7 +2234,7 @@
     {
      "knob": "Drive",
      "dir": "down",
-     "quote": "For higher gain, engage the Boost switch and turn down Drive” – yek Steve Vai's personal VL100 settings: Drive: 7.5, Bass: 6, Mid: 4/5, Treble: 8, Presence: 8 (Legato 100 model)",
+     "quote": "For higher gain, engage the Boost switch and turn down Drive”",
      "page": 84
     }
    ],
@@ -2280,7 +2277,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of a Cameron CCV that sounds like “one pissed off amp”",
+    "quote": "Models of a Cameron CCV that sounds like",
     "page": 86
    },
    "controls": null,
@@ -2931,7 +2928,7 @@
      "said_by": null
     },
     {
-     "quote": "You can replicate the “Gradual” position by decreasing Input Trim to .250 “Like the Comet 60 model, this model doesn’t need a lot of EQ-ing.",
+     "quote": "You can replicate the “Gradual” position by decreasing Input Trim to .250",
      "page": 113,
      "said_by": null
     }
@@ -3223,7 +3220,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of two versions of Friedman’s Dirty Shirley, his take on the JTM 45. The “2” model is based on an earlier version, which is a little more aggressive than the regular model",
+    "quote": "Models of two versions of Friedman’s Dirty Shirley, his take on the JTM 45.",
     "page": 125
    },
    "controls": null,
@@ -3234,7 +3231,7 @@
      "said_by": null
     },
     {
-     "quote": "Set the gain around 6 and then bring the master to taste” – Manual",
+     "quote": "Set the gain around 6 and then bring the master to taste”",
      "page": 125,
      "said_by": null
     }
@@ -3785,7 +3782,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Model of the Bogner Uberschall, called “Armageddon in a box” by Bogner",
+    "quote": "Model of the Bogner Uberschall, called",
     "page": 146
    },
    "controls": null,
@@ -4782,7 +4779,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Model of a Dr. Z Route 66: thick blues and medium rock tones",
+    "quote": "Model of a Dr.",
     "page": 190
    },
    "controls": null,
@@ -4795,7 +4792,7 @@
    ],
    "cab": {
     "speaker": {
-     "quote": "Single 12” V30, G12H, Alnico Blue or Dr. Z Z 12",
+     "quote": "Single 12” V30, G12H, Alnico Blue or Dr.",
      "page": 190
     },
     "stock_cabs": null,
@@ -4842,7 +4839,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Model of a Dr. Z Maz 8, an 8 watt Class A amp, the “quintessential country amp”",
+    "quote": "Model of a Dr.",
     "page": 192
    },
    "controls": null,
@@ -4855,7 +4852,7 @@
    ],
    "cab": {
     "speaker": {
-     "quote": "Single 12” V30, G12H, Alnico Blue or Dr. Z Z 12",
+     "quote": "Single 12” V30, G12H, Alnico Blue or Dr.",
      "page": 192
     },
     "stock_cabs": null,
@@ -5054,7 +5051,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of various Marshall Plexi heads, “the world’s greatest rock amp” • PLEXI 100W – 1969 Superlead 100w • PLEXI 100W 1970 – 1970 Superlead 100w • PLEXI 50W – 1972 Lead 50w • PLEXI 50W HI 2 – 70’s Lead 50w • PLEXI 50W 6550 – 1972 Lead 50w with 6550 tubes",
+    "quote": "Models of various Marshall Plexi heads,",
     "page": 203
    },
    "controls": null,
@@ -5065,9 +5062,9 @@
      "said_by": null
     },
     {
-     "quote": "Adjust Presence to taste. ” – Cliff",
+     "quote": "Adjust Presence to taste. ”",
      "page": 203,
-     "said_by": null
+     "said_by": "Cliff"
     }
    ],
    "cab": {
@@ -5084,7 +5081,7 @@
    "settings": [
     {
      "quote": "“My settings for a “typical” Plexi tone are Bass: 2, Mid: 8, Treble 7.5.",
-     "page": 206,
+     "page": 203,
      "said_by": null,
      "context": null,
      "unit_name": null,
@@ -5404,9 +5401,9 @@
      "said_by": null
     },
     {
-     "quote": "Volume around 2.50, Bass at 3 (both models)” – yek",
+     "quote": "Volume around 2.50, Bass at 3 (both models)”",
      "page": 223,
-     "said_by": null
+     "said_by": "yek"
     }
    ],
    "cab": {
@@ -5604,9 +5601,9 @@
      "said_by": null
     },
     {
-     "quote": "This results in a very meaty and solid rock tone. which makes high push-ups really thick.” – yek",
+     "quote": "This results in a very meaty and solid rock tone. which makes high push-ups really thick.”",
      "page": 230,
-     "said_by": null
+     "said_by": "yek"
     }
    ],
    "cab": {
@@ -6028,9 +6025,9 @@
    "controls": null,
    "tips": [
     {
-     "quote": "“Don't hesitate to set Input Drive really low (below 2) and everything else at stock” – yek",
+     "quote": "“Don't hesitate to set Input Drive really low (below 2) and everything else at stock”",
      "page": 244,
-     "said_by": null
+     "said_by": "yek"
     }
    ],
    "cab": {
@@ -6085,9 +6082,9 @@
    "controls": null,
    "tips": [
     {
-     "quote": "“I keep all controls pretty much at default, except for Treble (= Tone)” – yek",
+     "quote": "“I keep all controls pretty much at default, except for Treble (= Tone)”",
      "page": 245,
-     "said_by": null
+     "said_by": "yek"
     }
    ],
    "cab": {
@@ -6907,7 +6904,7 @@
     ]
    },
    "synopsis": {
-    "quote": "Models of a Fender Vibro-King, called by some “The King of Fender Amps” , and the favorite amp of Gary Clark Jr. and Robert Cray",
+    "quote": "Models of a Fender Vibro-King, called by some",
     "page": 282
    },
    "controls": null,
@@ -6976,9 +6973,9 @@
    "controls": null,
    "tips": [
     {
-     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone” – Yek",
+     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone”",
      "page": 284,
-     "said_by": null
+     "said_by": "yek"
     }
    ],
    "cab": {
@@ -6997,13 +6994,13 @@
     {
      "knob": "Bass",
      "dir": "down",
-     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone” – Yek",
+     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone”",
      "page": 284
     },
     {
      "knob": "Treble",
      "dir": "up",
-     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone” – Yek",
+     "quote": "“I turn down Bass a little, increase Treble a little and that’s it: a great vintage Fender tone”",
      "page": 284
     }
    ],
@@ -7057,9 +7054,9 @@
      "said_by": null
     },
     {
-     "quote": "If you find the AA or CS model too dark, engage the Bright switch” – yek",
+     "quote": "If you find the AA or CS model too dark, engage the Bright switch”",
      "page": 286,
-     "said_by": null
+     "said_by": "yek"
     }
    ],
    "cab": {
@@ -7259,9 +7256,9 @@
      "said_by": null
     },
     {
-     "quote": "Other than that, I can pretty much leave all controls at default” – Yek",
+     "quote": "Other than that, I can pretty much leave all controls at default”",
      "page": 293,
-     "said_by": null
+     "said_by": "yek"
     }
    ],
    "cab": {

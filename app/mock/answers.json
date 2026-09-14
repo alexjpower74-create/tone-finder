@@ -285,16 +285,16 @@
       "score": 7.9,
       "why": [
        {
-        "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
-        "page": 28,
+        "quote": "Numerous guitar heroes played some kind of Plexi: Pete Townsend, Jimi Hendrix, Jimmy Page, Angus Young, Yngwie Malmsteen, Jeff Beck and of course Eddie Van Halen.",
+        "page": 29,
         "said_by": null,
         "matched": [
          "van halen"
         ]
        },
        {
-        "quote": "Numerous guitar heroes played some kind of Plexi: Pete Townsend, Jimi Hendrix, Jimmy Page, Angus Young, Yngwie Malmsteen, Jeff Beck and of course Eddie Van Halen.",
-        "page": 29,
+        "quote": "Eddie Van Halen cranked all volume and tone controls on his Plexi.",
+        "page": 30,
         "said_by": null,
         "matched": [
          "van halen"
@@ -312,7 +312,7 @@
         "knob": "Bass",
         "value": 2,
         "kind": "guide",
-        "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
         "page": 28,
         "said_by": null
        },
@@ -320,7 +320,7 @@
         "knob": "Mid",
         "value": 8,
         "kind": "guide",
-        "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
         "page": 28,
         "said_by": null
        },
@@ -328,7 +328,7 @@
         "knob": "Treble",
         "value": 7.5,
         "kind": "guide",
-        "quote": "Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
+        "quote": "“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.",
         "page": 28,
         "said_by": null
        },
@@ -545,6 +545,15 @@
         "said_by": null,
         "matched": [
          "sparkling",
+         "clean"
+        ]
+       },
+       {
+        "quote": "It has the typical blackface 60′s sparkle with a scooped clean sound just like the bigger Fender brothers, just with more smooth breakup, sag and compression.”",
+        "page": 123,
+        "said_by": null,
+        "matched": [
+         "sparkle",
          "clean"
         ]
        }
@@ -1012,7 +1021,7 @@
       "score": 15.8,
       "why": [
        {
-        "quote": "Models of the Bludotone Ojai, a clone of Robben Ford’s “Tan” Dumble Overdrive Special",
+        "quote": "When you Dumble, you say Robben Ford, and vice versa.",
         "page": 49,
         "said_by": null,
         "matched": [
@@ -1020,7 +1029,7 @@
         ]
        },
        {
-        "quote": "When you Dumble, you say Robben Ford, and vice versa.",
+        "quote": "It’s sort of an authorized clone: Robben Ford owns a Bludotone Ojai.",
         "page": 49,
         "said_by": null,
         "matched": [
@@ -1244,7 +1253,7 @@
       "score": 12.7,
       "why": [
        {
-        "quote": "Four models of a VOX AC30: • Class-A 30W: Normal channel of a non-Top Boost AC30 • Class-A 30W BRT: Bright channel of a non-Top Boost AC30 • Class-A 30W TB: Top Boost channel of the AC30 Hand-Wired • Class-A 30W HOT: Hot mode of the AC30 Hand-Wired",
+        "quote": "The VOX AC30 flagship amplifier came to life in ’59 because the existing AC15 simply wasn’t loud enough and artists such as The Shadows asked for louder ones..",
         "page": 107,
         "said_by": null,
         "matched": [
@@ -1252,7 +1261,7 @@
         ]
        },
        {
-        "quote": "The VOX AC30 flagship amplifier came to life in ’59 because the existing AC15 simply wasn’t loud enough and artists such as The Shadows asked for louder ones..",
+        "quote": "VOX doubled the number of power tubes in the AC30.",
         "page": 107,
         "said_by": null,
         "matched": [
@@ -1353,7 +1362,7 @@
       "score": 8.4,
       "why": [
        {
-        "quote": "Model of a VOX AC15 Top Boost, AC30’s little brother",
+        "quote": "The AC15 was developed before the AC30.",
         "page": 103,
         "said_by": null,
         "matched": [
@@ -1361,7 +1370,7 @@
         ]
        },
        {
-        "quote": "The AC15 was developed before the AC30.",
+        "quote": "The AC15 simply was not loud enough so VOX made a louder version: the AC30.",
         "page": 103,
         "said_by": null,
         "matched": [
@@ -1638,7 +1647,7 @@
         ]
        },
        {
-        "quote": "More history “Despite being derived virtually point-by-point from Fender’s 5F6-A Bassman schematic, British components give the JTM45 a tone all its own.” – Vintage Guitar It’s a different kind of Marshall, compared to the later Plexis.",
+        "quote": "“Despite being derived virtually point-by-point from Fender’s 5F6-A Bassman schematic, British components give the JTM45 a tone all its own.”",
         "page": 62,
         "said_by": null,
         "matched": [
