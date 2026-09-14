@@ -71,6 +71,27 @@ test('fake-plant: unknown unit name, bad page and a changed character are droppe
   checkInvariants(a, { pages })
 })
 
+test('fake-gk: general knowledge about the guide, candidates or model list is dropped; terms are de-duplicated', async () => {
+  const a = await ask('Van Halen brown sound master fake-gk')
+  assert.equal(a.ai.used, true)
+  assert.equal(a.suggestions[0].model_id, 'brit-brown-and-fas-brown')
+  assert.equal(a.suggestions[0].source, 'ai_checked')
+  assert.deepEqual(a.general_knowledge.map((g) => g.text), ['FAKE: Eddie Van Halen played a modded Marshall Superlead on the early records.'])
+  for (const g of a.general_knowledge) assert.doesNotMatch(g.text, /guide|candidate|provided|model list|the list/i)
+  const { matched_terms, ai_terms } = a.understood
+  assert.ok(matched_terms.includes('van halen') && matched_terms.includes('brown sound'), JSON.stringify(a.understood))
+  assert.deepEqual(matched_terms, [...new Set(matched_terms)], `matched_terms repeat: ${matched_terms}`)
+  assert.deepEqual(ai_terms, [...new Set(ai_terms)], `ai_terms repeat: ${ai_terms}`)
+  assert.equal(matched_terms.filter((t) => t === 'master').length, 1, 'control: "master" is in both the query and the AI terms')
+})
+
+test('the pick prompt forbids guide talk in general knowledge, and the cache version moved on', async () => {
+  const { PROMPT_VERSION } = await import('../ai.js')
+  assert.equal(PROMPT_VERSION, 'tf-ai-2')
+  const src = readFileSync(fileURLToPath(new URL('../ai.js', import.meta.url)), 'utf8')
+  assert.match(src, /Never write general_knowledge about the guide, the guide candidates or the model list/)
+})
+
 test('fake-span: an AI citation that runs across a box break is dropped as quote_not_on_page', async () => {
   const q = 'Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.'
   assert.ok(checkQuote({ quote: q, page: 28 }, pages).ok, 'control: it is an exact, verified substring')

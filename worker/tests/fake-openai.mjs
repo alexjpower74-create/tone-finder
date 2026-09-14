@@ -31,6 +31,22 @@ export const SCENARIOS = {
       ],
     },
   },
+  'fake-gk': {
+    pick: {
+      general_knowledge: [
+        { text: 'The provided guide candidate points to Fractal Audio’s own Brown Sound-style models for that vibe.' },
+        { text: 'FAKE: Eddie Van Halen played a modded Marshall Superlead on the early records.' },
+        { text: 'From the model list, Brit Brown fits best.' },
+      ],
+      search_terms: ['van halen', 'brown sound', 'master'],
+      picks: [{ model_id: 'brit-brown-and-fas-brown', unit_name: 'Brit Brown' }],
+    },
+    cite: {
+      suggestions: [
+        { model_id: 'brit-brown-and-fas-brown', unit_name: 'Brit Brown', citations: [{ page: 60, quote: 'Turn up Presence in the Brit Brown model' }] },
+      ],
+    },
+  },
   'fake-span': {
     pick: { general_knowledge: [], search_terms: [], picks: [{ model_id: '1959slp', unit_name: '1959SLP' }] },
     cite: {
