@@ -192,11 +192,14 @@ null (Worker before load-guide), in which case the only searchable text is the q
 
 ### 4.1 Terms and search
 - Lowercase the query, keep letters, digits, `+`, `#`, `/`, `-` and apostrophes inside words; split on the rest.
-- **Stop words** are never searched alone: a an and the of on in at to for with from by like my me i want need
-  get some sort kind type tone tones sound sounds sounding song guitar guitars amp amps model models setting
-  settings preset patch please how what that this those these is are be it its his her their do does make give
-  play playing through into onto over under about via as or but than (the last eleven added from tf1's finding:
-  "banjo through a toaster" matched "through" in two tips).
+- **Stop words** are never searched alone. Two kinds:
+  - *Function words*: a an and the of on in at to for with from by like my me i want need get some sort kind type
+    please how what that this those these is are be it its his her their do does make give through into onto over
+    under about via as or but than (the last eleven from tf1's finding: "banjo through a toaster" matched "through").
+    A 2+-word n-gram may not start or end with one (except "the" + proper name, below).
+  - *Filler words*: tone tones sound sounds sounding song guitar guitars amp amps model models setting settings
+    preset patch play playing. A 2+-word n-gram may END with one but not start with one, so "brown sound" and
+    "rhythm tone" are tried as phrases ("brown" alone matched "'60 brown Fender Super").
 - **Generic words** are searched and scored but are never *strong*: clean crunch crunchy rhythm lead solo dirty
   distorted distortion overdrive overdriven drive gain master volume bass mid middle treble presence depth
   loud quiet warm bright dark fat big heavy.
@@ -218,6 +221,11 @@ null (Worker before load-guide), in which case the only searchable text is the q
 - `score(model) = Σ over found terms of idf × (best field weight where the term hits that model) × (1.5 if the term
   has 2+ words) × (1 + ln(hits))`, where `hits` is how many times the term occurs across that model's pages (min 1).
   A section that names Metallica four times outranks four sections that list Metallica once among other users.
+  **The `(1 + ln(hits))` factor applies only when the term's best field for that model is body text (weight 1)**;
+  name, based_on, synopsis and tips hits use factor 1 (otherwise "blues" in "Blues Junior" swamped "SRV").
+- **Coverage.** `final score = score × (0.5 + 0.5 × covered / found)`, where `found` is the number of distinct
+  found non-generic terms in the query and `covered` how many of them hit this model (both at least 1). A model
+  that matches "The Edge" and "chime" outranks one that matches only "chime".
 - **Candidates** are models with at least one strong term. Keep those with `score >= 0.4 × top score`, at most 4,
   ordered by score, then guide order.
 - `understood.matched_terms`: found terms. `understood.unmatched_terms`: non-stop, non-generic words and n-grams
@@ -254,6 +262,10 @@ null (Worker before load-guide), in which case the only searchable text is the q
     and then bring the master to taste” – Manual"; doesn't span → p. 16 "The name “Twin” probably refers to the use
     of two 12” speakers.", p. 28 "Plexis with 4x12 cabinets gave rise to the “Marshall stack”.", p. 146 "Model of the
     Bogner Uberschall, called “Armageddon in a box” by Bogner".
+- **Clean cuts.** A quote cut at a box break or clause must not end on a comma, semicolon, colon or a dangling
+  "and" / "or" / "with": trim them (the result is still an exact substring and must still verify), or drop the quote
+  when that leaves under 12 characters ("Models of various Marshall Plexi heads," → "… heads"; Recto stock cabs
+  "… 13, 14, 21 and").
 - **Why quality.** A why quote must contain a strong term, except that the second or third quote may carry only
   generic terms when it comes from synopsis or tips. `controls` lines and spec-table lines are never why quotes. A
   quote shown under one suggestion is not repeated under another in the same Answer when that model has another

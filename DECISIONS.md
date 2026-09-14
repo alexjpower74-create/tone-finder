@@ -105,3 +105,11 @@ Alexander was asleep, so the lead decided these. Each one says why. Newest at th
     left edge and no added marks, because many verified quotes carry the guide's own “ ” and the added marks doubled
     them (“…adjustments.””). tf2's "inline quote ≤ 3 words" join heuristic is replaced by the box-break rule (#15),
     which uses the raw line breaks and keeps longer quoted titles such as “The King of Fender Amps” whole.
+
+18. **Ranking fixes after round 2 (17:15).** At 61f197a Metallica and sparkly clean were fixed, but reading the
+    answers again showed: "brown sound" never tried as a phrase (the lead's own rule banned n-grams ending in a stop
+    word, and "sound" was one), term frequency inflating common words ("blues" in Blues Junior outranked "SRV" in
+    Super Verb), no reward for matching more of the query (Car Roamer "chime" beat Class-A 30W "The Edge" + "chime"),
+    and cut quotes ending on "," or "and". Contract: filler words may end a phrase, term frequency only for body-text
+    hits, a coverage factor, clean cuts. Golden: brown sound must match as a phrase and never suggest the '60 brown
+    Fenders; SRV Texas blues → Super Verb first; edge of breakup blues → Ruby Rocket first.

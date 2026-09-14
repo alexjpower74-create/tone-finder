@@ -171,7 +171,7 @@
     "FM9",
     "Plexi 2204"
   ],
-  "_queries_note": "AI off (guide search only). any_of: at least one suggestion's model_id is in the list. top1_any_of: the first suggestion's model_id is in the list. why_terms_any: at least one why quote of the matching suggestion contains one of these (case-insensitive). every_why_matches: every why quote of every suggestion matches this case-insensitive regex. never_ids: stub ids are never suggestions. min_suggestions: at least this many suggestions. Global: no_why_spans_box_break (API.md §4.2) applies to every query's Answer.",
+  "_queries_note": "AI off (guide search only). any_of: at least one suggestion's model_id is in the list. top1_any_of: the first suggestion's model_id is in the list. why_terms_any: at least one why quote of the matching suggestion contains one of these (case-insensitive). every_why_matches: every why quote of every suggestion matches this case-insensitive regex. never_ids: stub ids are never suggestions. min_suggestions: at least this many suggestions. Global: no_why_spans_box_break (API.md §4.2) applies to every query's Answer. matched_includes: understood.matched_terms contains each. none_of: no suggestion's model_id is in the list.",
   "queries": [
     {
       "query": "Van Halen brown sound",
@@ -188,6 +188,14 @@
       "why_terms_any": [
         "van halen",
         "brown sound"
+      ],
+      "matched_includes": [
+        "van halen",
+        "brown sound"
+      ],
+      "none_of": [
+        "6g4-super",
+        "6g12-concert"
       ]
     },
     {
@@ -322,6 +330,20 @@
       "status": "ok",
       "any_of": [
         "fas-custom-models"
+      ]
+    },
+    {
+      "query": "SRV Texas blues",
+      "status": "ok",
+      "top1_any_of": [
+        "super-verb"
+      ]
+    },
+    {
+      "query": "edge of breakup blues",
+      "status": "ok",
+      "top1_any_of": [
+        "ruby-rocket"
       ]
     }
   ],
