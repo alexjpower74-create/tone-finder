@@ -2,7 +2,7 @@
 // Reads the local guide from TF_GUIDE_DIR; a missing guide fails the run (it never silently skips).
 import { expect, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
-import { boxBreaks, cutAttribution, normText, parsePages, spansBoxBreak } from '../tools/guide-text.mjs';
+import { boxBreaks, cleanCut, cutAttribution, normText, parsePages, spansBoxBreak } from '../tools/guide-text.mjs';
 import { ONCE, quotesIn, readFixture } from './fixtures.mjs';
 
 const GUIDE_DIR = process.env.TF_GUIDE_DIR || '/home/alexander/Claude/Reference/Yek Fractal Amp Guide';
@@ -61,7 +61,10 @@ for (const file of ['models.json', 'answers.json']) {
     // Same attribution definition as the builder (" – yek", " – Cliff", …). A list separator such as
     // "3x10 Vibrato King – Cab Pack" is not an attribution.
     const endsWithAttribution = quotes.filter((q) => cutAttribution(q.quote).quote !== q.quote).map((q) => `${q.path}: ${q.quote}`);
+    // Clean cuts: no leading bullet, no trailing , ; : or dangling and / or / with.
+    const unclean = quotes.filter((q) => cleanCut(q.quote) !== q.quote).map((q) => `${q.path}: ${q.quote}`);
     expect(spanning).toEqual([]);
     expect(endsWithAttribution).toEqual([]);
+    expect(unclean).toEqual([]);
   });
 }

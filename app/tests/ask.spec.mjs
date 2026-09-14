@@ -108,6 +108,8 @@ test('general knowledge is labelled and the AI drops list Brown Sound Deluxe', a
   await expect(drops.getByText('Brown Sound Deluxe: not an Axe-Fx II model in the guide')).toBeHidden();
   await press(drops.locator('summary'), ti);
   await expect(drops.getByText('Brown Sound Deluxe: not an Axe-Fx II model in the guide')).toBeVisible();
+  // bad_page detail "USA IIC+, p. 12" (§5.5) in plain words.
+  await expect(drops.getByText("USA IIC+: page 12 isn't in that model's section")).toBeVisible();
 
   // With AI help switched off the guide alone can't support it.
   await press(page.locator('label.switch'), ti);

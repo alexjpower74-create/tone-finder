@@ -54,8 +54,9 @@ function understoodHtml(u) {
 }
 
 // "Brown Sound Deluxe: not an Axe-Fx II model in the guide", "USA IIC+: quote not on page 12".
+// detail is "<unit name>, p. <n>", or just the name (API.md §5.5); the older "<name>: page <n>" still reads.
 export function dropText({ kind, detail }) {
-  const m = String(detail).match(/^(.*?):\s*page\s+(\d+)$/i);
+  const m = String(detail).match(/^(.*?)(?:,\s*p\.\s*|:\s*page\s+)(\d+)$/i);
   const name = m ? m[1] : detail;
   const page = m ? m[2] : null;
   switch (kind) {
@@ -66,7 +67,7 @@ export function dropText({ kind, detail }) {
     case 'quote_not_on_page':
       return page ? `${name}: quote not on page ${page}` : `${name}: quote not on the page`;
     case 'quote_too_long':
-      return `${detail}: quote too long to check`;
+      return page ? `${name}: quote on page ${page} too long to check` : `${name}: quote too long to check`;
     case 'no_verified_quote':
       return `${name}: no quote we could check`;
     default:

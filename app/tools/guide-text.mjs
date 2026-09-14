@@ -106,6 +106,18 @@ export function splitAtBoxBreaks(quote, rawPage) {
   return pieces.filter(Boolean);
 }
 
+// Clean cuts (API.md §4.2): never start with a bullet, never end on a comma, semicolon, colon or a dangling
+// "and" / "or" / "with". Trimming keeps an exact substring; the caller drops the quote if it gets too short.
+export function cleanCut(quote) {
+  let q = String(quote).trim().replace(/^•\s+/, '');
+  let prev;
+  do {
+    prev = q;
+    q = q.replace(/\s*[,;:]$/, '').replace(/\s+(?:and|or|with)$/, '').trim();
+  } while (q !== prev);
+  return q;
+}
+
 // A quote never ends with an attribution: " – yek" is cut off and becomes said_by.
 const ATTRIBUTION_TAIL = /\s[–-]\s(yek|Yek|Cliff|Legendary Tones|Marshall|MESA|Manual)$/;
 export function cutAttribution(quote) {

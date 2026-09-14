@@ -721,7 +721,7 @@
       },
       {
        "kind": "bad_page",
-       "detail": "USA IIC+: page 12"
+       "detail": "USA IIC+, p. 12"
       }
      ]
     },
@@ -943,7 +943,7 @@
         "page": 219
        },
        "stock_cabs": {
-        "quote": "4x12 Recto, 4x12 USA, 4x12 Cali, 4x12 Petrucci – Cab Packs 5, 7, 13, 14, 21 and",
+        "quote": "4x12 Recto, 4x12 USA, 4x12 Cali, 4x12 Petrucci – Cab Packs 5, 7, 13, 14, 21",
         "page": 219
        },
        "notes": [
@@ -1065,8 +1065,8 @@
       "score": 15.8,
       "why": [
        {
-        "quote": "Amp controls Volume (=Input Drive), Bright switch, Mid switch, Rock/Jazz switch, Treble, Middle, Bass, Overdrive Drive (=Overdrive), Overdrive Volume, Master and Presence The Ojai is an exact copy of Robben Ford’s personal “Tan” Dumble Overdrive Special.",
-        "page": 49,
+        "quote": "“The Bludojai is a Robben Ford voiced amp.",
+        "page": 50,
         "said_by": null,
         "matched": [
          "robben ford"
@@ -1166,15 +1166,15 @@
       "score": 11.3,
       "why": [
        {
-        "quote": "Famous Dumble players include Robben Ford, Larry Carlton, John Mayer, Carlos Santana, Keith Urban, SRV, Eric Johnson, Joe Bonamassa.",
-        "page": 199,
+        "quote": "The ODS-100 Ford amp models are based on schematics which supposedly represent Robben Ford’s Tan Dumble, serial #102.",
+        "page": 200,
         "said_by": null,
         "matched": [
          "robben ford"
         ]
        },
        {
-        "quote": "There’s always a lot of talk on the internet forums about Robben Ford's Dumble tone.",
+        "quote": "Famous Dumble players include Robben Ford, Larry Carlton, John Mayer, Carlos Santana, Keith Urban, SRV, Eric Johnson, Joe Bonamassa.",
         "page": 199,
         "said_by": null,
         "matched": [
@@ -1315,7 +1315,7 @@
       "score": 12.7,
       "why": [
        {
-        "quote": "The VOX AC30 flagship amplifier came to life in ’59 because the existing AC15 simply wasn’t loud enough and artists such as The Shadows asked for louder ones..",
+        "quote": "Class-A 30W: Normal channel of a non-Top Boost AC30",
         "page": 107,
         "said_by": null,
         "matched": [
@@ -1323,7 +1323,7 @@
         ]
        },
        {
-        "quote": "VOX doubled the number of power tubes in the AC30.",
+        "quote": "Class-A 30W BRT: Bright channel of a non-Top Boost AC30",
         "page": 107,
         "said_by": null,
         "matched": [
@@ -1711,20 +1711,19 @@
       "score": 10.2,
       "why": [
        {
-        "quote": "Clips Marshall JTM-45 Marshall JTM45 2245 Plexi Amp",
-        "page": 62,
-        "said_by": null,
-        "matched": [
-         "jtm 45",
-         "jtm45"
-        ]
-       },
-       {
-        "quote": "Amp controls Presence, Bass, Middle, Treble and Volume (=Drive) The JTM 45 was Marshall’s first amplifier in the early ‘60s.",
+        "quote": "It was a hit and a vintage JTM 45 is worth a lot, listing #6 on Vintage Guitar’s list of most valuable amps. 2245 is Marshall’s model number.",
         "page": 62,
         "said_by": null,
         "matched": [
          "jtm 45"
+        ]
+       },
+       {
+        "quote": "“Despite being derived virtually point-by-point from Fender’s 5F6-A Bassman schematic, British components give the JTM45 a tone all its own.”",
+        "page": 62,
+        "said_by": null,
+        "matched": [
+         "jtm45"
         ]
        }
       ],

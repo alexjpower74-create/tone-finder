@@ -15,7 +15,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  boxRuns, cutAttribution, makeVerifier, normText, parsePages, spansBoxBreak, splitAtBoxBreaks, splitSentences,
+  boxRuns, cleanCut, cutAttribution, makeVerifier, normText, parsePages, spansBoxBreak, splitAtBoxBreaks, splitSentences,
 } from './guide-text.mjs';
 
 const APP = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -45,6 +45,7 @@ function quoteProblem(quote, page) {
   if (!isVerified(quote, page)) return 'not verified on its page';
   if (spansBoxBreak(quote, V.raw(page))) return 'spans a box break';
   if (cutAttribution(quote).quote !== quote) return 'ends with an attribution';
+  if (cleanCut(quote) !== quote) return 'not a clean cut';
   return null;
 }
 
@@ -62,14 +63,19 @@ function saidByAfter(quote, page) {
   return m ? (m[1] === 'Yek' ? 'yek' : m[1]) : null;
 }
 
+// A box that starts with a card label is a card field (controls line, clip titles, links), never a why quote.
+const CARD_LABEL_START = /^(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls|More videos, clips and comments)\b/;
+
 // A picked passage → the pieces it may be quoted as: cut at box breaks (only ever shorter), attribution tail cut
-// into said_by, trailing printed page number dropped, and only pieces that start a sentence or box and verify.
+// into said_by, trailing printed page number dropped, and only pieces that start a sentence or box, aren't a card
+// field, and verify.
 function quotablePieces(passage, page) {
   const out = [];
   for (const piece of splitAtBoxBreaks(passage, V.raw(page))) {
-    const cut = cutAttribution(piece.replace(/\s+\d{1,3}$/, '').trim());
-    if (/^[A-Z0-9“"‘(]/.test(cut.quote) && !quoteProblem(cut.quote, page)) {
-      out.push({ quote: cut.quote, page, said_by: cut.said_by ?? saidByAfter(cut.quote, page) });
+    const cut = cutAttribution(cleanCut(piece.replace(/\s+\d{1,3}$/, '')));
+    const quote = cleanCut(cut.quote);
+    if (/^[A-Z0-9“"‘(]/.test(quote) && !CARD_LABEL_START.test(quote) && !quoteProblem(quote, page)) {
+      out.push({ quote, page, said_by: cut.said_by ?? saidByAfter(quote, page) });
     }
   }
   return out;
@@ -389,9 +395,14 @@ function whyQuotes(m, terms, max = 3) {
     const matched = terms.filter((t) => termRe(t).test(s.quote));
     if (matched.length && !scored.some((x) => x.quote === s.quote)) scored.push({ ...s, matched });
   }
-  // More terms first, then whole sentences over fragments, then stored tips/synopsis, then guide order.
+  // More terms first; then a sentence naming the model or a unit name (or a unit name's last word of 3+ letters,
+  // §4.2 "Which sentence first"); then whole sentences over fragments; then stored tips/synopsis; then guide order.
+  const names = [target.name, ...target.unit_names.map((u) => u.name), ...target.unit_names.map((u) => u.name.split(/\s+/).pop()).filter((w) => w.length >= 3)]
+    .map((n) => n.toLowerCase());
+  const namesModel = (q) => (names.some((n) => q.toLowerCase().includes(n)) ? 1 : 0);
   const whole = (q) => (/[.!?][”"’)]*$/.test(q) ? 1 : 0);
-  scored.sort((a, b) => b.matched.length - a.matched.length || whole(b.quote) - whole(a.quote) || b.rank - a.rank || a.page - b.page);
+  scored.sort((a, b) =>
+    b.matched.length - a.matched.length || namesModel(b.quote) - namesModel(a.quote) || whole(b.quote) - whole(a.quote) || b.rank - a.rank || a.page - b.page);
   const saidBy = (q) =>
     [...target.tips, ...target.notes, ...target.settings].find((x) => x.quote === q.quote)?.said_by ?? q.said_by ?? null;
   const picked = [];
@@ -504,7 +515,7 @@ put('the rhythm tone on Master of Puppets', answer('the rhythm tone on Master of
     used: true, reason: null, cost_cad: 0.0031,
     dropped: [
       { kind: 'unknown_model', detail: 'Brown Sound Deluxe' },
-      { kind: 'bad_page', detail: 'USA IIC+: page 12' },
+      { kind: 'bad_page', detail: 'USA IIC+, p. 12' },
     ],
   },
   general_knowledge: [
