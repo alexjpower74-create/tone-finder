@@ -75,9 +75,8 @@ npm run test:app
 See `docs/DEPLOY.md` for what exists and how to redeploy (`cd worker && npx wrangler deploy`; `scripts/deploy-app.sh`).
 - **Cloudflare:** Worker `tone-finder` + D1 `tone-finder` (migrated with `--remote`), secrets `ADMIN_TOKEN` and
   `OPENAI_API_KEY`, and the app as a static-assets Worker `tone-finder-app`.
-- **Still Alexander's call:** whether the guide's 301 pages of text may be loaded into the cloud database
-  (`npm run load-guide` against the live Worker; ask yek first for anything public). Until then the live app is
-  quote-only and the AI step reports `guide_not_loaded`. The app has no login.
+- **Settled 2026-09-15:** yek approved the guide's text being in the cloud database; the 301 pages are loaded on the
+  live Worker (`npm run load-guide`, sha verified) and AI help is on by default. The app has no login.
 - **Not needed:** no cron, no domain chosen.
 
 ## Where to pick this up

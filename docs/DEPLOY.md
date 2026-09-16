@@ -16,7 +16,8 @@ kept as written.
 ## 1. Decide first
 - **The guide's text in a cloud database.** The Worker searches yek's guide page by page, so a deployed Worker
   needs the 301 pages in its D1 database. The repo never holds them. A private deploy for your own use is the
-  natural reading; anything public should ask yek (Alexander van Engelen, via the Fractal forum) first. Without
+  natural reading; anything public should ask yek (Alexander van Engelen, via the Fractal forum) first. **Settled
+  2026-09-15: yek approved; the 301 pages are loaded in the live D1 (`npm run load-guide`, sha verified).** Without
   the pages the app still works from the short stored quotes, but search gets much weaker and AI help is off.
 - **AI help.** Keep it (OpenAI key, CA$2 cap, answers cached) or leave `OPENAI_API_KEY` unset for guide search only.
 - **Who can open it.** It has no login. Put it behind Cloudflare Access, or keep it local.
