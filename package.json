@@ -14,7 +14,7 @@
     "test:app": "playwright test -c app/playwright.config.mjs",
     "test": "npm run test:core && npm run test:worker && npm run test:app",
     "dev": "npm run dev:app",
-    "check": "biome ci . && npm test"
+    "check": "biome ci . && npm test && check-no-personal-data --quiet ."
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
