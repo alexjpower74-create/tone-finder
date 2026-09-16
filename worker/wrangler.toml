@@ -1,4 +1,4 @@
-# Tone Finder Worker — LOCAL ONLY. Run with `wrangler dev --local`; never deploy, never --remote.
+# Tone Finder Worker. Deployed 2026-09-15 to tone-finder.alexjpower74.workers.dev on Alexander's go. Local dev: `wrangler dev --local`.
 name = "tone-finder"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
@@ -6,7 +6,7 @@ compatibility_date = "2026-09-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "tone-finder"
-database_id = "LOCAL-ONLY-set-at-deploy"
+database_id = "765d3265-7af8-4bc4-b889-b6f64974faed"
 migrations_dir = "migrations"
 
 # Non-secret defaults (docs/API.md §1). worker/.dev.vars and --var override them. OPENAI_API_KEY and

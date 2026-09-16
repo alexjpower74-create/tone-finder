@@ -6,7 +6,7 @@ diverge. `data/golden.json` (lead-owned) holds the acceptance expectations that 
 
 ## 0. Words that matter
 
-- **Guide**: `yek-guide-fulltext.txt` in `TF_GUIDE_DIR` (default `/home/alexander/Claude/Reference/Yek Fractal Amp
+- **Guide**: `yek-guide-fulltext.txt` in `TF_GUIDE_DIR` (default `~/Claude/Reference/Yek Fractal Amp
   Guide`), plus `yek-guide-sections.json` beside it (a pre-parsed per-section card + spec table). 301 pages, split on
   lines `===== PAGE n =====`. **Page n is the PDF page and the only page number we ever show or store.** The
   printed number at the foot of a page is n − 1; never use it. The guide never enters git (AGENTS.md).
@@ -54,7 +54,7 @@ diverge. `data/golden.json` (lead-owned) holds the acceptance expectations that 
   AI_PRICE_IN_PER_M=0.75
   AI_PRICE_CACHED_IN_PER_M=0.075
   AI_PRICE_OUT_PER_M=4.50
-  TF_GUIDE_DIR=/home/alexander/Claude/Reference/Yek Fractal Amp Guide
+  TF_GUIDE_DIR=~/Claude/Reference/Yek Fractal Amp Guide
   ```
   An empty `OPENAI_API_KEY` means AI is off and **zero** requests are made. `TF_GUIDE_DIR` is read by scripts only.
   Scripts read `worker/.dev.vars`; real environment variables override it.

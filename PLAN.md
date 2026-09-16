@@ -48,7 +48,7 @@ Node 26.
   runs sharing the QA worktree at 16:37 wiped each other's wrangler state and port 8307.)
 - A check that cannot fail measured nothing: for each important check, say what would make it red, make it red
   once, restore, and record it in your report.
-- **The guide stays out of git.** Read it from `TF_GUIDE_DIR` (`/home/alexander/Claude/Reference/Yek Fractal Amp
+- **The guide stays out of git.** Read it from `TF_GUIDE_DIR` (`~/Claude/Reference/Yek Fractal Amp
   Guide`). No page dumps in fixtures, snapshots, logs or reports; quotes ≤ 320 characters only.
 - **No paid AI calls from slices.** Use the fake OpenAI server. Don't read `~/.claude/imagegen/.env` or any key
   file. The lead makes the real calls at the end.

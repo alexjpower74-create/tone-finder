@@ -10,14 +10,16 @@ name, and anything not from the guide is labelled as such.
   knobs, Ares notes and the optional AI step. Runs in Node (scripts, tests) and inside the Worker.
 - `data/models.json`: derived structured data built by `scripts/build-models.mjs` from the local guide (names,
   specs, page numbers, short verified quotes). `data/golden.json` is lead-owned acceptance data.
-- `worker/`: Cloudflare Worker + D1 (`tone-finder`, binding `DB`), **local only** (`wrangler dev --local`).
-- `app/`: static HTML/CSS/JS, no build step, served by `node app/serve.mjs`.
+- `worker/`: Cloudflare Worker + D1 (`tone-finder`, binding `DB`); local dev with `wrangler dev --local`, live at
+  tone-finder.alexjpower74.workers.dev since 2026-09-15.
+- `app/`: static HTML/CSS/JS, no build step, served by `node app/serve.mjs`; live as a static-assets Worker
+  (`scripts/deploy-app.sh`, `deploy/app/wrangler.toml`).
 - Contract `docs/API.md` · build plan `PLAN.md` · decisions `DECISIONS.md`.
 
 **Ports.** app 8301 · worker 8302 · fake OpenAI server for tests 8303 · QA: app 8309, worker 8308, fake AI 8307.
 
 **The guide is not ours.** `yek-guide-fulltext.txt` lives in `TF_GUIDE_DIR`
-(`/home/alexander/Claude/Reference/Yek Fractal Amp Guide`). It never enters git: no page text, no copies, no
+(`~/Claude/Reference/Yek Fractal Amp Guide`). It never enters git: no page text, no copies, no
 fixtures made from it. The repo holds only derived data and short quotes (≤ 2 sentences, ≤ 320 characters), each
 verified as an exact substring of its page.
 
@@ -38,7 +40,9 @@ verified as an exact substring of its page.
   with the Ares note (API.md §4.5).
 - AI: optional, OpenAI `gpt-5.4-mini`, hard cap **CA$2** for the project, every paid call logged in D1 and in
   `docs/spend.md`. Tests use the fake server only. Never echo, log or commit a key.
-- **No deploys** of any kind (no `wrangler deploy`, `secret put`, `d1 create`, nothing `--remote`). Nothing is
-  sent. Private repo only.
+- **Deploys only when Alexander says so** (he did on 2026-09-15: Worker, D1, secrets and the app are live). Nothing
+  is sent. The guide's full page text is not loaded into the live database until Alexander decides (docs/DEPLOY.md §1).
+- **Public repo hygiene.** The repo is public: `check-no-personal-data .` must print clean before every push; no home
+  paths, keys, tokens or guide page text in git.
 - Plain English. Dark, stage-readable UI (print view is white, low ink). No emoji as icons. No devils or demons
   imagery.

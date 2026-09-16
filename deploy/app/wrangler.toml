@@ -1,0 +1,8 @@
+# The app as a static-assets Worker. Run scripts/deploy-app.sh, not wrangler by hand: the script builds ../dist
+# from app/ with the production api-base first. Deployed 2026-09-15 on Alexander's go.
+name = "tone-finder-app"
+compatibility_date = "2026-09-01"
+
+[assets]
+directory = "../dist"
+not_found_handling = "404-page"

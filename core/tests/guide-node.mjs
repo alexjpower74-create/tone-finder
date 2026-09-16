@@ -2,9 +2,10 @@
 // `guide not found at <path>` so the run fails (docs/API.md §2).
 import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { homedir } from 'node:os'
 import { parsePages } from '../guide.js'
 
-export const DEFAULT_GUIDE_DIR = '/home/alexander/Claude/Reference/Yek Fractal Amp Guide'
+export const DEFAULT_GUIDE_DIR = join(homedir(), 'Claude/Reference/Yek Fractal Amp Guide')
 
 export function guideDir() {
   return process.env.TF_GUIDE_DIR || DEFAULT_GUIDE_DIR

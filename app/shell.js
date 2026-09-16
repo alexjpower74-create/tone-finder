@@ -8,7 +8,9 @@ const NAV = [
 ];
 
 export function currentPage() {
-  const file = location.pathname.split('/').pop() || 'index.html';
+  // Static-assets hosting serves 'models.html' at '/models'; treat both spellings as the same page.
+  let file = location.pathname.split('/').pop() || 'index.html';
+  if (!file.includes('.')) file += '.html';
   return file === 'model.html' ? 'models.html' : file;
 }
 

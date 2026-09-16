@@ -3,7 +3,12 @@
 Type a tone ("Van Halen brown sound") and get 2–4 starting points for a Fractal Audio **Axe-Fx II XL+ on Ares**:
 amp model, cab and seven starting knobs. Every suggestion quotes yek's guide to the amp models, with the page.
 
-## Open it
+**Live:** **https://tone-finder-app.alexjpower74.workers.dev** (API: https://tone-finder.alexjpower74.workers.dev/api/health).
+Deployed 2026-09-15. The live copy answers from the 866 short verified quotes in `data/models.json`; the guide's full
+page text is **not** loaded into the cloud database (see "Deployed" below), so live search is quote-only and the AI
+step waits for that decision. Source: https://github.com/alexjpower74-create/tone-finder.
+
+## Open it locally
 
 ```bash
 cd ~/Projects/"Tone Finder" && npm run demo
@@ -65,13 +70,14 @@ npm run test:worker   # refuses to start if its ports are busy
 npm run test:app
 ```
 
-## What deploying needs
+## Deployed
 
-See `docs/DEPLOY.md`. Nothing has been deployed.
-- **Cloudflare:** a D1 database `tone-finder` (migrations with `--remote`), the secret `ADMIN_TOKEN` and
-  optionally `OPENAI_API_KEY`, and a one-off `load-guide` into the deployed database.
-- **Your calls:** whether the guide's text may live in a cloud database (ask yek before anything public), and who
-  can open the app (it has no login).
+See `docs/DEPLOY.md` for what exists and how to redeploy (`cd worker && npx wrangler deploy`; `scripts/deploy-app.sh`).
+- **Cloudflare:** Worker `tone-finder` + D1 `tone-finder` (migrated with `--remote`), secrets `ADMIN_TOKEN` and
+  `OPENAI_API_KEY`, and the app as a static-assets Worker `tone-finder-app`.
+- **Still Alexander's call:** whether the guide's 301 pages of text may be loaded into the cloud database
+  (`npm run load-guide` against the live Worker; ask yek first for anything public). Until then the live app is
+  quote-only and the AI step reports `guide_not_loaded`. The app has no login.
 - **Not needed:** no cron, no domain chosen.
 
 ## Where to pick this up

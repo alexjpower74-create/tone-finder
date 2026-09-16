@@ -1,6 +1,17 @@
-# Deploying Tone Finder (not done — Alexander reviews first)
+# Deploying Tone Finder
 
-Nothing has been deployed. Everything below is what a deploy would need. Run none of it without Alexander's go.
+**Deployed 2026-09-15** on Alexander's go.
+- App: https://tone-finder-app.alexjpower74.workers.dev (static-assets Worker `tone-finder-app`, built by
+  `scripts/deploy-app.sh` from `app/` into `deploy/dist/`, api-base rewritten to the API Worker).
+- API Worker: https://tone-finder.alexjpower74.workers.dev (`worker/`, `npx wrangler deploy`).
+- D1: `tone-finder`, id `765d3265-7af8-4bc4-b889-b6f64974faed`, migration `0001_init.sql` applied `--remote`.
+- Secrets: `ADMIN_TOKEN` (local copy in `~/.config/tone-finder/env`, mode 600) and `OPENAI_API_KEY`. AI help is
+  on by default with the CA$2 cap in `wrangler.toml`.
+- **Not done:** `load-guide` into the live database. The guide's page text is not in the cloud until Alexander
+  decides (§1). Live search runs on the stored quotes only; `/api/health` shows `guide.loaded: false`.
+
+Redeploy: `cd worker && npx wrangler deploy` for the API; `scripts/deploy-app.sh` for the app. The checklist below is
+kept as written.
 
 ## 1. Decide first
 - **The guide's text in a cloud database.** The Worker searches yek's guide page by page, so a deployed Worker
@@ -23,7 +34,7 @@ Vars already in `wrangler.toml` (not secrets): `OPENAI_BASE_URL`, `AI_MODEL`, `A
 (1.3866, update it), `AI_PRICE_IN_PER_M`, `AI_PRICE_CACHED_IN_PER_M`, `AI_PRICE_OUT_PER_M`. The spend cap counts
 what the deployed database has recorded, so a fresh database starts at CA$0 again: lower `AI_CAP_CAD` by what
 `docs/spend.md` already shows if the CA$2 is meant to cover local testing too. The top comment in `wrangler.toml`
-says LOCAL ONLY; change it when you deploy.
+now records the deploy.
 No cron: Tone Finder has no scheduled work.
 
 Load the guide once into the deployed database (pages come from your local copy, never from git):

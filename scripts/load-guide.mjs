@@ -4,6 +4,7 @@
 import { readFileSync, existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { homedir } from 'node:os'
 import { parsePages, pagesSha256, PDF_PAGES } from '../core/guide.js'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -24,7 +25,7 @@ export function config(env = process.env) {
   return {
     url: pick('TF_WORKER_URL', 'http://127.0.0.1:8302').replace(/\/+$/, ''),
     token: pick('ADMIN_TOKEN', ''),
-    dir: pick('TF_GUIDE_DIR', '/home/alexander/Claude/Reference/Yek Fractal Amp Guide'),
+    dir: pick('TF_GUIDE_DIR', join(homedir(), 'Claude/Reference/Yek Fractal Amp Guide')),
   }
 }
 
