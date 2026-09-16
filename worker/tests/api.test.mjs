@@ -106,8 +106,22 @@ test('/api/models: total, filters and facets', async () => {
   assert.equal(all.json.total, 109)
   assert.equal(all.json.count, 109)
   assert.equal(all.json.models.length, 109)
-  assert.equal(all.json.facets.master_volume.reduce((n, f) => n + f.count, 0), 109)
-  assert.deepEqual(Object.keys(all.json.models[0]).sort(), ['based_on', 'brands', 'facets', 'id', 'name', 'pages', 'refers_to', 'section', 'synopsis', 'unit_names'])
+  assert.equal(
+    all.json.facets.master_volume.reduce((n, f) => n + f.count, 0),
+    109,
+  )
+  assert.deepEqual(Object.keys(all.json.models[0]).sort(), [
+    'based_on',
+    'brands',
+    'facets',
+    'id',
+    'name',
+    'pages',
+    'refers_to',
+    'section',
+    'synopsis',
+    'unit_names',
+  ])
   const marshall = await call('GET', '/api/models?brand=Marshall')
   assert.ok(marshall.json.count > 0 && marshall.json.count < 109)
   assert.equal(marshall.json.total, 109)
@@ -173,8 +187,14 @@ test('fake-plant through HTTP: only the verified citation survives, drops listed
   assert.equal(a.ai.used, true)
   assert.equal(a.suggestions[0].model_id, '1959slp')
   assert.equal(a.suggestions[0].source, 'ai_checked')
-  assert.deepEqual(a.suggestions[0].why.map((w) => w.page), [28])
-  assert.deepEqual(a.ai.dropped.map((d) => d.kind), ['unknown_model', 'bad_page', 'quote_not_on_page', 'unknown_model'])
+  assert.deepEqual(
+    a.suggestions[0].why.map((w) => w.page),
+    [28],
+  )
+  assert.deepEqual(
+    a.ai.dropped.map((d) => d.kind),
+    ['unknown_model', 'bad_page', 'quote_not_on_page', 'unknown_model'],
+  )
   assert.ok(!a.suggestions.some((s) => s.unit_name === 'Brown Sound Deluxe'))
 })
 
@@ -213,7 +233,10 @@ test('spend cap: a Worker with a tiny AI_CAP_CAD makes no request', { skip: !CAP
 })
 
 test('OPTIONS answered with CORS; JSON responses carry the header', async () => {
-  const r = await fetch(`${W}/api/ask`, { method: 'OPTIONS', headers: { origin: 'http://127.0.0.1:8301', 'access-control-request-method': 'POST' } })
+  const r = await fetch(`${W}/api/ask`, {
+    method: 'OPTIONS',
+    headers: { origin: 'http://127.0.0.1:8301', 'access-control-request-method': 'POST' },
+  })
   assert.equal(r.status, 204)
   assert.equal(r.headers.get('access-control-allow-origin'), '*')
   assert.match(r.headers.get('access-control-allow-methods'), /POST/)

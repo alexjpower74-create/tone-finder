@@ -70,20 +70,28 @@ async function waitFor(url, child, ms = 90000) {
 
 function migrate(state) {
   rmSync(join(workerDir, state), { recursive: true, force: true })
-  const r = spawnSync('wrangler', ['d1', 'migrations', 'apply', 'tone-finder', '--local', '--persist-to', state], { cwd: workerDir, env: quietEnv, encoding: 'utf8' })
+  const r = spawnSync('wrangler', ['d1', 'migrations', 'apply', 'tone-finder', '--local', '--persist-to', state], {
+    cwd: workerDir,
+    env: quietEnv,
+    encoding: 'utf8',
+  })
   if (r.status !== 0) throw new Error(`migrations failed for ${state}:\n${r.stdout}\n${r.stderr}`)
 }
 
 function wranglerDev(name, port, state, extraVars = []) {
-  const vars = [
-    'ADMIN_TOKEN:test-admin-token',
-    'OPENAI_API_KEY:test-key',
-    `OPENAI_BASE_URL:http://127.0.0.1:${FAKE_PORT}/v1`,
-    ...extraVars,
-  ]
+  const vars = ['ADMIN_TOKEN:test-admin-token', 'OPENAI_API_KEY:test-key', `OPENAI_BASE_URL:http://127.0.0.1:${FAKE_PORT}/v1`, ...extraVars]
   return start(name, 'wrangler', [
-    'dev', '--local', '--port', String(port), '--ip', '127.0.0.1', '--persist-to', state,
-    '--inspector-port', String(port + 1000), '--show-interactive-dev-session=false',
+    'dev',
+    '--local',
+    '--port',
+    String(port),
+    '--ip',
+    '127.0.0.1',
+    '--persist-to',
+    state,
+    '--inspector-port',
+    String(port + 1000),
+    '--show-interactive-dev-session=false',
     ...vars.flatMap((v) => ['--var', v]),
   ])
 }
@@ -103,7 +111,10 @@ let code = 1
 try {
   const busy = []
   for (const p of [WORKER_PORT, FAKE_PORT, CAP_PORT, WORKER_PORT + 1000, CAP_PORT + 1000]) if (!(await portFree(p))) busy.push(p)
-  if (busy.length) throw new Error(`port(s) already in use: ${busy.join(', ')}. Set TF_WORKER_PORT / TF_FAKE_AI_PORT / TF_WORKER_CAP_PORT to free ports. Nothing was started or sent.`)
+  if (busy.length)
+    throw new Error(
+      `port(s) already in use: ${busy.join(', ')}. Set TF_WORKER_PORT / TF_FAKE_AI_PORT / TF_WORKER_CAP_PORT to free ports. Nothing was started or sent.`,
+    )
   migrate(STATE)
   migrate(CAP_STATE)
   const fake = start('fake-openai', process.execPath, ['tests/fake-openai.mjs'], { ...quietEnv, TF_FAKE_AI_PORT: String(FAKE_PORT) })

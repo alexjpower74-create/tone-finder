@@ -94,7 +94,11 @@ async function callModel({ env, fetchImpl, messages, maxTokens }) {
     throw new AiError('bad_json')
   }
   const u = body?.usage || {}
-  const usage = { input: num(u.prompt_tokens, 0), cached: num(u.prompt_tokens_details?.cached_tokens, 0), output: num(u.completion_tokens, 0) }
+  const usage = {
+    input: num(u.prompt_tokens, 0),
+    cached: num(u.prompt_tokens_details?.cached_tokens, 0),
+    output: num(u.completion_tokens, 0),
+  }
   let content
   try {
     content = JSON.parse(body?.choices?.[0]?.message?.content)
@@ -135,7 +139,8 @@ function pagesForModel(model, pages) {
   return out
 }
 
-const pickLabel = (p) => (typeof p?.unit_name === 'string' && p.unit_name) || (typeof p?.model_id === 'string' && p.model_id) || 'unnamed pick'
+const pickLabel = (p) =>
+  (typeof p?.unit_name === 'string' && p.unit_name) || (typeof p?.model_id === 'string' && p.model_id) || 'unnamed pick'
 
 // A pick or suggestion names a real, non-stub model and one of its unit names. Returns the model or null.
 export function checkPick(data, p) {
@@ -155,7 +160,11 @@ export function checkCitation(model, c, pages, titles = null, { locate = true } 
   const text = pageText(pages, page)
   const cited = normText(c?.quote)
   const tooLong = cited.length > 320 || sentenceBreakCount(cited) > 1
-  const span = locate ? locateQuote(cited, text) : text.includes(cited) ? { start: text.indexOf(cited), end: text.indexOf(cited) + cited.length } : null
+  const span = locate
+    ? locateQuote(cited, text)
+    : text.includes(cited)
+      ? { start: text.indexOf(cited), end: text.indexOf(cited) + cited.length }
+      : null
   if (!span) return { ok: false, kind: tooLong ? 'quote_too_long' : 'quote_not_on_page' }
   const located = text.slice(span.start, span.end)
   const wide = expandToSentence(raw, span, titles)
@@ -218,13 +227,35 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
       const r = await callModel({ env, fetchImpl, messages, maxTokens: MAX_TOKENS[step] })
       const usd = costUsd(r.usage, p)
       costCad += usd * p.usdCad
-      await store.recordCall({ at, model, step, input_tokens: r.usage.input, cached_input_tokens: r.usage.cached, output_tokens: r.usage.output, usd, cad: usd * p.usdCad, query_hash: queryHash, ok: 1 })
+      await store.recordCall({
+        at,
+        model,
+        step,
+        input_tokens: r.usage.input,
+        cached_input_tokens: r.usage.cached,
+        output_tokens: r.usage.output,
+        usd,
+        cad: usd * p.usdCad,
+        query_hash: queryHash,
+        ok: 1,
+      })
       return r.content
     } catch (e) {
       const u = e.usage || { input: 0, cached: 0, output: 0 }
       const usd = costUsd(u, p)
       costCad += usd * p.usdCad
-      await store.recordCall({ at, model, step, input_tokens: u.input, cached_input_tokens: u.cached, output_tokens: u.output, usd, cad: usd * p.usdCad, query_hash: queryHash, ok: 0 })
+      await store.recordCall({
+        at,
+        model,
+        step,
+        input_tokens: u.input,
+        cached_input_tokens: u.cached,
+        output_tokens: u.output,
+        usd,
+        cad: usd * p.usdCad,
+        query_hash: queryHash,
+        ok: 0,
+      })
       throw e
     }
   }
@@ -242,7 +273,11 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
         content: JSON.stringify({
           query: q,
           models: modelList(data),
-          guide_candidates: c0.answer.suggestions.map((s) => ({ model_id: s.model_id, unit_name: s.unit_name, why: s.why.map((w) => w.quote) })),
+          guide_candidates: c0.answer.suggestions.map((s) => ({
+            model_id: s.model_id,
+            unit_name: s.unit_name,
+            why: s.why.map((w) => w.quote),
+          })),
         }),
       },
     ]
@@ -290,7 +325,10 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
             `QUERY: ${q}\n\n` +
             targets
               .slice(0, LIMITS.models)
-              .map((t) => `MODEL ${t.model.id} (unit names: ${t.model.unit_names.map((u) => u.name).join(', ')})\n${pagesForModel(t.model, pages)}`)
+              .map(
+                (t) =>
+                  `MODEL ${t.model.id} (unit names: ${t.model.unit_names.map((u) => u.name).join(', ')})\n${pagesForModel(t.model, pages)}`,
+              )
               .join('\n'),
         },
       ]
@@ -344,9 +382,17 @@ export async function aiAnswer(query, { models: data, pages = null, env = {}, ai
     })
     suggestions.push(
       buildSuggestion(k.model, {
-        data, pages, query: q, terms: allTerms, intent, rank: 0, source: 'ai_checked',
+        data,
+        pages,
+        query: q,
+        terms: allTerms,
+        intent,
+        rank: 0,
+        source: 'ai_checked',
         score: c1.candidates.find((c) => c.model.id === k.model.id)?.score ?? 0,
-        why, unitName: k.unit, aiTexts: gk,
+        why,
+        unitName: k.unit,
+        aiTexts: gk,
       }),
     )
   }

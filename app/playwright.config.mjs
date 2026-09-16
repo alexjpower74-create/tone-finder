@@ -1,12 +1,12 @@
 // Run from the repo root: npx playwright test -c app/playwright.config.mjs
-import { defineConfig } from '@playwright/test';
-import { fileURLToPath } from 'node:url';
+import { defineConfig } from '@playwright/test'
+import { fileURLToPath } from 'node:url'
 
-const PORT = Number(process.env.TF_APP_PORT || 8301);
-const REPO = fileURLToPath(new URL('..', import.meta.url));
+const PORT = Number(process.env.TF_APP_PORT || 8301)
+const REPO = fileURLToPath(new URL('..', import.meta.url))
 
-const phone = { viewport: { width: 390, height: 844 }, hasTouch: true };
-const desktop = { viewport: { width: 1280, height: 800 } };
+const phone = { viewport: { width: 390, height: 844 }, hasTouch: true }
+const desktop = { viewport: { width: 1280, height: 800 } }
 
 export default defineConfig({
   testDir: './tests',
@@ -33,4 +33,4 @@ export default defineConfig({
     reuseExistingServer: false,
     timeout: 15_000,
   },
-});
+})

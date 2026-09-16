@@ -134,7 +134,17 @@ async function adminGuide(request, env) {
   const ok =
     Array.isArray(list) &&
     list.length === PDF_PAGES &&
-    list.every((e) => Array.isArray(e) && e.length === 2 && Number.isInteger(e[0]) && e[0] >= 1 && e[0] <= PDF_PAGES && typeof e[1] === 'string' && !seen.has(e[0]) && seen.add(e[0]))
+    list.every(
+      (e) =>
+        Array.isArray(e) &&
+        e.length === 2 &&
+        Number.isInteger(e[0]) &&
+        e[0] >= 1 &&
+        e[0] <= PDF_PAGES &&
+        typeof e[1] === 'string' &&
+        !seen.has(e[0]) &&
+        seen.add(e[0]),
+    )
   if (!ok) return error(400, 'bad_pages', `Send exactly pages 1-${PDF_PAGES} as [page, text] pairs.`)
   const pages = new Map(list)
   const sha = await pagesSha256(pages)

@@ -3,7 +3,9 @@
 
 // Every run of whitespace (space, tab, newline, U+00A0, …) → one space, then trim. Nothing else.
 export function normText(s) {
-  return String(s ?? '').replace(/[\s ]+/g, ' ').trim()
+  return String(s ?? '')
+    .replace(/[\s ]+/g, ' ')
+    .trim()
 }
 
 // The sentence-boundary regex from §0 rule 2. A fresh RegExp each call: /g regexes carry state.
@@ -37,7 +39,8 @@ export function splitSentences(text) {
 
 // Box breaks (docs/API.md §4.2): the extraction glues separate boxes together. A new box starts on a raw line that
 // begins (after spaces/tabs) with an opening “, an attribution dash, a bullet, or a card label.
-const BOX_START = /^[ \t]*(?:“|[–-] [A-Z]|• |(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls) |More videos, clips and comments)/
+const BOX_START =
+  /^[ \t]*(?:“|[–-] [A-Z]|• |(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls) |More videos, clips and comments)/
 
 // → offsets in pageText (= normText(rawPage)) where a new box starts. Runs between breaks are normalised and
 // joined with one space, which reproduces pageText exactly.
@@ -52,7 +55,11 @@ export function boxBreaks(rawPage, titles = null) {
   const lines = String(rawPage ?? '').split('\n')
   const first = lines.findIndex((l) => l.trim())
   let last = -1
-  for (let i = lines.length - 1; i >= 0; i--) if (lines[i].trim()) { last = i; break }
+  for (let i = lines.length - 1; i >= 0; i--)
+    if (lines[i].trim()) {
+      last = i
+      break
+    }
   const header = titles && first >= 0 && titles.has(normText(lines[first])) ? first + 1 : -1
   const footer = last > first && /^\s*\d+\s*$/.test(lines[last]) ? last : -1
   const runs = [[]]
@@ -129,10 +136,40 @@ export function cutAttribution(quote, names) {
 // still a substring; callers verify it again.
 // Attribution names (same list as the build's SAID_BY and the engine's why path).
 export const ATTRIBUTION_NAMES = [
-  'yek', 'Yek', 'Cliff', 'Legendary Tones', 'Marshall', 'MESA', 'Manual', 'Alan Phillips', 'Fenderguru.com',
-  'Fenderguru', 'Wikipedia', 'Orange', 'Bogner', 'Soldano', 'Fryette', 'Friedman', 'Diezel', 'Supro', 'Suhr',
-  'Peavey', 'Komet', 'Ken Fischer', 'Dr. Z', 'Bob Bradshaw', 'Vintage Guitar', 'ToneQuest', 'The Gear Page',
-  'Swart', 'Splawn', 'Premier Guitar', 'Trainwreck.com', 'Richard Hallebeek', 'Rob Navarette', 'Ultra Sound',
+  'yek',
+  'Yek',
+  'Cliff',
+  'Legendary Tones',
+  'Marshall',
+  'MESA',
+  'Manual',
+  'Alan Phillips',
+  'Fenderguru.com',
+  'Fenderguru',
+  'Wikipedia',
+  'Orange',
+  'Bogner',
+  'Soldano',
+  'Fryette',
+  'Friedman',
+  'Diezel',
+  'Supro',
+  'Suhr',
+  'Peavey',
+  'Komet',
+  'Ken Fischer',
+  'Dr. Z',
+  'Bob Bradshaw',
+  'Vintage Guitar',
+  'ToneQuest',
+  'The Gear Page',
+  'Swart',
+  'Splawn',
+  'Premier Guitar',
+  'Trainwreck.com',
+  'Richard Hallebeek',
+  'Rob Navarette',
+  'Ultra Sound',
 ]
 let leadingAttribution = null
 
@@ -143,7 +180,12 @@ export function cleanCut(quote) {
   let prev
   do {
     prev = s
-    s = s.replace(leadingAttribution, '').replace(/^•\s*/, '').replace(/[\s,;:]+$/, '').replace(/\s+(?:and|or|with)$/i, '').trim()
+    s = s
+      .replace(leadingAttribution, '')
+      .replace(/^•\s*/, '')
+      .replace(/[\s,;:]+$/, '')
+      .replace(/\s+(?:and|or|with)$/i, '')
+      .trim()
   } while (s !== prev)
   return s
 }
@@ -235,7 +277,14 @@ function escapeRegex(s) {
 
 // Guide-side folding for whole-word search: case-insensitive, and ’ ' - count as word breaks.
 export function foldForSearch(s) {
-  return ' ' + String(s).toLowerCase().replace(/[’'‘\-–]/g, ' ').replace(/[\s ]+/g, ' ') + ' '
+  return (
+    ' ' +
+    String(s)
+      .toLowerCase()
+      .replace(/[’'‘\-–]/g, ' ')
+      .replace(/[\s ]+/g, ' ') +
+    ' '
+  )
 }
 
 // Whole-word find of `term` inside `text`. Both sides are folded the same way, and a hit must not be

@@ -39,7 +39,11 @@ export async function loadGuide({ url, token, dir } = config()) {
   const body = JSON.stringify({ pages_sha256: sha, pages: [...pages.entries()].sort((a, b) => a[0] - b[0]) })
   let res
   try {
-    res = await fetch(`${url}/api/admin/guide`, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` }, body })
+    res = await fetch(`${url}/api/admin/guide`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+      body,
+    })
   } catch {
     throw new Error(`could not reach the Worker at ${url} (is it running?)`)
   }

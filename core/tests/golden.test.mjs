@@ -23,24 +23,38 @@ for (const g of golden.queries) {
     const why = (ss) => ss.flatMap((s) => s.why.map((w) => w.quote))
     const detail = `status=${a.status} ids=${ids.join(',')} terms=${a.understood.matched_terms.join('|')}`
     if (g.status) assert.equal(a.status, g.status, detail)
-    if (g.any_of) assert.ok(ids.some((id) => g.any_of.includes(id)), `any_of ${detail}`)
-    if (g.matched_includes) for (const t of g.matched_includes) assert.ok(a.understood.matched_terms.includes(t), `matched_includes ${t}: ${detail}`)
+    if (g.any_of)
+      assert.ok(
+        ids.some((id) => g.any_of.includes(id)),
+        `any_of ${detail}`,
+      )
+    if (g.matched_includes)
+      for (const t of g.matched_includes) assert.ok(a.understood.matched_terms.includes(t), `matched_includes ${t}: ${detail}`)
     if (g.none_of) assert.ok(!ids.some((id) => g.none_of.includes(id)), `none_of ${detail}`)
-    for (const s of a.suggestions) for (const w of s.why) {
-      assert.ok(!/(?:[,;:]|\s(?:and|or|with))$/i.test(w.quote), `unclean cut in why: ${w.quote}`)
-      const problem = quoteShapeProblem(w.quote, pages.get(w.page), sectionTitles(models))
-      assert.equal(problem, null, `${s.model_id} p. ${w.page} ${problem}: ${w.quote}`)
-    }
+    for (const s of a.suggestions)
+      for (const w of s.why) {
+        assert.ok(!/(?:[,;:]|\s(?:and|or|with))$/i.test(w.quote), `unclean cut in why: ${w.quote}`)
+        const problem = quoteShapeProblem(w.quote, pages.get(w.page), sectionTitles(models))
+        assert.equal(problem, null, `${s.model_id} p. ${w.page} ${problem}: ${w.quote}`)
+      }
     if (g.min_suggestions) assert.ok(a.suggestions.length >= g.min_suggestions, `min_suggestions ${detail}`)
     if (golden.no_why_spans_box_break) {
-      for (const s of a.suggestions) for (const w of s.why) assert.ok(!spansBoxBreak(w.quote, pages.get(w.page), sectionTitles(models)), `${s.model_id} p. ${w.page} spans a box break: ${w.quote}`)
+      for (const s of a.suggestions)
+        for (const w of s.why)
+          assert.ok(
+            !spansBoxBreak(w.quote, pages.get(w.page), sectionTitles(models)),
+            `${s.model_id} p. ${w.page} spans a box break: ${w.quote}`,
+          )
     }
     if (g.top1_any_of) assert.ok(g.top1_any_of.includes(ids[0]), `top1_any_of ${detail}`)
     if (g.why_terms_any) {
       const pool = g.any_of || g.top1_any_of
       const matching = pool ? a.suggestions.filter((s) => pool.includes(s.model_id)) : a.suggestions
       const quotes = why(matching).map((q) => q.toLowerCase())
-      assert.ok(quotes.some((q) => g.why_terms_any.some((t) => q.includes(t))), `why_terms_any ${detail}`)
+      assert.ok(
+        quotes.some((q) => g.why_terms_any.some((t) => q.includes(t))),
+        `why_terms_any ${detail}`,
+      )
     }
     if (g.every_why_matches) {
       const re = new RegExp(g.every_why_matches, 'i')
@@ -48,7 +62,9 @@ for (const g of golden.queries) {
       assert.ok(quotes.length > 0, 'control: there are why quotes')
       for (const q of quotes) assert.match(q, re)
     }
-    if (g.unmatched_includes) for (const w of g.unmatched_includes) assert.ok(a.understood.unmatched_terms.includes(w), `unmatched ${w}: ${a.understood.unmatched_terms}`)
+    if (g.unmatched_includes)
+      for (const w of g.unmatched_includes)
+        assert.ok(a.understood.unmatched_terms.includes(w), `unmatched ${w}: ${a.understood.unmatched_terms}`)
     if (g.no_unit_name) {
       assert.ok(!isUnitName(models, g.no_unit_name))
       assert.ok(!a.suggestions.some((s) => s.unit_name.toLowerCase() === g.no_unit_name.toLowerCase()))

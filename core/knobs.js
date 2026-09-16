@@ -18,7 +18,9 @@ export function quoteSupportsKnob(knob, value, quote, hints = {}) {
   const text = String(quote || '')
   if (!text) return false
   if (parseKnobs(text, hints)[knob] === Number(value)) return true
-  const labels = Object.entries(labelMap(hints)).filter(([, k]) => k === knob).map(([l]) => l)
+  const labels = Object.entries(labelMap(hints))
+    .filter(([, k]) => k === knob)
+    .map(([l]) => l)
   if (!labels.length) return false
   const v = escapeRe(String(Number(value)))
   const re = new RegExp(
@@ -52,7 +54,14 @@ export function knobsFor(model, { unitName = null, terms = [], intent = null, co
   if (picked) {
     for (const k of KNOBS) {
       if (k in picked.knobs && quoteSupportsKnob(k, picked.knobs[k], picked.quote, hints)) {
-        out.set(k, { knob: k, value: picked.knobs[k], kind: 'guide', quote: picked.quote, page: picked.page, said_by: picked.said_by ?? null })
+        out.set(k, {
+          knob: k,
+          value: picked.knobs[k],
+          kind: 'guide',
+          quote: picked.quote,
+          page: picked.page,
+          said_by: picked.said_by ?? null,
+        })
       }
     }
   }

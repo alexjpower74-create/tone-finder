@@ -70,14 +70,23 @@ if (!existsSync(appServe)) {
   process.exit(1)
 }
 
-const mig = spawnSync('wrangler', ['d1', 'migrations', 'apply', 'tone-finder', '--local'], { cwd: workerDir, env: { ...quietEnv, CI: '1' }, encoding: 'utf8' })
+const mig = spawnSync('wrangler', ['d1', 'migrations', 'apply', 'tone-finder', '--local'], {
+  cwd: workerDir,
+  env: { ...quietEnv, CI: '1' },
+  encoding: 'utf8',
+})
 if (mig.status !== 0) {
   console.error(`demo: local migrations failed\n${mig.stdout}\n${mig.stderr}`)
   process.exit(1)
 }
 console.log('Local D1 migrations applied.')
 
-start('worker', 'wrangler', ['dev', '--local', '--port', String(WORKER_PORT), '--ip', '127.0.0.1', '--show-interactive-dev-session=false'], workerDir)
+start(
+  'worker',
+  'wrangler',
+  ['dev', '--local', '--port', String(WORKER_PORT), '--ip', '127.0.0.1', '--show-interactive-dev-session=false'],
+  workerDir,
+)
 start('app', process.execPath, [appServe, '--port', String(APP_PORT)], root)
 
 try {

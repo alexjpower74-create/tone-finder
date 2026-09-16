@@ -17,7 +17,10 @@ export function checkInvariants(a, { pages = null, data = models } = {}) {
     assert.ok(s.why.length >= 1 && s.why.length <= 3, `${s.model_id}: ${s.why.length} why quotes`)
     if (pages) for (const w of s.why) assert.ok(checkQuote(w, pages).ok, `${s.model_id} why not verified p. ${w.page}: ${w.quote}`)
     assert.ok(unitNameOf(data, s.model_id, s.unit_name), `${s.unit_name} is not a unit name of ${s.model_id}`)
-    assert.deepEqual(s.knobs.map((k) => k.knob), KNOBS)
+    assert.deepEqual(
+      s.knobs.map((k) => k.knob),
+      KNOBS,
+    )
   }
   assert.ok(a.suggestions.length <= 4)
   if (a.status === 'no_guide_support') {

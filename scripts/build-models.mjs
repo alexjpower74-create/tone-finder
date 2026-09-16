@@ -7,7 +7,15 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadPages, loadSections } from '../core/tests/guide-node.mjs'
 import { pageText, pagesSha256, PDF_PAGES } from '../core/guide.js'
-import { normText, splitSentences, splitAtBoxBreaks, spansBoxBreak, cutAttribution, cleanCut, titleSet as makeTitleSet } from '../core/text.js'
+import {
+  normText,
+  splitSentences,
+  splitAtBoxBreaks,
+  spansBoxBreak,
+  cutAttribution,
+  cleanCut,
+  titleSet as makeTitleSet,
+} from '../core/text.js'
 import { checkQuote } from '../core/verify.js'
 import { brandsForSection } from '../core/brands.js'
 import { facetMasterVolume, facetPowerTubes } from '../core/models.js'
@@ -28,18 +36,60 @@ export const SPEC_KEYS = {
   'Tonestack Location': 'tonestack',
 }
 export const SAID_BY = [
-  'yek', 'Yek', 'Cliff', 'Legendary Tones', 'Marshall', 'MESA', 'Manual', 'Alan Phillips', 'Fenderguru.com',
-  'Fenderguru', 'Wikipedia', 'Orange', 'Bogner', 'Soldano', 'Fryette', 'Friedman', 'Diezel', 'Supro', 'Suhr',
-  'Peavey', 'Komet', 'Ken Fischer', 'Dr. Z', 'Bob Bradshaw', 'Vintage Guitar', 'ToneQuest', 'The Gear Page',
-  'Swart', 'Splawn', 'Premier Guitar', 'Trainwreck.com', 'Richard Hallebeek', 'Rob Navarette', 'Ultra Sound',
+  'yek',
+  'Yek',
+  'Cliff',
+  'Legendary Tones',
+  'Marshall',
+  'MESA',
+  'Manual',
+  'Alan Phillips',
+  'Fenderguru.com',
+  'Fenderguru',
+  'Wikipedia',
+  'Orange',
+  'Bogner',
+  'Soldano',
+  'Fryette',
+  'Friedman',
+  'Diezel',
+  'Supro',
+  'Suhr',
+  'Peavey',
+  'Komet',
+  'Ken Fischer',
+  'Dr. Z',
+  'Bob Bradshaw',
+  'Vintage Guitar',
+  'ToneQuest',
+  'The Gear Page',
+  'Swart',
+  'Splawn',
+  'Premier Guitar',
+  'Trainwreck.com',
+  'Richard Hallebeek',
+  'Rob Navarette',
+  'Ultra Sound',
 ]
 export const CONVENTIONS = [
   ['high-low-inputs', 'If the actual amp has two inputs, the model is based on the input with the highest gain.'],
   ['no-master-volume', 'If the original amp has no Master Volume control, the Master control in the amp model will default at 10.'],
-  ['two-gain-controls', 'If the original amp has two gain controls, the one that’s closest to the 1/4” input on the actual amp will be represented by Input Drive in the amp model, and the other one by Overdrive.'],
-  ['single-tone-control', 'If the original amp only has a single Tone control, the control will be mapped to either Treble or Presence/Hi Cut in the amp model.'],
-  ['taper-match', 'The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.'],
-  ['soft-reset', 'A soft reset is performed by de-selecting and re-selecting the amp type in the Amp block. This resets most parameters, including Presence and Master, but leaves the Drive controls and Bass/Mid/Treble untouched.'],
+  [
+    'two-gain-controls',
+    'If the original amp has two gain controls, the one that’s closest to the 1/4” input on the actual amp will be represented by Input Drive in the amp model, and the other one by Overdrive.',
+  ],
+  [
+    'single-tone-control',
+    'If the original amp only has a single Tone control, the control will be mapped to either Treble or Presence/Hi Cut in the amp model.',
+  ],
+  [
+    'taper-match',
+    'The controls of the virtual amp models, such as Drive, Bass, Treble etc. match the tapers on the original amps within 10%, except for Master, Presence/Hi Cut and Depth.',
+  ],
+  [
+    'soft-reset',
+    'A soft reset is performed by de-selecting and re-selecting the amp type in the Amp block. This resets most parameters, including Presence and Master, but leaves the Drive controls and Bass/Mid/Treble untouched.',
+  ],
 ]
 
 export function slug(name) {
@@ -63,7 +113,8 @@ export function build({ pages, sections, curation, log = () => {} }) {
     return null
   }
   // API.md §4.2: split at box breaks, cut attributions into said_by; pieces only get shorter and must still verify.
-  const CARD_LABEL = /^(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls|More videos, clips and comments)(?![A-Za-z])/
+  const CARD_LABEL =
+    /^(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls|More videos, clips and comments)(?![A-Za-z])/
   const titles = makeTitleSet(sections.map((s) => s.title).concat(['Fender Circuits', 'Amplifier Information']))
   const boxClean = (quote, page, min = 12, max = 320) => {
     const out = []
@@ -79,8 +130,15 @@ export function build({ pages, sections, curation, log = () => {} }) {
   const firstClean = (r) => {
     if (!r) return null
     const [c] = boxClean(r.quote, r.page)
-    if (!c) { stats.cut_dropped++; log(`box split left nothing: p. ${r.page} "${r.quote.slice(0, 50)}"`); return null }
-    if (c.quote !== r.quote) { stats.box_split++; log(`box split p. ${r.page}: "${r.quote.slice(0, 50)}" → "${c.quote.slice(0, 50)}"`) }
+    if (!c) {
+      stats.cut_dropped++
+      log(`box split left nothing: p. ${r.page} "${r.quote.slice(0, 50)}"`)
+      return null
+    }
+    if (c.quote !== r.quote) {
+      stats.box_split++
+      log(`box split p. ${r.page}: "${r.quote.slice(0, 50)}" → "${c.quote.slice(0, 50)}"`)
+    }
     return { quote: c.quote, page: r.page }
   }
 
@@ -96,7 +154,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
       const m = /^(.*?)\s*\.{2,}\s*(\d+)\s*$/.exec(line) || /^(.*?[^.\d\s])\s*(\d+)$/.exec(line)
       if (!m) continue
       const text = normText(m[1].replace(/\.+$/, ''))
-      if (text === 'The Amps') { inAmps = true; continue }
+      if (text === 'The Amps') {
+        inAmps = true
+        continue
+      }
       if (text === 'Amp Categories') inAmps = false
       if (!inAmps) continue
       toc.push({ text, printed: Number(m[2]), page: p })
@@ -107,11 +168,17 @@ export function build({ pages, sections, curation, log = () => {} }) {
   const tocSubs = new Map() // section index → [{ text, page }]
   let lastTitle = null
   for (const e of toc) {
-    if (titleSet.has(e.text)) { lastTitle = e.text; continue }
+    if (titleSet.has(e.text)) {
+      lastTitle = e.text
+      continue
+    }
     const pdf = e.printed + 1
     const owner = modelSecs.findIndex((s) => s.title === lastTitle && pdf >= s.page && pdf <= s.end)
     const idx = owner >= 0 ? owner : modelSecs.findIndex((s) => s.title === lastTitle)
-    if (idx < 0) { fails.push(`TOC entry with no section: ${e.text}`); continue }
+    if (idx < 0) {
+      fails.push(`TOC entry with no section: ${e.text}`)
+      continue
+    }
     if (!tocSubs.has(idx)) tocSubs.set(idx, [])
     tocSubs.get(idx).push(e)
   }
@@ -121,7 +188,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
     const dup = modelSecs.filter((x) => x.title.split(' (')[0] === base).length > 1
     if (!dup) return { name: base, fromToc: false }
     const sub = (tocSubs.get(i) || [])[0]
-    if (!sub) { fails.push(`duplicate name without a TOC sub-entry: ${s.title}`); return { name: base, fromToc: false } }
+    if (!sub) {
+      fails.push(`duplicate name without a TOC sub-entry: ${s.title}`)
+      return { name: base, fromToc: false }
+    }
     return { name: sub.text, fromToc: true }
   }
   const basedOn = (title) => {
@@ -170,7 +240,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
   for (const k of skel) {
     for (const e of tocSubs.get(k.i) || []) {
       const name = e.text.split(/: | \(/)[0]
-      if (pointerIn(k, name)) { log(`TOC pointer skipped: ${name} in ${k.id}`); continue }
+      if (pointerIn(k, name)) {
+        log(`TOC pointer skipped: ${name} in ${k.id}`)
+        continue
+      }
       const expand = curation.toc_expand?.[name]
       if (expand) {
         const parts = name.split('/')
@@ -190,7 +263,7 @@ export function build({ pages, sections, curation, log = () => {} }) {
     if (/\bmodels?$/i.test(k.name)) prefixes.add(k.name.split(' ')[0].toLowerCase())
     for (let p = k.s.page; p <= k.s.end; p++) {
       for (const line of pages.get(p).split('\n')) {
-        const m = /^\s*[•\-]\s*([A-Z][^–:]{2,40}?)\s+[–:]\s/.exec(line)
+        const m = /^\s*[•-]\s*([A-Z][^–:]{2,40}?)\s+[–:]\s/.exec(line)
         if (!m) continue
         const name = normText(m[1])
         const low = name.toLowerCase()
@@ -202,12 +275,21 @@ export function build({ pages, sections, curation, log = () => {} }) {
   // Body names (curated): section-page spelling when on the model's pages, else lowest priority.
   for (const b of curation.body_names || []) {
     const k = skel.find((x) => x.id === b.model)
-    if (!k) { fails.push(`body name for unknown model ${b.model}`); continue }
+    if (!k) {
+      fails.push(`body name for unknown model ${b.model}`)
+      continue
+    }
     const opts = { minLength: 3, sentences: false }
     let page = findPage(b.evidence, k.s.page, k.s.end, opts)
     let tier = 0
-    if (!page) { page = findPage(b.evidence, 1, PDF_PAGES, opts); tier = 3 }
-    if (!page) { fails.push(`body name not in the guide: ${b.evidence}`); continue }
+    if (!page) {
+      page = findPage(b.evidence, 1, PDF_PAGES, opts)
+      tier = 3
+    }
+    if (!page) {
+      fails.push(`body name not in the guide: ${b.evidence}`)
+      continue
+    }
     addName(k.id, b.evidence, b.evidence, page, tier)
   }
   // Appendix tables: the longest all-caps line suffix that starts with a known name.
@@ -234,7 +316,7 @@ export function build({ pages, sections, curation, log = () => {} }) {
         hit = { suffix, k: best[1] }
       }
       if (hit) addName(hit.k.id, hit.suffix, hit.suffix, p, 2)
-      else if (/^[A-Z0-9][A-Z0-9+\-]* [A-Z0-9 +\-]+$/.test(normText(rawLine))) {
+      else if (/^[A-Z0-9][A-Z0-9+-]* [A-Z0-9 +-]+$/.test(normText(rawLine))) {
         fails.push(`appendix name with no model: ${normText(rawLine)} (p. ${p})`)
       }
     }
@@ -277,7 +359,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
       for (let i = end; i < Math.min(t.length, end + 600); i++) {
         if (t[i] === '“') depth++
         else if (t[i] === '”') {
-          if (depth === 0) { closeAt = i + 1; break }
+          if (depth === 0) {
+            closeAt = i + 1
+            break
+          }
           depth--
         }
       }
@@ -289,7 +374,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
       for (let i = at - 1; i >= Math.max(0, at - 1200); i--) {
         if (t[i] === '”') depth++
         else if (t[i] === '“') {
-          if (depth === 0) { opened = true; break }
+          if (depth === 0) {
+            opened = true
+            break
+          }
           depth--
         }
       }
@@ -320,12 +408,26 @@ export function build({ pages, sections, curation, log = () => {} }) {
     const sents = splitSentences(t)
     for (const cand of [sents.slice(0, 2).join(' '), sents[0]]) {
       const r = cand && tryQ(cand)
-      if (r) { stats.cut_shrunk++; log(`${what} ${k.id}: kept first sentence(s)`); return r }
+      if (r) {
+        stats.cut_shrunk++
+        log(`${what} ${k.id}: kept first sentence(s)`)
+        return r
+      }
     }
     const words = (sents[0] || t).split(' ')
     for (let n = words.length - 1; n >= 2; n--) {
-      const r = tryQ(words.slice(0, n).join(' ').replace(/[,;:–-]+$/, '').trim())
-      if (r) { stats.cut_shrunk++; log(`${what} ${k.id}: shrunk to "${r.quote}"`); return r }
+      const r = tryQ(
+        words
+          .slice(0, n)
+          .join(' ')
+          .replace(/[,;:–-]+$/, '')
+          .trim(),
+      )
+      if (r) {
+        stats.cut_shrunk++
+        log(`${what} ${k.id}: shrunk to "${r.quote}"`)
+        return r
+      }
     }
     stats.cut_dropped++
     log(`${what} ${k.id}: dropped (no verified cut)`)
@@ -333,7 +435,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
   }
 
   const controlsQuote = (k) => {
-    const lines = pages.get(k.s.page).split('\n').map((l) => l.trim())
+    const lines = pages
+      .get(k.s.page)
+      .split('\n')
+      .map((l) => l.trim())
     const i = lines.findIndex((l) => l.startsWith('Amp controls '))
     if (i < 0) return null
     const parts = [lines[i].slice('Amp controls '.length)]
@@ -341,7 +446,7 @@ export function build({ pages, sections, curation, log = () => {} }) {
       const prev = parts[parts.length - 1]
       const next = lines[j]
       if (!next || /^\d+$/.test(next)) break
-      if (/[,\-]$|\band$|\bwith$/.test(prev) || /^[a-z(]/.test(next)) parts.push(next)
+      if (/[,-]$|\band$|\bwith$/.test(prev) || /^[a-z(]/.test(next)) parts.push(next)
       else break
     }
     for (let n = parts.length; n >= 1; n--) {
@@ -398,7 +503,9 @@ export function build({ pages, sections, curation, log = () => {} }) {
     }
     if (k.isStub) return model
 
-    model.synopsis = card.Synopsis ? firstClean(bestQuote(cutCard(card.Synopsis, [' • ', ' Tips ', ' Clips ', ' More videos']), k, 'synopsis')) : null
+    model.synopsis = card.Synopsis
+      ? firstClean(bestQuote(cutCard(card.Synopsis, [' • ', ' Tips ', ' Clips ', ' More videos']), k, 'synopsis'))
+      : null
     model.controls = firstClean(controlsQuote(k))
     const hints = parseControlHints(model.controls?.quote)
 
@@ -408,9 +515,16 @@ export function build({ pages, sections, curation, log = () => {} }) {
     for (const sen of tipText ? splitSentences(tipText) : []) {
       if (sen.length < 12) continue
       const page = sen.length <= 320 ? findPage(sen, k.s.page, k.s.end) : null
-      if (!page) { stats.cut_dropped++; log(`tip ${k.id}: dropped "${sen.slice(0, 60)}…"`); continue }
+      if (!page) {
+        stats.cut_dropped++
+        log(`tip ${k.id}: dropped "${sen.slice(0, 60)}…"`)
+        continue
+      }
       const pieces = boxClean(sen, page)
-      if (pieces.length !== 1 || pieces[0].quote !== sen) { stats.box_split++; log(`tip ${k.id} p. ${page}: box split into ${pieces.length}`) }
+      if (pieces.length !== 1 || pieces[0].quote !== sen) {
+        stats.box_split++
+        log(`tip ${k.id} p. ${page}: box split into ${pieces.length}`)
+      }
       for (const pc of pieces) {
         if (tipSeen.has(pc.quote)) continue
         tipSeen.add(pc.quote)
@@ -419,8 +533,12 @@ export function build({ pages, sections, curation, log = () => {} }) {
     }
 
     // Cab.
-    const speaker = card['Cabinet/speaker'] ? firstClean(bestQuote(cutCard(card['Cabinet/speaker'], [' Web, Manual', ' More videos, clips and comments']), k, 'speaker')) : null
-    const stock = card['Stock cabs'] ? firstClean(bestQuote(cutCard(card['Stock cabs'], [' Web, Manual', ' More videos, clips and comments']), k, 'stock_cabs')) : null
+    const speaker = card['Cabinet/speaker']
+      ? firstClean(bestQuote(cutCard(card['Cabinet/speaker'], [' Web, Manual', ' More videos, clips and comments']), k, 'speaker'))
+      : null
+    const stock = card['Stock cabs']
+      ? firstClean(bestQuote(cutCard(card['Stock cabs'], [' Web, Manual', ' More videos, clips and comments']), k, 'stock_cabs'))
+      : null
     const stored = new Set([speaker?.quote, stock?.quote, model.synopsis?.quote, model.controls?.quote, ...model.tips.map((t) => t.quote)])
     const cabNotes = []
     const headerEnd = model.controls ? pageText(pages, k.s.page).indexOf(model.controls.quote) + model.controls.quote.length : 0
@@ -445,13 +563,26 @@ export function build({ pages, sections, curation, log = () => {} }) {
     // Settings (curated), knobs parsed per rule 6.
     for (const st of settingsByModel.get(k.id) || []) {
       const r = checkQuote({ quote: st.quote, page: st.page }, pages)
-      if (!r.ok) { fails.push(`settings quote ${r.reason} p. ${st.page} (${k.id}): ${st.quote}`); continue }
-      if (st.page < k.s.page || st.page > k.s.end) { fails.push(`settings page outside model pages (${k.id})`); continue }
-      if (spansBoxBreak(st.quote, pages.get(st.page), titles)) { fails.push(`settings quote spans a box break p. ${st.page} (${k.id})`); continue }
-      if (st.context && !checkQuote({ quote: st.context, page: st.page }, pages).ok) fails.push(`settings context not on p. ${st.page}: ${st.context}`)
+      if (!r.ok) {
+        fails.push(`settings quote ${r.reason} p. ${st.page} (${k.id}): ${st.quote}`)
+        continue
+      }
+      if (st.page < k.s.page || st.page > k.s.end) {
+        fails.push(`settings page outside model pages (${k.id})`)
+        continue
+      }
+      if (spansBoxBreak(st.quote, pages.get(st.page), titles)) {
+        fails.push(`settings quote spans a box break p. ${st.page} (${k.id})`)
+        continue
+      }
+      if (st.context && !checkQuote({ quote: st.context, page: st.page }, pages).ok)
+        fails.push(`settings context not on p. ${st.page}: ${st.context}`)
       for (const o of st.other || []) if (!st.quote.includes(o)) fails.push(`settings other fragment not in quote: ${o}`)
       const knobs = parseKnobs(st.quote, hints, st.other || [])
-      if (!Object.keys(knobs).length) { fails.push(`settings with no knob (${k.id}): ${st.quote}`); continue }
+      if (!Object.keys(knobs).length) {
+        fails.push(`settings with no knob (${k.id}): ${st.quote}`)
+        continue
+      }
       let unit = null
       if (st.unit_name) {
         unit = model.unit_names.find((u) => u.name.toLowerCase() === st.unit_name.toLowerCase())?.name ?? null
@@ -474,7 +605,9 @@ export function build({ pages, sections, curation, log = () => {} }) {
     for (const tip of model.tips) {
       for (const d of parseDirections(tip.quote, hints)) {
         if (dirSeen.has(d.knob)) continue
-        const label = Object.keys(map).find((l) => map[l] === d.knob && new RegExp(`(?<![A-Za-z0-9])${escapeRegex(l)}(?![A-Za-z0-9])`, 'i').test(tip.quote))
+        const label = Object.keys(map).find(
+          (l) => map[l] === d.knob && new RegExp(`(?<![A-Za-z0-9])${escapeRegex(l)}(?![A-Za-z0-9])`, 'i').test(tip.quote),
+        )
         if (!label) continue
         dirSeen.add(d.knob)
         model.directions.push({ knob: d.knob, dir: d.dir, quote: tip.quote, page: tip.page })
@@ -493,7 +626,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
         for (let i = m.index - 1; i >= Math.max(0, m.index - 2000); i--) {
           if (t[i] === '”') depth++
           else if (t[i] === '“') {
-            if (depth === 0) { open = i; break }
+            if (depth === 0) {
+              open = i
+              break
+            }
             depth--
           }
         }
@@ -504,7 +640,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
         let q = null
         const two = sents.slice(0, 2).join(' ')
         for (const cand of [sents[0]?.length < 60 ? two : null, sents[0]]) {
-          if (cand && cand.length >= 12 && cand.length <= NOTE_MAX && checkQuote({ quote: cand, page: p }, pages).ok) { q = cand; break }
+          if (cand && cand.length >= 12 && cand.length <= NOTE_MAX && checkQuote({ quote: cand, page: p }, pages).ok) {
+            q = cand
+            break
+          }
         }
         if (q) q = boxClean(q, p, 12, NOTE_MAX)[0]?.quote ?? null
         if (!q || stored.has(q)) continue
@@ -514,7 +653,10 @@ export function build({ pages, sections, curation, log = () => {} }) {
       }
     }
     cands.sort((a, b) => a.rank - b.rank || a.at - b.at)
-    model.notes = cands.slice(0, 5).sort((a, b) => a.at - b.at).map(({ quote, page, said_by }) => ({ quote, page, said_by }))
+    model.notes = cands
+      .slice(0, 5)
+      .sort((a, b) => a.at - b.at)
+      .map(({ quote, page, said_by }) => ({ quote, page, said_by }))
     return model
   })
 
@@ -536,7 +678,7 @@ export async function buildData(opts) {
   const data = {
     schema: 1,
     guide: {
-      title: 'Yek\'s Guide to the Fractal Audio Amp Models',
+      title: "Yek's Guide to the Fractal Audio Amp Models",
       by: 'Alexander van Engelen (yek); compiled by simviz',
       revision: 'April 2017',
       firmware: 'Quantum 7.02',

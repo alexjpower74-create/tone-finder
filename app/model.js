@@ -1,35 +1,40 @@
 // Model detail (docs/API.md §8): every cited note, each with its page pill.
-import { carry, getModel } from './api.js';
-import { cabHtml, quoteHtml } from './card.js';
-import { esc, pagePill, renderShell } from './shell.js';
+import { carry, getModel } from './api.js'
+import { cabHtml, quoteHtml } from './card.js'
+import { esc, pagePill, renderShell } from './shell.js'
 
-renderShell();
+renderShell()
 
-const root = document.getElementById('model');
-const id = new URLSearchParams(location.search).get('id') ?? '';
+const root = document.getElementById('model')
+const id = new URLSearchParams(location.search).get('id') ?? ''
 
 const SPEC_ROWS = [
-  ['years', 'Years made'], ['circuit', 'Circuit'], ['power', 'Power'], ['master_volume', 'Master volume'],
-  ['negative_feedback', 'Negative feedback'], ['preamp_tubes', 'Preamp tubes'], ['power_tubes', 'Power tubes'],
+  ['years', 'Years made'],
+  ['circuit', 'Circuit'],
+  ['power', 'Power'],
+  ['master_volume', 'Master volume'],
+  ['negative_feedback', 'Negative feedback'],
+  ['preamp_tubes', 'Preamp tubes'],
+  ['power_tubes', 'Power tubes'],
   ['tonestack', 'Tonestack'],
-];
+]
 
-const backLink = () => `<a class="btn" href="${esc(carry('models.html'))}">Back to Models</a>`;
+const backLink = () => `<a class="btn" href="${esc(carry('models.html'))}">Back to Models</a>`
 
 function section(title, body) {
-  return body ? `<section class="glass panel"><h2>${title}</h2>${body}</section>` : '';
+  return body ? `<section class="glass panel"><h2>${title}</h2>${body}</section>` : ''
 }
 
 function pagesSentence(p) {
-  return p.start === p.end ? `Page ${p.start} in the guide.` : `Pages ${p.start}–${p.end} in the guide.`;
+  return p.start === p.end ? `Page ${p.start} in the guide.` : `Pages ${p.start}–${p.end} in the guide.`
 }
 
 function render({ model: m, conventions }, target) {
-  document.title = `${m.name} · Tone Finder`;
+  document.title = `${m.name} · Tone Finder`
   const specs = SPEC_ROWS.map(
     ([key, label]) =>
       `<tr><th scope="row">${label}</th><td>${m.specs[key] == null ? '<span class="none">Not in the guide</span>' : esc(m.specs[key])}</td></tr>`,
-  ).join('');
+  ).join('')
 
   const settings = m.settings
     .map(
@@ -43,13 +48,13 @@ function render({ model: m, conventions }, target) {
         ${s.other.length ? `<div class="small muted">Also in this list: ${s.other.map(esc).join(' · ')}</div>` : ''}
       </li>`,
     )
-    .join('');
+    .join('')
 
   const directions = m.directions
     .map((d) => `<li><div class="muted small">${esc(d.knob)} ${d.dir === 'up' ? 'up' : 'down'}</div>${quoteHtml(d)}</li>`)
-    .join('');
+    .join('')
 
-  const mvRule = m.facets.master_volume === 'no' ? conventions.find((c) => c.id === 'no-master-volume') : null;
+  const mvRule = m.facets.master_volume === 'no' ? conventions.find((c) => c.id === 'no-master-volume') : null
 
   root.innerHTML = `
     <p>${backLink()}</p>
@@ -80,34 +85,34 @@ function render({ model: m, conventions }, target) {
       ${section('Directions', directions ? `<ul class="detail-list">${directions}</ul>` : '')}
       ${section('Master volume', mvRule ? quoteHtml(mvRule) : '')}
       ${(() => {
-        const cab = cabHtml(m.cab);
-        return cab ? `<section class="glass panel">${cab.replace('<h3>Cab</h3>', '<h2>Cab</h2>')}</section>` : '';
+        const cab = cabHtml(m.cab)
+        return cab ? `<section class="glass panel">${cab.replace('<h3>Cab</h3>', '<h2>Cab</h2>')}</section>` : ''
       })()}
       ${section('Notes', m.notes.length ? `<ul class="detail-list">${m.notes.map((n) => `<li>${quoteHtml(n)}</li>`).join('')}</ul>` : '')}
-    </div>`;
+    </div>`
 }
 
-(async () => {
+;(async () => {
   try {
-    if (!id) throw Object.assign(new Error('No model with that id.'), { status: 404 });
-    const res = await getModel(id);
-    let target = null;
+    if (!id) throw Object.assign(new Error('No model with that id.'), { status: 404 })
+    const res = await getModel(id)
+    let target = null
     if (res.model.refers_to) {
       try {
-        target = (await getModel(res.model.refers_to)).model;
+        target = (await getModel(res.model.refers_to)).model
       } catch {
-        target = { id: res.model.refers_to, name: res.model.refers_to };
+        target = { id: res.model.refers_to, name: res.model.refers_to }
       }
     }
-    render(res, target);
+    render(res, target)
   } catch (e) {
     if (e.status === 404) {
-      document.title = 'No model · Tone Finder';
-      root.innerHTML = `<h1 data-testid="no-model">No model with that id.</h1><p>${backLink()}</p>`;
+      document.title = 'No model · Tone Finder'
+      root.innerHTML = `<h1 data-testid="no-model">No model with that id.</h1><p>${backLink()}</p>`
     } else {
-      root.innerHTML = `<p class="error">${esc(e.message)}</p><p>${backLink()}</p>`;
+      root.innerHTML = `<p class="error">${esc(e.message)}</p><p>${backLink()}</p>`
     }
   } finally {
-    root.removeAttribute('aria-busy');
+    root.removeAttribute('aria-busy')
   }
-})();
+})()

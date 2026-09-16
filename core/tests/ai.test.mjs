@@ -56,7 +56,10 @@ test('fake-plant: unknown unit name, bad page and a changed character are droppe
   const s = a.suggestions[0]
   assert.equal(s.model_id, '1959slp')
   assert.equal(s.source, 'ai_checked')
-  assert.deepEqual(s.why.map((w) => [w.page, w.quote]), [[28, 'Models of a 100 watt Superlead Plexi re-issue']])
+  assert.deepEqual(
+    s.why.map((w) => [w.page, w.quote]),
+    [[28, 'Models of a 100 watt Superlead Plexi re-issue']],
+  )
   assert.equal(s.unit_name, '1959SLP')
   for (const w of s.why) assert.ok(checkQuote(w, pages).ok)
   assert.ok(!a.suggestions.some((x) => x.unit_name === 'Brown Sound Deluxe'))
@@ -70,7 +73,13 @@ test('fake-plant: unknown unit name, bad page and a changed character are droppe
   assert.deepEqual(a.general_knowledge, [{ text: 'FAKE general knowledge: a planted line for the tests.', label: GK_LABEL }])
   assert.equal(fake.count(), 2)
   assert.equal(store.calls.length, 2)
-  assert.deepEqual(store.calls.map((c) => [c.step, c.ok, c.input_tokens, c.cached_input_tokens, c.output_tokens]), [['pick', 1, 1500, 500, 400], ['cite', 1, 1500, 500, 400]])
+  assert.deepEqual(
+    store.calls.map((c) => [c.step, c.ok, c.input_tokens, c.cached_input_tokens, c.output_tokens]),
+    [
+      ['pick', 1, 1500, 500, 400],
+      ['cite', 1, 1500, 500, 400],
+    ],
+  )
   assert.ok(a.ai.cost_cad > 0)
   checkInvariants(a, { pages })
 })
@@ -85,20 +94,27 @@ test('fake-attrib: a citation opening with the previous passage’s "– Manual"
   assert.equal(s.why[0].page, 188)
   assert.ok(s.why[0].quote.startsWith('Fractal Audio’s model is based on channel 1'), s.why[0].quote)
   assert.ok(checkQuote(s.why[0], pages).ok)
-  for (const x of a.suggestions) for (const w of x.why) {
-    assert.equal(quoteShapeProblem(w.quote, pages.get(w.page), sectionTitles(models)), null, `${x.model_id}: ${w.quote}`)
-  }
+  for (const x of a.suggestions)
+    for (const w of x.why) {
+      assert.equal(quoteShapeProblem(w.quote, pages.get(w.page), sectionTitles(models)), null, `${x.model_id}: ${w.quote}`)
+    }
   assert.ok(!JSON.stringify(a.suggestions.map((x) => x.why)).includes('– Manual Fractal'))
 })
 
 test('fake-fold: a citation differing only in quote marks and case is located and shown as the page text', async () => {
   const exact = 'Custom amp models by Fractal Audio, recreating EVH’s “Brown Sound”'
   assert.ok(pageText(pages, 60).includes(exact), 'control: the exact text is on p. 60')
-  assert.ok(!pageText(pages, 60).includes('custom amp models by fractal audio, recreating EVH\'s "Brown Sound"'), 'control: the folded citation is not a raw substring')
+  assert.ok(
+    !pageText(pages, 60).includes('custom amp models by fractal audio, recreating EVH\'s "Brown Sound"'),
+    'control: the folded citation is not a raw substring',
+  )
   const a = await ask('Van Halen brown sound fake-fold')
   const brown = a.suggestions.find((s) => s.model_id === 'brit-brown-and-fas-brown')
   assert.equal(brown.source, 'ai_checked')
-  assert.deepEqual(brown.why.map((w) => [w.page, w.quote]), [[60, exact]])
+  assert.deepEqual(
+    brown.why.map((w) => [w.page, w.quote]),
+    [[60, exact]],
+  )
   const ods = a.suggestions.find((s) => s.model_id === 'ods-100')
   assert.ok(ods && ods.source === 'ai_checked', JSON.stringify(a.suggestions.map((s) => [s.model_id, s.source])))
   const w = ods.why[0]
@@ -106,10 +122,11 @@ test('fake-fold: a citation differing only in quote marks and case is located an
   assert.ok(w.quote.includes('which produces an up front sparkling tone'), w.quote)
   assert.ok(w.quote.length > 'which produces an up front sparkling tone,'.length, `expanded: ${w.quote}`)
   assert.match(w.quote, /^[A-Z“"(‘]/, 'starts at a sentence start')
-  for (const s of a.suggestions) for (const q of s.why) {
-    assert.ok(checkQuote(q, pages).ok)
-    assert.ok(!spansBoxBreak(q.quote, pages.get(q.page), sectionTitles(models)))
-  }
+  for (const s of a.suggestions)
+    for (const q of s.why) {
+      assert.ok(checkQuote(q, pages).ok)
+      assert.ok(!spansBoxBreak(q.quote, pages.get(q.page), sectionTitles(models)))
+    }
   assert.deepEqual(a.ai.dropped, [
     { kind: 'quote_not_on_page', detail: 'Brit Brown, p. 60' },
     { kind: 'quote_not_on_page', detail: 'Brit Brown, p. 61' },
@@ -131,7 +148,10 @@ test('fake-gk: general knowledge about the guide, candidates or model list is dr
   assert.equal(a.ai.used, true)
   assert.equal(a.suggestions[0].model_id, 'brit-brown-and-fas-brown')
   assert.equal(a.suggestions[0].source, 'ai_checked')
-  assert.deepEqual(a.general_knowledge.map((g) => g.text), ['FAKE: Eddie Van Halen played a modded Marshall Superlead on the early records.'])
+  assert.deepEqual(
+    a.general_knowledge.map((g) => g.text),
+    ['FAKE: Eddie Van Halen played a modded Marshall Superlead on the early records.'],
+  )
   for (const g of a.general_knowledge) assert.doesNotMatch(g.text, /guide|candidate|provided|model list|the list/i)
   const { matched_terms, ai_terms } = a.understood
   assert.ok(matched_terms.includes('van halen') && matched_terms.includes('brown sound'), JSON.stringify(a.understood))
@@ -151,7 +171,10 @@ test('fake-span: an AI citation that runs across a box break is dropped as quote
   const q = 'Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.'
   assert.ok(checkQuote({ quote: q, page: 28 }, pages).ok, 'control: it is an exact, verified substring')
   const a = await ask('1959SLP fake-span')
-  assert.deepEqual(a.ai.dropped, [{ kind: 'quote_not_on_page', detail: '1959SLP, p. 28' }, { kind: 'no_verified_quote', detail: '1959SLP' }])
+  assert.deepEqual(a.ai.dropped, [
+    { kind: 'quote_not_on_page', detail: '1959SLP, p. 28' },
+    { kind: 'no_verified_quote', detail: '1959SLP' },
+  ])
   assert.ok(a.suggestions.every((s) => s.source === 'guide_search'))
   assert.ok(!JSON.stringify(a).includes('Van Halen “My settings'))
 })
@@ -173,7 +196,10 @@ test('fake-nonsense: no guide support and no general knowledge → still "I can\
 
 test('the pick prompt tells the model to return nothing for requests that are not about music', async () => {
   const src = readFileSync(fileURLToPath(new URL('../ai.js', import.meta.url)), 'utf8')
-  assert.match(src, /If the request is not about a guitar tone, song, artist, band, style or gear, return empty general_knowledge, search_terms and picks/)
+  assert.match(
+    src,
+    /If the request is not about a guitar tone, song, artist, band, style or gear, return empty general_knowledge, search_terms and picks/,
+  )
 })
 
 test('fake-puppets: general knowledge + search terms lead to USA IIC+ with a verified p. 270 quote', async () => {
@@ -249,7 +275,14 @@ test('off, no_key and guide_not_loaded make zero requests', async () => {
 test('request shape: bearer key, model, token limits, low reasoning, JSON mode', async () => {
   await ask('Robben Ford fake-puppets')
   const last = await http('/last')
-  assert.deepEqual(last, { step: 'cite', authorization: 'present', model: 'gpt-5.4-mini', max_completion_tokens: MAX_TOKENS.cite, reasoning_effort: 'low', response_format: { type: 'json_object' } })
+  assert.deepEqual(last, {
+    step: 'cite',
+    authorization: 'present',
+    model: 'gpt-5.4-mini',
+    max_completion_tokens: MAX_TOKENS.cite,
+    reasoning_effort: 'low',
+    response_format: { type: 'json_object' },
+  })
   assert.equal(MAX_TOKENS.pick, 1200)
   assert.equal(MAX_TOKENS.cite, 2500)
 })
@@ -257,7 +290,10 @@ test('request shape: bearer key, model, token limits, low reasoning, JSON mode',
 test('spend math follows §5.8', () => {
   const p = prices(env)
   assert.equal(costUsd({ input: 1_000_000, cached: 0, output: 0 }, p), 0.75)
-  assert.equal(Math.round(costUsd({ input: 1500, cached: 500, output: 400 }, p) * 1e9), Math.round(((1000 * 0.75 + 500 * 0.075 + 400 * 4.5) / 1e6) * 1e9))
+  assert.equal(
+    Math.round(costUsd({ input: 1500, cached: 500, output: 400 }, p) * 1e9),
+    Math.round(((1000 * 0.75 + 500 * 0.075 + 400 * 4.5) / 1e6) * 1e9),
+  )
   assert.equal(estimateCad(3000, 1200, p), ((1000 * 0.75 + 1200 * 4.5) / 1e6) * 1.3866)
 })
 

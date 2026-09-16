@@ -49,20 +49,31 @@ test('boxBreaks offsets are word starts in pageText on every page, and include t
 })
 
 test('splitAtBoxBreaks shortens only; cutAttribution moves the name to said_by', () => {
-  assert.deepEqual(splitAtBoxBreaks(SPANS[0][1], pages.get(28)), ['Or just crank everything, like Eddie Van Halen', '“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.'])
+  assert.deepEqual(splitAtBoxBreaks(SPANS[0][1], pages.get(28)), [
+    'Or just crank everything, like Eddie Van Halen',
+    '“My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.',
+  ])
   assert.deepEqual(splitAtBoxBreaks(CLEAN[0][1], pages.get(16)), [CLEAN[0][1]])
   const [before, after] = splitAtBoxBreaks(SPANS[1][1], pages.get(33))
   assert.equal(before, 'These tonal characteristics are what define this much respected all-valve head.”')
   assert.deepEqual(cutAttribution(after, ['Marshall']), { quote: 'The re-issue has two EL34 tubes', said_by: null })
   const [manual] = splitAtBoxBreaks(SPANS[2][1], pages.get(125))
   assert.equal(manual, 'Set the gain around 6 and then bring the master to taste”')
-  assert.deepEqual(cutAttribution('Turn up Treble a lot to make it less dark – yek', ['yek']), { quote: 'Turn up Treble a lot to make it less dark', said_by: 'yek' })
+  assert.deepEqual(cutAttribution('Turn up Treble a lot to make it less dark – yek', ['yek']), {
+    quote: 'Turn up Treble a lot to make it less dark',
+    said_by: 'yek',
+  })
 })
 
 test('no quote in models.json spans a box break or ends with an attribution', () => {
   let n = 0
   const walk = (v, path, model) => {
-    if (Array.isArray(v)) return v.forEach((x, i) => walk(x, `${path}[${i}]`, model))
+    if (Array.isArray(v)) {
+      v.forEach((x, i) => {
+        walk(x, `${path}[${i}]`, model)
+      })
+      return
+    }
     if (!v || typeof v !== 'object') return
     if (typeof v.quote === 'string' && Number.isInteger(v.page)) {
       n++
@@ -107,12 +118,18 @@ test('round 4: running header and page-number footer are box breaks', () => {
   for (const [p, q] of FOOTER) assert.equal(spansBoxBreak(q, pages.get(p)), true, `p. ${p} footer should span`)
   // The sentence without the header does not span.
   assert.equal(spansBoxBreak('The Edge’s famous amp is a ’64 Top Boost AC30/6 model.', pages.get(108), titles), false)
-  assert.deepEqual(splitAtBoxBreaks(HEADER[0][1], pages.get(108), titles), ['Class-A 30W (VOX AC30)', 'The Edge’s famous amp is a ’64 Top Boost AC30/6 model.'])
+  assert.deepEqual(splitAtBoxBreaks(HEADER[0][1], pages.get(108), titles), [
+    'Class-A 30W (VOX AC30)',
+    'The Edge’s famous amp is a ’64 Top Boost AC30/6 model.',
+  ])
   assert.equal(cleanCut('• Bright: adds sparkle, and'), 'Bright: adds sparkle')
 })
 
 test('cleanCut strips a leading attribution with a known name only', () => {
-  assert.equal(cleanCut('– Manual Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed.'), 'Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed.')
+  assert.equal(
+    cleanCut('– Manual Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed.'),
+    'Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed.',
+  )
   assert.equal(cleanCut('- yek Turn up Treble'), 'Turn up Treble')
   assert.equal(cleanCut('– Cab Packs 5, 7'), '– Cab Packs 5, 7', 'not an attribution name')
 })

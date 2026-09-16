@@ -63,7 +63,10 @@ test('a tip direction nudges only a guess', () => {
   assert.deepEqual(presence.direction, { dir: 'up', quote: 'Turn up Presence in the Brit Brown model', page: 60 })
   // 1959SLP's tip says turn Bass down and Middle and Treble up, but those knobs have guide values.
   const slp = byId.get('1959slp')
-  assert.ok(slp.directions.some((d) => d.knob === 'Bass' && d.dir === 'down'), 'control: the direction exists')
+  assert.ok(
+    slp.directions.some((d) => d.knob === 'Bass' && d.dir === 'down'),
+    'control: the direction exists',
+  )
   for (const k of knobsFor(slp, { conventions }).knobs.filter((x) => x.kind === 'guide')) {
     assert.equal(k.value, slp.settings[0].knobs[k.knob])
     assert.ok(!('direction' in k))
@@ -93,7 +96,11 @@ test('the answer with pages: null still works from stored quotes', () => {
   assert.ok(a.suggestions.length >= 1)
   for (const s of a.suggestions) {
     const m = byId.get(s.model_id)
-    const stored = new Set(JSON.stringify(m).match(/"quote":"(?:[^"\\]|\\.)*"/g).map((x) => JSON.parse(x.slice(8))))
+    const stored = new Set(
+      JSON.stringify(m)
+        .match(/"quote":"(?:[^"\\]|\\.)*"/g)
+        .map((x) => JSON.parse(x.slice(8))),
+    )
     for (const w of s.why) assert.ok(stored.has(w.quote), `${s.model_id}: why is not a stored quote: ${w.quote}`)
   }
   checkInvariants(a, { pages: null })
@@ -114,7 +121,8 @@ test('a planted "SAMPLE (test only): add Transformer Grind" tip yields one ares_
     where: 'why',
     quote: 'SAMPLE (test only): add Transformer Grind',
     page: 28,
-    advice: "Your firmware doesn't have this control. Skip this step: Fractal replaced it with Speaker Compression (Spkr Comp), which resets to 3.0.",
+    advice:
+      "Your firmware doesn't have this control. Skip this step: Fractal replaced it with Speaker Compression (Spkr Comp), which resets to 3.0.",
   })
   assert.equal(s.ares_flags[0].advice, ARES_ADVICE)
   // Control: the unplanted data gives no flag for the same model.
@@ -128,10 +136,18 @@ test('the ares object equals API.md §4.5 on every answer', () => {
     guide_firmware: 'Quantum 7.02',
     note: 'yek\'s guide was written for Quantum 7.02. Your Axe-Fx II runs Ares, which came later. Quantum 9.00 removed Motor Drive and Transformer Grind from the Amp block and replaced them with Speaker Compression (Spkr Comp), and Fractal says Ares amp modeling "should sound very similar".',
     sources: [
-      { url: 'https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/', fetched: '2026-09-14',
-        quote: 'Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm.' },
-      { url: 'https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/', fetched: '2026-09-14',
-        quote: 'Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar.' },
+      {
+        url: 'https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/',
+        fetched: '2026-09-14',
+        quote:
+          'Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm.',
+      },
+      {
+        url: 'https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/',
+        fetched: '2026-09-14',
+        quote:
+          'Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar.',
+      },
     ],
   }
   assert.deepEqual(answer('banjo through a toaster', { models, pages }).ares, expected)
@@ -168,7 +184,11 @@ test('coverage: a model matching one of two found terms scores exactly 0.75 × i
   const car1 = one.find((c) => c.model.id === 'car-roamer')
   const car2 = both.find((c) => c.model.id === 'car-roamer')
   assert.ok(car1 && car2, 'control: Car Roamer is a candidate for both queries')
-  assert.deepEqual(car2.terms.map((t) => t.term), ['chime'], 'control: it matches only "chime"')
+  assert.deepEqual(
+    car2.terms.map((t) => t.term),
+    ['chime'],
+    'control: it matches only "chime"',
+  )
   assert.ok(Math.abs(car2.score - 0.75 * car1.score) < 1e-9, `${car2.score} vs 0.75 × ${car1.score}`)
   const edge = search('the edge', { models, pages }).candidates.find((c) => c.model.id === 'class-a-30w')
   const chime = search('chime', { models, pages }).candidates.find((c) => c.model.id === 'class-a-30w')
@@ -182,11 +202,15 @@ test('"Petrucci lead": no why quote is a stock-cabs line', () => {
   const a = answer('Petrucci lead', { models, pages })
   assert.equal(a.status, 'ok')
   const stock = models.models.map((m) => m.cab.stock_cabs?.quote).filter(Boolean)
-  assert.ok(stock.some((q) => q.includes('4x12 Petrucci')), 'control: the Recto stock-cabs line names Petrucci')
-  for (const s of a.suggestions) for (const w of s.why) {
-    assert.ok(!stock.some((q) => w.quote.includes(q) || q.includes(w.quote)), `${s.model_id}: ${w.quote}`)
-    assert.ok(!/Cab Packs?\b/.test(w.quote), `${s.model_id}: ${w.quote}`)
-  }
+  assert.ok(
+    stock.some((q) => q.includes('4x12 Petrucci')),
+    'control: the Recto stock-cabs line names Petrucci',
+  )
+  for (const s of a.suggestions)
+    for (const w of s.why) {
+      assert.ok(!stock.some((q) => w.quote.includes(q) || q.includes(w.quote)), `${s.model_id}: ${w.quote}`)
+      assert.ok(!/Cab Packs?\b/.test(w.quote), `${s.model_id}: ${w.quote}`)
+    }
 })
 
 test('never the running header as a why quote (Tremolo Lux, "blackface")', async () => {

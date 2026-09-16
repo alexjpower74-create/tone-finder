@@ -1,26 +1,31 @@
 // Guide search (docs/API.md §4.1). Pure: models.json data + optional guide pages.
 import { pageText } from './guide.js'
 import { foldForSearch, splitSentences, splitAtBoxBreaks } from './text.js'
-import { indexModels, resolvedModel, sectionTitles } from './models.js'
+import { indexModels, resolvedModel } from './models.js'
 
 // Function words may not start or end an n-gram; filler words may end one ("brown sound") but not start one.
 export const FUNCTION_WORDS = new Set(
-  ('a an and the of on in at to for with from by like my me i want need get some sort kind type please how what that ' +
+  (
+    'a an and the of on in at to for with from by like my me i want need get some sort kind type please how what that ' +
     'this those these is are be it its his her their do does make give through into onto over under about via as or ' +
-    'but than').split(' '),
+    'but than'
+  ).split(' '),
 )
 export const FILLER_WORDS = new Set(
   'tone tones sound sounds sounding song guitar guitars amp amps model models setting settings preset patch play playing'.split(' '),
 )
 export const STOP_WORDS = new Set([...FUNCTION_WORDS, ...FILLER_WORDS])
 export const GENERIC_WORDS = new Set(
-  ('clean crunch crunchy rhythm lead solo dirty distorted distortion overdrive overdriven drive gain master volume ' +
-    'bass mid middle treble presence depth loud quiet warm bright dark fat big heavy').split(' '),
+  (
+    'clean crunch crunchy rhythm lead solo dirty distorted distortion overdrive overdriven drive gain master volume ' +
+    'bass mid middle treble presence depth loud quiet warm bright dark fat big heavy'
+  ).split(' '),
 )
 export const STRONG_DF_SHARE = 0.35
 export const KEEP_SHARE = 0.4
 export const MAX_SUGGESTIONS = 4
-export const CARD_LABEL = /^(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls|More videos, clips and comments)(?![A-Za-z])/
+export const CARD_LABEL =
+  /^(?:Synopsis|Tips|Clips|Sound Clips|Cabinet\/speaker|Stock cabs|Web, Manual|Amp controls|More videos, clips and comments)(?![A-Za-z])/
 
 const INTENTS = [
   ['high_gain', ['high gain', 'metal', 'djent', 'thrash', 'brutal', 'chug']],
@@ -32,8 +37,11 @@ const INTENTS = [
 
 // Lowercase; keep letters, digits, + # / - and apostrophes inside words; split on everything else.
 export function tokenize(query) {
-  const words = String(query).toLowerCase().match(/[\p{L}\p{N}+#\/\-’']+/gu) || []
-  return words.map((w) => w.replace(/^['’\-\/]+|['’\-\/]+$/g, '')).filter(Boolean)
+  const words =
+    String(query)
+      .toLowerCase()
+      .match(/[\p{L}\p{N}+#/\-’']+/gu) || []
+  return words.map((w) => w.replace(/^['’\-/]+|['’\-/]+$/g, '')).filter(Boolean)
 }
 
 export function detectIntent(tokens) {
@@ -84,7 +92,12 @@ export function termRegex(term) {
 
 // "The Edge": capital "The", the other words in any case, not at a sentence start. Runs on unfolded text.
 function properRegex(words) {
-  const rest = words.slice(1).map((w) => w.split('').map((ch) => (/[a-z]/.test(ch) ? `[${ch}${ch.toUpperCase()}]` : escapeRegex(ch))).join(''))
+  const rest = words.slice(1).map((w) =>
+    w
+      .split('')
+      .map((ch) => (/[a-z]/.test(ch) ? `[${ch}${ch.toUpperCase()}]` : escapeRegex(ch)))
+      .join(''),
+  )
   return new RegExp('(?<=[^.!?:“"\\s][”"’)]*\\s+)The\\s+' + rest.join('\\s+') + '(?![A-Za-z0-9+#/])', 'g')
 }
 
@@ -96,12 +109,23 @@ function buildIndex(data, pages) {
     const stubs = idx.stubsOf.get(m.id) || []
     const w4 = [...m.unit_names.map((u) => u.name), m.name, m.based_on || '', ...stubs.flatMap((s) => [s.name, s.based_on || ''])]
     const w3 = [m.synopsis?.quote, ...m.tips.map((t) => t.quote)]
-    const w2 = [m.controls?.quote, m.cab.speaker?.quote, m.cab.stock_cabs?.quote, ...m.cab.notes.map((n) => n.quote), ...m.settings.map((s) => s.quote)]
+    const w2 = [
+      m.controls?.quote,
+      m.cab.speaker?.quote,
+      m.cab.stock_cabs?.quote,
+      ...m.cab.notes.map((n) => n.quote),
+      ...m.settings.map((s) => s.quote),
+    ]
     const w1 = [...m.notes.map((n) => n.quote), ...m.directions.map((d) => d.quote)]
     const pageTexts = []
     if (pages) for (let p = m.pages.start; p <= m.pages.end; p++) pageTexts.push(pageText(pages, p) || '')
     const join = (arr) => arr.filter(Boolean).join(SEP)
-    const fields = [[4, w4], [3, w3], [2, w2], [1, [...w1, ...pageTexts]]]
+    const fields = [
+      [4, w4],
+      [3, w3],
+      [2, w2],
+      [1, [...w1, ...pageTexts]],
+    ]
     return {
       model: m,
       fields: fields.map(([w, arr]) => [w, foldForSearch(join(arr))]),
@@ -132,11 +156,17 @@ function hitsFor(index, term) {
     if (proper) {
       for (const [w, text] of entry.raw) {
         proper.lastIndex = 0
-        if (proper.test(text)) { weight = w; break }
+        if (proper.test(text)) {
+          weight = w
+          break
+        }
       }
     } else {
       for (const [w, text] of entry.fields) {
-        if (text.includes(pre) && re.test(text)) { weight = w; break }
+        if (text.includes(pre) && re.test(text)) {
+          weight = w
+          break
+        }
       }
     }
     if (!weight) continue
@@ -235,11 +265,19 @@ export function sentencePool(model, pages, titles = null) {
   const pool = []
   const add = (q, weight, kind) => q && pool.push({ text: q.quote, page: q.page, weight, kind, said_by: q.said_by ?? null })
   add(model.synopsis, 3, 'synopsis')
-  model.tips.forEach((t) => add(t, 3, 'tip'))
+  model.tips.forEach((t) => {
+    add(t, 3, 'tip')
+  })
   add(model.cab.speaker, 2, 'cab')
-  model.cab.notes.forEach((n) => add(n, 2, 'cab'))
-  model.settings.forEach((s) => add(s, 2, 'settings'))
-  model.notes.forEach((n) => add(n, 1, 'note'))
+  model.cab.notes.forEach((n) => {
+    add(n, 2, 'cab')
+  })
+  model.settings.forEach((s) => {
+    add(s, 2, 'settings')
+  })
+  model.notes.forEach((n) => {
+    add(n, 1, 'note')
+  })
   if (pages) {
     for (let p = model.pages.start; p <= model.pages.end; p++) {
       const raw = pages.get(p) || ''

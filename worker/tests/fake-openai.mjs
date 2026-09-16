@@ -27,7 +27,11 @@ export const SCENARIOS = {
             { page: 28, quote: 'Models of a 100 watt Superlead Plexy re-issue' }, // (iii) one changed character
           ],
         },
-        { model_id: 'brit-brown-and-fas-brown', unit_name: 'Brown Sound Deluxe', citations: [{ page: 60, quote: 'Turn up Presence in the Brit Brown model' }] },
+        {
+          model_id: 'brit-brown-and-fas-brown',
+          unit_name: 'Brown Sound Deluxe',
+          citations: [{ page: 60, quote: 'Turn up Presence in the Brit Brown model' }],
+        },
       ],
     },
   },
@@ -39,7 +43,13 @@ export const SCENARIOS = {
           model_id: 'matchbox-d-30',
           unit_name: 'Matchbox D-30',
           // The real model's p. 188 citation opens with the previous passage's attribution.
-          citations: [{ page: 188, quote: '– Manual Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed. It’s a favorite of many players, for clean tones with chime as well as crunchy work.' }],
+          citations: [
+            {
+              page: 188,
+              quote:
+                '– Manual Fractal Audio’s model is based on channel 1 (12AX7) with Master bypassed. It’s a favorite of many players, for clean tones with chime as well as crunchy work.',
+            },
+          ],
         },
       ],
     },
@@ -80,7 +90,11 @@ export const SCENARIOS = {
     },
     cite: {
       suggestions: [
-        { model_id: 'brit-brown-and-fas-brown', unit_name: 'Brit Brown', citations: [{ page: 60, quote: 'Turn up Presence in the Brit Brown model' }] },
+        {
+          model_id: 'brit-brown-and-fas-brown',
+          unit_name: 'Brit Brown',
+          citations: [{ page: 60, quote: 'Turn up Presence in the Brit Brown model' }],
+        },
       ],
     },
   },
@@ -89,7 +103,17 @@ export const SCENARIOS = {
     cite: {
       suggestions: [
         // An exact substring of p. 28 that runs from one box into the next (API.md §4.2): must be dropped.
-        { model_id: '1959slp', unit_name: '1959SLP', citations: [{ page: 28, quote: 'Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.' }] },
+        {
+          model_id: '1959slp',
+          unit_name: '1959SLP',
+          citations: [
+            {
+              page: 28,
+              quote:
+                'Or just crank everything, like Eddie Van Halen “My settings for a “typical” Plexi tone are Bass 2, Mid 8, Treble 7.5.',
+            },
+          ],
+        },
       ],
     },
   },
@@ -105,7 +129,13 @@ export const SCENARIOS = {
         {
           model_id: 'class-a-30w',
           unit_name: 'Class-A 30W TB',
-          citations: [{ page: 109, quote: 'What also works well with VOX amps is to boost the signal at the input stage, for example by increasing Input Trim, or by adding a Drive such as FET Boost or SDD.' }],
+          citations: [
+            {
+              page: 109,
+              quote:
+                'What also works well with VOX amps is to boost the signal at the input stage, for example by increasing Input Trim, or by adding a Drive such as FET Boost or SDD.',
+            },
+          ],
         },
       ],
     },
@@ -118,7 +148,11 @@ export const SCENARIOS = {
     },
     cite: {
       suggestions: [
-        { model_id: 'usa-iic-plus-and-usa-iic-plus-plus', unit_name: 'USA IIC+', citations: [{ page: 270, quote: 'also referred to as “Metallica’s IIC+”' }] },
+        {
+          model_id: 'usa-iic-plus-and-usa-iic-plus-plus',
+          unit_name: 'USA IIC+',
+          citations: [{ page: 270, quote: 'also referred to as “Metallica’s IIC+”' }],
+        },
       ],
     },
   },

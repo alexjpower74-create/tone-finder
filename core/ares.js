@@ -8,18 +8,20 @@ export const ARES = Object.freeze({
     Object.freeze({
       url: 'https://forum.fractalaudio.com/threads/axe-fx-ii-quantum-rev-9-00-firmware-release.131649/',
       fetched: '2026-09-14',
-      quote: 'Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm.',
+      quote:
+        'Removed the “Motor Drive” and “Transformer Grind” algorithms and associated parameters from the Amp block. These have been replaced by the new “Speaker Compression” algorithm.',
     }),
     Object.freeze({
       url: 'https://forum.fractalaudio.com/threads/axe-fx-ii-ares-rev-1-00-firmware-release.148248/',
       fetched: '2026-09-14',
-      quote: 'Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar.',
+      quote:
+        'Not all aspects of the Ares modeling were able to be ported but the most important parts were and the amp modeling should sound very similar.',
     }),
   ]),
 })
 
 export const ARES_ADVICE =
-  'Your firmware doesn\'t have this control. Skip this step: Fractal replaced it with Speaker Compression (Spkr Comp), which resets to 3.0.'
+  "Your firmware doesn't have this control. Skip this step: Fractal replaced it with Speaker Compression (Spkr Comp), which resets to 3.0."
 
 const ARES_RE = /motor\s*drive|(transformer|xformer|xfrmr)\s*grind/gi
 

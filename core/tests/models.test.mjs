@@ -26,7 +26,10 @@ export const QUOTE_BUDGET = 0.15
 function quotesOf(m) {
   const out = []
   const walk = (v, path) => {
-    if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${path}[${i}]`))
+    if (Array.isArray(v))
+      v.forEach((x, i) => {
+        walk(x, `${path}[${i}]`)
+      })
     else if (v && typeof v === 'object') {
       if (typeof v.quote === 'string' && 'page' in v) out.push({ ...v, path })
       for (const [k, x] of Object.entries(v)) if (k !== 'quote') walk(x, `${path}.${k}`)
@@ -40,8 +43,14 @@ test('rule 1: exactly 109 models, same order, sections and start pages as sectio
   const expected = sections.filter((s) => !APPENDIX_SECTIONS.includes(s.title))
   assert.equal(expected.length, 109)
   assert.equal(models.length, golden.model_count)
-  assert.deepEqual(models.map((m) => m.section), expected.map((s) => s.title))
-  assert.deepEqual(models.map((m) => m.pages.start), expected.map((s) => s.page))
+  assert.deepEqual(
+    models.map((m) => m.section),
+    expected.map((s) => s.title),
+  )
+  assert.deepEqual(
+    models.map((m) => m.pages.start),
+    expected.map((s) => s.page),
+  )
   for (let i = 0; i < models.length; i++) {
     const nextPage = sections[sections.findIndex((s) => s.title === models[i].section && s.page === models[i].pages.start) + 1].page
     assert.equal(models[i].pages.end, nextPage - 1, models[i].id)
@@ -60,7 +69,10 @@ test('rule 1: every section title is in the TOC; every TOC amp entry is a title 
       const mm = /^(.*?)\s*\.{2,}\s*(\d+)\s*$/.exec(line) || /^(.*?[^.\d\s])\s*(\d+)$/.exec(line)
       if (!mm) continue
       const text = normText(mm[1].replace(/\.+$/, ''))
-      if (text === 'The Amps') { inAmps = true; continue }
+      if (text === 'The Amps') {
+        inAmps = true
+        continue
+      }
       if (text === 'Amp Categories') inAmps = false
       if (!inAmps) continue
       n++
@@ -87,7 +99,10 @@ test('rule 3: unit names have verified evidence, are evidence or its slash expan
     assert.ok(m.unit_names.length > 0 || /models$/.test(m.name) === false, `${m.id} has no unit names`)
     for (const u of m.unit_names) {
       assert.ok(u.evidence.length >= 3)
-      assert.ok(checkQuote({ quote: u.evidence, page: u.page }, pages, { minLength: 3, sentences: false }).ok, `${m.id}: ${u.evidence} p. ${u.page}`)
+      assert.ok(
+        checkQuote({ quote: u.evidence, page: u.page }, pages, { minLength: 3, sentences: false }).ok,
+        `${m.id}: ${u.evidence} p. ${u.page}`,
+      )
       if (u.name !== u.evidence) {
         const parts = u.evidence.split('/')
         const first = parts[0].split(' ')
@@ -104,7 +119,8 @@ test('rule 3: unit names have verified evidence, are evidence or its slash expan
   // Slash names that are part of the name stay whole.
   assert.ok(byId.get('usa-iic-plus-and-usa-iic-plus-plus').unit_names.some((u) => u.name === 'USA IIC+ BRT/DP'))
   const plexi = byId.get('plexi-models').unit_names.map((u) => u.name)
-  for (const n of ['Plexi 100W HIGH', 'Plexi 100W JUMP', 'Plexi 100W NRML', 'Plexi 50W HI 1', 'Plexi 50W JUMP', 'Plexi 50W NRML']) assert.ok(plexi.includes(n), n)
+  for (const n of ['Plexi 100W HIGH', 'Plexi 100W JUMP', 'Plexi 100W NRML', 'Plexi 50W HI 1', 'Plexi 50W JUMP', 'Plexi 50W NRML'])
+    assert.ok(plexi.includes(n), n)
 })
 
 test('golden: names_resolve_to, names_never, stub_ids, stub_targets', () => {
@@ -138,7 +154,10 @@ test('rule 4: specs verbatim or null, facets derived, brands from the fixed tabl
     assert.deepEqual(m.brands, brandsForSection(m.section))
     for (const b of m.brands) {
       const tokens = BRANDS.find(([name]) => name === b)[1]
-      assert.ok(tokens.some((t) => m.section.includes(t)), `${m.id}: ${b}`)
+      assert.ok(
+        tokens.some((t) => m.section.includes(t)),
+        `${m.id}: ${b}`,
+      )
     }
   }
   assert.equal(facetMasterVolume('Yes (Lead) No (Clean)'), 'mixed')
@@ -165,7 +184,10 @@ test('rule 5: every quote verified on a page inside its model; quote budget ≤ 
     assert.ok(checkQuote(c, pages).ok, c.id)
     total += c.quote.length
   }
-  assert.deepEqual(data.conventions.map((c) => c.id), ['high-low-inputs', 'no-master-volume', 'two-gain-controls', 'single-tone-control', 'taper-match', 'soft-reset'])
+  assert.deepEqual(
+    data.conventions.map((c) => c.id),
+    ['high-low-inputs', 'no-master-volume', 'two-gain-controls', 'single-tone-control', 'taper-match', 'soft-reset'],
+  )
   let guide = 0
   for (let p = 1; p <= 301; p++) guide += pageText(pages, p).length
   const share = total / guide
@@ -182,7 +204,10 @@ test('rule 6: settings knobs re-derive from the quote, values 0–10 written in 
       count++
       assert.ok(Object.keys(st.knobs).length >= 1, `${m.id} settings without knobs`)
       assert.deepEqual(st.knobs, parseKnobs(st.quote, hints, st.other), `${m.id} p. ${st.page}`)
-      assert.deepEqual(Object.keys(st.knobs), KNOBS.filter((k) => k in st.knobs))
+      assert.deepEqual(
+        Object.keys(st.knobs),
+        KNOBS.filter((k) => k in st.knobs),
+      )
       for (const [k, v] of Object.entries(st.knobs)) {
         assert.ok(v >= 0 && v <= 10)
         assert.match(st.quote, new RegExp(String(v).replace('.', '\\.')), `${m.id} ${k}`)
@@ -208,10 +233,16 @@ test('rule 7: directions come from tips, up/down, label present', () => {
     const map = labelMap(parseControlHints(m.controls?.quote))
     for (const d of m.directions) {
       count++
-      assert.ok(m.tips.some((t) => t.quote === d.quote && t.page === d.page), `${m.id}: direction not from a tip`)
+      assert.ok(
+        m.tips.some((t) => t.quote === d.quote && t.page === d.page),
+        `${m.id}: direction not from a tip`,
+      )
       assert.ok(d.dir === 'up' || d.dir === 'down')
       const labels = Object.keys(map).filter((l) => map[l] === d.knob)
-      assert.ok(labels.some((l) => new RegExp(`(?<![A-Za-z0-9])${l}(?![A-Za-z0-9])`, 'i').test(d.quote)), `${m.id}: ${d.knob} label not in quote`)
+      assert.ok(
+        labels.some((l) => new RegExp(`(?<![A-Za-z0-9])${l}(?![A-Za-z0-9])`, 'i').test(d.quote)),
+        `${m.id}: ${d.knob} label not in quote`,
+      )
     }
   }
   assert.ok(count > 10, `control: directions exist (${count})`)
@@ -224,7 +255,11 @@ test('guide sha matches; the build is deterministic and matches the committed fi
   const b = await buildData({ pages, sections, curation })
   const sa = JSON.stringify(a.data, null, 2) + '\n'
   assert.equal(sa, JSON.stringify(b.data, null, 2) + '\n')
-  assert.equal(sa, readFileSync(fileURLToPath(new URL('../../data/models.json', import.meta.url)), 'utf8'), 'data/models.json is stale: run npm run build:models')
+  assert.equal(
+    sa,
+    readFileSync(fileURLToPath(new URL('../../data/models.json', import.meta.url)), 'utf8'),
+    'data/models.json is stale: run npm run build:models',
+  )
 })
 
 test('a curated quote that fails verification stops the build', async () => {

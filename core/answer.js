@@ -9,7 +9,42 @@ import { aresObject, aresFlags } from './ares.js'
 export const NO_SUPPORT_MESSAGE = "I can't point to the guide for that."
 export const GK_LABEL = 'General knowledge (AI) — not from the guide'
 export const MAX_WHY = 3
-const SAID_BY_NAMES = ['yek', 'Yek', 'Cliff', 'Legendary Tones', 'Marshall', 'MESA', 'Manual', 'Alan Phillips', 'Fenderguru.com', 'Fenderguru', 'Wikipedia', 'Orange', 'Bogner', 'Soldano', 'Fryette', 'Friedman', 'Diezel', 'Supro', 'Suhr', 'Peavey', 'Komet', 'Ken Fischer', 'Dr. Z', 'Bob Bradshaw', 'Vintage Guitar', 'ToneQuest', 'The Gear Page', 'Swart', 'Splawn', 'Premier Guitar', 'Trainwreck.com', 'Richard Hallebeek', 'Rob Navarette', 'Ultra Sound']
+const SAID_BY_NAMES = [
+  'yek',
+  'Yek',
+  'Cliff',
+  'Legendary Tones',
+  'Marshall',
+  'MESA',
+  'Manual',
+  'Alan Phillips',
+  'Fenderguru.com',
+  'Fenderguru',
+  'Wikipedia',
+  'Orange',
+  'Bogner',
+  'Soldano',
+  'Fryette',
+  'Friedman',
+  'Diezel',
+  'Supro',
+  'Suhr',
+  'Peavey',
+  'Komet',
+  'Ken Fischer',
+  'Dr. Z',
+  'Bob Bradshaw',
+  'Vintage Guitar',
+  'ToneQuest',
+  'The Gear Page',
+  'Swart',
+  'Splawn',
+  'Premier Guitar',
+  'Trainwreck.com',
+  'Richard Hallebeek',
+  'Rob Navarette',
+  'Ultra Sound',
+]
 const SPEC_LINE = /Amplifier Specifications|(?:Years of Manufacture|Negative Feedback|Preamp Tubes|Power Amp Tubes|Tonestack Location) \S/
 
 const round2 = (x) => Math.round(x * 100) / 100
@@ -75,7 +110,10 @@ export function pickWhy(model, terms, pages, { avoid = new Set(), titles = null 
     let matched = compiled.filter((t) => t.re.test(foldForSearch(text)))
     if (!matched.length) return
     if (text.length > QUOTE_MAX) {
-      const pre = clausePrefix(text, [...matched].sort((a, b) => b.strong - a.strong))
+      const pre = clausePrefix(
+        text,
+        [...matched].sort((a, b) => b.strong - a.strong),
+      )
       if (!pre) return
       text = cleanCut(pre)
       if (text.length < 12) return
@@ -88,7 +126,16 @@ export function pickWhy(model, terms, pages, { avoid = new Set(), titles = null 
     seen.add(key)
     const strong = matched.some((t) => t.strong)
     if (!strong && item.weight < 3) return
-    cands.push({ text, page: item.page, weight: item.weight, order, said_by: said || saidBy.get(key) || null, matched, strong, named: nameRe.test(foldForSearch(text)) })
+    cands.push({
+      text,
+      page: item.page,
+      weight: item.weight,
+      order,
+      said_by: said || saidBy.get(key) || null,
+      matched,
+      strong,
+      named: nameRe.test(foldForSearch(text)),
+    })
   })
   const fresh = cands.filter((c) => !avoid.has(c.text))
   const usable = fresh.some((c) => c.strong) ? fresh : cands
@@ -101,7 +148,15 @@ export function pickWhy(model, terms, pages, { avoid = new Set(), titles = null 
     pool.forEach((c, i) => {
       if (!chosen.length && !c.strong) return
       const add = c.matched.filter((t) => !covered.has(t.term))
-      const key = [c.strong ? 1 : 0, add.some((t) => t.strong) ? 1 : 0, c.weight >= 3 ? 1 : 0, c.named ? 1 : 0, add.length, c.weight, -c.order]
+      const key = [
+        c.strong ? 1 : 0,
+        add.some((t) => t.strong) ? 1 : 0,
+        c.weight >= 3 ? 1 : 0,
+        c.named ? 1 : 0,
+        add.length,
+        c.weight,
+        -c.order,
+      ]
       if (!bestKey || cmpKey(key, bestKey) > 0) {
         best = i
         bestKey = key
@@ -111,7 +166,9 @@ export function pickWhy(model, terms, pages, { avoid = new Set(), titles = null 
     const [c] = pool.splice(best, 1)
     const add = c.matched.filter((t) => !covered.has(t.term))
     if (chosen.length && !add.length) break
-    c.matched.forEach((t) => covered.add(t.term))
+    c.matched.forEach((t) => {
+      covered.add(t.term)
+    })
     chosen.push({ quote: c.text, page: c.page, said_by: c.said_by, matched: c.matched.map((t) => t.term) })
   }
   return chosen
@@ -127,7 +184,10 @@ export function chooseUnitName(model, why, query) {
   return model.unit_names[0]?.name ?? model.name
 }
 
-export function buildSuggestion(model, { data, pages, query, terms, intent, rank, source, score, why = null, unitName = null, aiTexts = [], avoid }) {
+export function buildSuggestion(
+  model,
+  { data, pages, query, terms, intent, rank, source, score, why = null, unitName = null, aiTexts = [], avoid },
+) {
   const whyList = why ?? pickWhy(model, terms, pages, { avoid, titles: sectionTitles(data) })
   const unit_name = unitName ?? chooseUnitName(model, whyList, query)
   const k = knobsFor(model, { unitName: unit_name, terms: terms.map((t) => t.term), intent, conventions: data.conventions })
@@ -193,9 +253,21 @@ export function guideAnswer(query, { models: data, pages = null, extraTerms = []
   const suggestions = []
   const kept = []
   for (const c of res.candidates) {
-    const s = buildSuggestion(c.model, { data, pages, query: full, terms: c.terms, intent: own.understood.intent, rank: 0, source: 'guide_search', score: c.score, avoid: used })
+    const s = buildSuggestion(c.model, {
+      data,
+      pages,
+      query: full,
+      terms: c.terms,
+      intent: own.understood.intent,
+      rank: 0,
+      source: 'guide_search',
+      score: c.score,
+      avoid: used,
+    })
     if (!s.why.length) continue
-    s.why.forEach((w) => used.add(w.quote))
+    s.why.forEach((w) => {
+      used.add(w.quote)
+    })
     suggestions.push(s)
     kept.push(c)
   }

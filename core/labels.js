@@ -29,7 +29,7 @@ function escapeRegex(s) {
 export function parseControlHints(controls) {
   const hints = {}
   if (!controls) return hints
-  const re = /([A-Za-z][A-Za-z0-9\-\/ ]*?)\s*\(\s*=\s*([^)]+?)\s*\)/g
+  const re = /([A-Za-z][A-Za-z0-9\-/ ]*?)\s*\(\s*=\s*([^)]+?)\s*\)/g
   let m
   while ((m = re.exec(controls))) {
     let label = m[1].trim()
@@ -71,7 +71,7 @@ export function parseKnobs(quote, hints = {}, other = []) {
     const v = /^\s*(?:[:=]\s*)?(?:(?:at|around)\s+)*(\d+(?:\.\d+)?)(?![\d.]*\d)/i.exec(rest)
     if (!v) continue
     const after = rest.slice(v[0].length)
-    if (/^\s*(?:[-–\/]\s*\d|to\s+\d|%|:\d|\s*o['’]clock)/i.test(after)) continue // ranges, clock, percent
+    if (/^\s*(?:[-–/]\s*\d|to\s+\d|%|:\d|\s*o['’]clock)/i.test(after)) continue // ranges, clock, percent
     const value = Number(v[1])
     if (!(value >= 0 && value <= 10)) continue
     found[knob] = value
@@ -84,7 +84,10 @@ export function parseKnobs(quote, hints = {}, other = []) {
 // Directions from a tip (rule 7): → [{ knob, dir }] in quote order, one per knob, conflicts dropped.
 export function parseDirections(tip, hints = {}) {
   const map = labelMap(hints)
-  const labels = Object.keys(map).sort((a, b) => b.length - a.length).map(escapeRegex).join('|')
+  const labels = Object.keys(map)
+    .sort((a, b) => b.length - a.length)
+    .map(escapeRegex)
+    .join('|')
   const L = `(?:the\\s+)?(?:${labels})(?![A-Za-z0-9])`
   const LIST = `${L}(?:\\s*(?:,\\s*(?:and\\s+)?|\\s+and\\s+|\\s+or\\s+)${L})*`
   const UP = 'turn(?:ing)?\\s+up|crank(?:ing)?|increas(?:e|ing)|rais(?:e|ing)|boost(?:ing)?'
@@ -92,7 +95,10 @@ export function parseDirections(tip, hints = {}) {
   const patterns = [
     [new RegExp(`(?<![A-Za-z])(${UP})\\s+(${LIST})`, 'gi'), 'up'],
     [new RegExp(`(?<![A-Za-z])(${DOWN})\\s+(${LIST})`, 'gi'), 'down'],
-    [new RegExp(`(?<![A-Za-z])turn\\s+(${LIST})\\s+(?:all\\s+the\\s+way\\s+|way\\s+|a\\s+(?:little|bit)\\s+)?(up|down)(?![A-Za-z])`, 'gi'), 'turn'],
+    [
+      new RegExp(`(?<![A-Za-z])turn\\s+(${LIST})\\s+(?:all\\s+the\\s+way\\s+|way\\s+|a\\s+(?:little|bit)\\s+)?(up|down)(?![A-Za-z])`, 'gi'),
+      'turn',
+    ],
     [new RegExp(`(?<![A-Za-z])keep\\s+(${LIST})\\s+(low|down|high|up)(?![A-Za-z])`, 'gi'), 'keep'],
   ]
   const hits = []
